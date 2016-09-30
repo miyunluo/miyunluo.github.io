@@ -1,0 +1,72 @@
+---
+layout:     post
+title:      "Welcome to Miyunluo Blog"
+subtitle:   " \"Hello World, Hello Blog\""
+date:       2016-09-30
+author:     "Miyunluo"
+header-img: "img/post-bg-2016.jpg"
+tags:
+    - 生活
+---
+
+> “On the way. ”
+
+
+## 前言
+
+Miyunluo 的 Blog 就这么上线了。
+
+[跳过废话 ](#build)
+
+
+
+2015 年的小学期，乱啃了一通 HTML, Bootstarp, JS, 社会实践的时候和[dusmart](https://dusmart.github.io)一起建了一个宣传网站，记得那时为了实现一个简单的弹出式窗口费了好大劲。
+
+
+今年暑期本打算为自己建立个人blog，结果回家后因考驾照等种种事情延宕了。
+
+近期偶然发现了[Github Pages](https://pages.github.com/) + [Jekyll](http://jekyllrb.com/)可以轻松解决blog问题，于是抽时间配置了环境，fork了一个model，build了自己的blog。
+
+Git+Jekyll的优点非常明显：
+* **Markdown** 带来的优雅写作体验
+* 非常熟悉的 Git workflow ，**Git Commit 即 Blog Post**
+* 利用 GitHub Pages 的域名和免费无限空间，不用自己折腾主机
+	* 如果需要自定义域名，也只需要简单改改 DNS 加个 CNAME 就好了
+* Jekyll 的自定制非常容易，基本就是个模版引擎
+
+
+<p id = "build"></p>
+---
+
+## 正文
+
+接下来说说配置的细节。  
+
+
+配置成功后想想似乎也没有遇到什么大坑，不过一边配一遍google解决问题还是花了一些时间。
+主要参考[Install Jekyll on OS X El Capitan 10.11](http://digitalshore.io/how-to-install-jekyll-mac-os-x-el-capitan/)。
+
+
+其中有一步需要 `sudo gem install jekyll`，而 rubygem 的源是被万里长城给墙了的……我挂着代理，没有受到影响，无法翻墙的同学可以移步[淘宝的镜像](https://ruby.taobao.org)，具体使用参见网页里的说明。
+
+有一步在众多教程里都没有提及，如果出现报错信息`cannot load such file -- bundler (LoadError)`，需要`sudo gem install bundler`，之后`bundle install`。
+
+最后一步build的时候，如果出现`cannot load such file -- jekyll-paginate`，那是因为fork到的modle一般都没有 Gemfile，可以自己新建一个Gmefile，或者 jekyll new 一个新project，将里面的Gemfile拷贝进去。
+
+关于blog本身。
+
+本地调试直接`jekyll serve --watch`，实时同步修改状态。
+
+运用了Less CSS框架，可以直接修改Less文件以更改前端样式。
+
+	
+
+## 后记
+
+希望建立博客后可以激励自己不断学习，不断写作。
+
+感谢[Hux](https://github.com/huxpro)提供的model。
+
+如果你恰好逛到了这里，希望你也能喜欢这个博客主题。
+
+—— Miyunluo 后记于 2016.09
