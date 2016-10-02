@@ -48,7 +48,7 @@ Git+Jekyll的优点非常明显：
 接下来说说配置的细节。  
 
 
-配置成功后想想似乎也没有遇到什么大坑，不过一边配一遍google解决问题还是花了一些时间。
+配置成功后想想似乎也没有遇到什么大坑，不过一边配一边google解决问题还是花了一些时间。
 主要参考[Install Jekyll on OS X El Capitan 10.11](http://digitalshore.io/how-to-install-jekyll-mac-os-x-el-capitan/)。
 
 
@@ -68,16 +68,16 @@ Git+Jekyll的优点非常明显：
 
 ## 后记
 
-Blog push到github.io后又遇到了一些问题，footer里的链接图标都没有加载出来。如下图
+Blog push到 github.io 后又遇到了一些问题，footer里的链接图标都没有加载出来，而在本地一切正常。问题见下图
 
 ![img](/img/in-post/post-blog-withno-contact.png)
 
 
 ---
 
-虽然这个东西可有可无，但是没有总是觉得不爽，晚上尝试了很久，开始以为是浏览器的锅，然而更换了浏览依然如故。
+虽然说这个东西可有可无，但是这种情况总是让我觉得不爽，晚上尝试了很久，开始以为是浏览器的锅，然而更换了浏览器依然如故，又检查了很久CSS，也没有发现问题。
 
-早上起来后认真的想了想，知乎的知字显示了出来，说明应该不是页面代码的问题，所以问题因该是图标样式表的问题，要么是没有加载，要么是冲突错误。去网上搜了搜图标的class，发现用的是[Font Awesome](http://www.w3schools.com/icons/fontawesome_icons_intro.asp)，翻了翻文件，发现这个链接库在 _includes/head.html中
+早上起来后认真的想了想，知乎的“知”字显示了出来，说明应该不是页面代码的问题，所以问题因该是图标样式表的问题，要么是没有加载，要么是冲突错误。去网上搜了搜图标的class，发现用的是[Font Awesome](http://www.w3schools.com/icons/fontawesome_icons_intro.asp)，翻了翻文件，发现这个链接库在 _includes/head.html中
 
 `<link href="http://cdn.staticfile.org/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">`
 
