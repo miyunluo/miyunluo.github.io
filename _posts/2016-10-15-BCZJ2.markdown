@@ -141,6 +141,7 @@ void rotate(int *nums, int len, int rotdist) {
 对于第一个问题，我们可以使用基于排序的标识：将单词中的字母表顺序排列。"deposit"的标识就是"deiopst"，这也是"dopiest"和其他任何该类单词的标识。要解决第二个问题，我们将所有的单词按照其标识的顺序排序。
 
 这里用hash table来解决
+
 ``` c++
 vector<string> anagram(vector<string>& Strs)
 {
@@ -163,5 +164,7 @@ vector<string> anagram(vector<string>& Strs)
 	}
 	return ans;
 }
+
 ```
+
 -- miyunluo 于2016.10
