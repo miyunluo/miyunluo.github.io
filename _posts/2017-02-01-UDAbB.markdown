@@ -45,7 +45,7 @@ We denot the vector of parameters of all layers in those three parts as **theta_
 
 At training time, seek **theta_f** that ***maximize*** the loss of the <u>domain classifier</u>, seek **theta_d** that ***minimize*** the loss of the <u>domain classifier</u>, seek **theta_y** that minimize the loss of the <u>label predictor</u>.
 
-Then the parameters can be updated with back propagation.
+Then the parameters can be updated with backpropagation.
 
 ![img](/img/in-post/post-blog-backpropfyd.png)
 
