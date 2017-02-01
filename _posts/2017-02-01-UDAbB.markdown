@@ -49,5 +49,7 @@ Then the parameters can be updated with back propagation.
 
 ![img](/img/in-post/post-blog-backpropfyd.png)
 
+**mu** is the learning rate, and the factor **lamda** is important according to author, otherwise the domain classifier loss will be minimized.
 
--- miyunluo 于2016.10
+
+-- miyunluo 于2017.02
