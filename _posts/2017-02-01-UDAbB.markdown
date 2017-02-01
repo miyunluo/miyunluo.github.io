@@ -4,7 +4,7 @@ title:      "Unsupervised Domain Adaptation by Backpropagation"
 subtitle:   " \"Some notes\""
 date:       2017-02-01
 author:     "Miyunluo"
-header-img: "img/post-bg-DeterministicSelect.jpg"
+header-img: "img/post-bg-UDAbB.jpg"
 tags:
     - Notes
 ---
