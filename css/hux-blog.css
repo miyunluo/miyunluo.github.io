@@ -1,3 +1,11 @@
+body div.content {}
+    body div.content code.has-jax {
+        font: inherit;
+        font-size: 100%;
+        background: inherit;
+        border: inherit;
+        color: #000000;
+    }
 @media (min-width: 1200px) {
   .post-container,
   .sidebar-container {
