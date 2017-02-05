@@ -66,7 +66,10 @@ In RKHS, we have:(3)
 
 ### MK-MMD
 
-MK-MMD means multiple kernel variant of MMD.
+MK-MMD means multiple kernel variant of MMD and it minimize Type two error.
+
+* Type one error: 存伪
+* Type two error: 弃真
 
 ---
 
