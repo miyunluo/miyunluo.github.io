@@ -5,9 +5,40 @@
     <description>关于学习和生活 | 这里是 @Miyunluo罗煜东 的个人博客</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Sat, 04 Mar 2017 19:01:01 +0800</pubDate>
-    <lastBuildDate>Sat, 04 Mar 2017 19:01:01 +0800</lastBuildDate>
+    <pubDate>Sun, 16 Jul 2017 14:00:27 +0800</pubDate>
+    <lastBuildDate>Sun, 16 Jul 2017 14:00:27 +0800</lastBuildDate>
     <generator>Jekyll v3.3.1</generator>
+    
+      <item>
+        <title>对近期生活的一些反思</title>
+        <description>&lt;blockquote&gt;
+  &lt;p&gt;“Look back and move on.”&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;正文&quot;&gt;正文&lt;/h2&gt;
+
+&lt;p&gt;时间一晃半个学期过去了，这一周来夜夜失眠，白日里又浑浑噩噩，浑似行尸走肉一般，日子被过的索然无味，似乎毫无所得却又看似忙忙碌碌。心中自觉惶恐，想想这人间四月，尽是大好时节，而我却活得如此不虔诚，实为不该。可每次想过之后又无法改变丝毫，总是选择向生活妥协。&lt;/p&gt;
+
+&lt;p&gt;昨日夜里又不能寐，一番胡思乱想，我觉得是还是应该写下来才好。&lt;/p&gt;
+
+&lt;p&gt;回想开学的前两周，每日早起上课，晚上锻炼，生活也算有条不紊。然而第二周的最后一天经历了一些感情上的小波折，之后便日日心魔缠身，事事心不在焉，以至于接下来的两周基本算是废了。第四周中期到第五周，为了使代码得到一个更优的结果开始疯狂的跑数据、改参数，可以说把寝室里所有能用的CPU都拿来用了，就差去网吧包夜了。(在此真的要感谢两位室友与他们的台式，自己不但影响了他们对电脑的使用，还使得寝室用电量急剧增加，主机的声音也影响了他们休息，想想真是愧疚。) 第六周后期开始和明哥着手码paper，这要说起来也算是个不小的工程，之前还低估了其中的工作量。总之熬了许多夜，一直到第九周结束。(在此还是要再感激室友的包容，我夜里点亮的屏幕影响了你们正常入眠，真的十分十分抱歉。)&lt;/p&gt;
+
+&lt;p&gt;前半学期终结，结束了两门课，也交掉了paper，日子突然变得空荡荡的，继而被自己放任得松松垮垮，夜里不寐，早上不起，白日无所事事，这么仔细一想突然感觉自己是如此废柴。想想自己近来的作风，多半也与之前被放纵的熬夜有关，但更多的还是缺失了短期生活的目标和动力。由于暑期要去实验室，所以对于找公司实习的事情也不是十分上心，浪费掉一次内推机会，到要走正常流程的时候真有种毕业就要失业的感觉。自己的代码容量与git上诸多大神相比真是少之又少，想想近来的数个编程作业，总是被自己以各种理由一拖再拖，到不得已时再东拼西凑了事，虽说可能有些同学对这种做法已经习以为常，但自己真要这么做的时候还是心有不甘。&lt;/p&gt;
+
+&lt;p&gt;写到这里愈发觉得 regularization 这种东西丢不得，一旦丢下，要再想拾起来就有些费力了。大二下开始每日一题的习惯早丢的没影了，这学期开学时坚持锻炼的习惯也因为种种原因胎死腹中。&lt;/p&gt;
+
+&lt;p&gt;所以就是现在吧：坚持锻炼，坚持学习，坚持coding，从前端开始。&lt;/p&gt;
+
+&lt;p&gt;– miyunluo 于2017.04&lt;/p&gt;
+</description>
+        <pubDate>Thu, 27 Apr 2017 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2017/04/27/junmidRev/</link>
+        <guid isPermaLink="true">http://localhost:4000/2017/04/27/junmidRev/</guid>
+        
+        <category>生活</category>
+        
+        
+      </item>
     
       <item>
         <title>Learning Transferanle Features with Deep Adapation Networks</title>
@@ -1174,111 +1205,6 @@ j = 1 2 3 4 &lt;strong&gt;5&lt;/strong&gt; 6&lt;/p&gt;
         <pubDate>Mon, 03 Oct 2016 00:00:00 +0800</pubDate>
         <link>http://localhost:4000/2016/10/03/poem/</link>
         <guid isPermaLink="true">http://localhost:4000/2016/10/03/poem/</guid>
-        
-        <category>生活</category>
-        
-        
-      </item>
-    
-      <item>
-        <title>Welcome to Miyunluo Blog</title>
-        <description>&lt;blockquote&gt;
-  &lt;p&gt;“On the way. ”&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h2 id=&quot;前言&quot;&gt;前言&lt;/h2&gt;
-
-&lt;p&gt;Miyunluo 的 Blog 就这么上线了。&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;#build&quot;&gt;跳过废话 &lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;2015 年的小学期，乱啃了一通 HTML, Bootstarp, JS, 社会实践的时候和&lt;a href=&quot;https://dusmart.github.io&quot;&gt;dusmart&lt;/a&gt;一起建了一个宣传网站，记得那时为了实现一个简单的弹出式窗口费了好大劲。&lt;/p&gt;
-
-&lt;p&gt;今年暑期本打算为自己建立个人blog，结果回家后因考驾照等种种事情延宕了。&lt;/p&gt;
-
-&lt;p&gt;近期偶然发现了&lt;a href=&quot;https://pages.github.com/&quot;&gt;Github Pages&lt;/a&gt; + &lt;a href=&quot;http://jekyllrb.com/&quot;&gt;Jekyll&lt;/a&gt;可以轻松解决blog问题，于是抽时间配置了环境，fork了一个model，build了自己的blog。&lt;/p&gt;
-
-&lt;p&gt;Git+Jekyll的优点非常明显：&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;Markdown&lt;/strong&gt; 带来的优雅写作体验&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;非常熟悉的 Git workflow ，&lt;strong&gt;Git Commit 即 Blog Post&lt;/strong&gt;&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;利用 GitHub Pages 的域名和免费无限空间，不用自己折腾主机&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;如果需要自定义域名，也只需要简单改改 DNS 加个 CNAME 就好了&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;Jekyll 的自定制非常容易，基本就是个模版引擎&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p id=&quot;build&quot;&gt;&lt;/p&gt;
-&lt;hr /&gt;
-
-&lt;h2 id=&quot;正文&quot;&gt;正文&lt;/h2&gt;
-
-&lt;p&gt;接下来说说配置的细节。&lt;/p&gt;
-
-&lt;p&gt;配置成功后想想似乎也没有遇到什么大坑，不过一边配一边google解决问题还是花了一些时间。
-主要参考&lt;a href=&quot;http://digitalshore.io/how-to-install-jekyll-mac-os-x-el-capitan/&quot;&gt;Install Jekyll on OS X El Capitan 10.11&lt;/a&gt;。&lt;/p&gt;
-
-&lt;p&gt;其中有一步需要 &lt;code class=&quot;highlighter-rouge&quot;&gt;sudo gem install jekyll&lt;/code&gt;，而 rubygem 的源是被万里长城给墙了的……我挂着代理，没有受到影响，无法翻墙的同学可以移步&lt;a href=&quot;https://ruby.taobao.org&quot;&gt;淘宝的镜像&lt;/a&gt;，具体使用参见网页里的说明。&lt;/p&gt;
-
-&lt;p&gt;有一步在众多教程里都没有提及，如果出现报错信息&lt;code class=&quot;highlighter-rouge&quot;&gt;cannot load such file -- bundler (LoadError)&lt;/code&gt;，需要&lt;code class=&quot;highlighter-rouge&quot;&gt;sudo gem install bundler&lt;/code&gt;，之后&lt;code class=&quot;highlighter-rouge&quot;&gt;bundle install&lt;/code&gt;。&lt;/p&gt;
-
-&lt;p&gt;最后一步build的时候，如果出现&lt;code class=&quot;highlighter-rouge&quot;&gt;cannot load such file -- jekyll-paginate&lt;/code&gt;，那是因为fork到的modle一般都没有 Gemfile，可以自己新建一个Gemfile，或者 jekyll new 一个新project，将里面的Gemfile拷贝进去。&lt;/p&gt;
-
-&lt;p&gt;关于blog本身。&lt;/p&gt;
-
-&lt;p&gt;本地调试直接&lt;code class=&quot;highlighter-rouge&quot;&gt;jekyll serve --watch&lt;/code&gt;，实时同步修改状态。&lt;/p&gt;
-
-&lt;p&gt;运用了Less CSS框架，可以直接修改Less文件以更改前端样式。&lt;/p&gt;
-
-&lt;h2 id=&quot;后记&quot;&gt;后记&lt;/h2&gt;
-
-&lt;p&gt;Blog push到 github.io 后又遇到了一些问题，footer里的链接图标都没有加载出来，而在本地一切正常。问题见下图&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/img/in-post/post-blog-withno-contact.png&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;p&gt;虽然说这个东西可有可无，但是这样子看着就让我觉得不爽，晚上尝试了很久，开始以为是浏览器的锅，然而更换了浏览器依然如故，又检查了很久CSS，也没有发现问题。&lt;/p&gt;
-
-&lt;p&gt;早上起来后认真的想了想，知乎的“知”字显示了出来，说明应该不是页面代码的问题，所以问题因该是图标样式表的问题，要么是没有加载，要么是冲突错误。去网上搜了搜图标的class，发现用的是&lt;a href=&quot;http://www.w3schools.com/icons/fontawesome_icons_intro.asp&quot;&gt;Font Awesome&lt;/a&gt;，翻了翻文件，发现这个链接库在 _includes/head.html中&lt;/p&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;link href=&quot;http://cdn.staticfile.org/font-awesome/4.2.0/css/font-awesome.min.css&quot; rel=&quot;stylesheet&quot; type=&quot;text/css&quot;&amp;gt;&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;继续搜索，发现在GithubHelp里有一篇&lt;a href=&quot;https://help.github.com/articles/securing-your-github-pages-site-with-https/&quot;&gt;Securing your GitHub Pages site with HTTPS&lt;/a&gt;，且给出了如下示例&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/img/in-post/post-blog-http2https.png&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;p&gt;问题应该是由于github采用https协议而导致链接库无法加载，解决方法就是换成https或者直接去掉，最后改为了&lt;/p&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;link href=&quot;//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css&quot; rel=&quot;stylesheet&quot; type=&quot;text/css&quot;&amp;gt;&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;问题解决。&lt;/p&gt;
-
-&lt;h2 id=&quot;结语&quot;&gt;结语&lt;/h2&gt;
-
-&lt;p&gt;希望建立博客后可以激励自己不断学习，不断写作。&lt;/p&gt;
-
-&lt;p&gt;感谢&lt;a href=&quot;https://github.com/huxpro&quot;&gt;Hux&lt;/a&gt;提供的model。&lt;/p&gt;
-
-&lt;p&gt;如果你恰好逛到了这里，希望你也能喜欢这个博客主题。&lt;/p&gt;
-
-&lt;p&gt;—— Miyunluo 后记于 2016.09&lt;/p&gt;
-</description>
-        <pubDate>Fri, 30 Sep 2016 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/2016/09/30/hello-2016/</link>
-        <guid isPermaLink="true">http://localhost:4000/2016/09/30/hello-2016/</guid>
         
         <category>生活</category>
         

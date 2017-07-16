@@ -16,7 +16,7 @@ weibo_username:     5522737680
 zhihu_username:     mie-yun-luo-88
 github_username:    miyunluo
 #twitter_username:  
-facebook_username:  
+facebook_username:  yudong.luo.77
 
 
 
@@ -47,12 +47,12 @@ kramdown:
 
 
 # Disqus settings
-#disqus_username: _your_disqus_short_name_
+disqus_username: miyunluo
 
 # Duoshuo settings
-duoshuo_username: miyunluo
+#duoshuo_username: miyunluo
 # Share component is depend on Comment so we can NOT use share only.
-duoshuo_share: true                     # set to false if you want to use Comment without Sharing
+#duoshuo_share: true                     # set to false if you want to use Comment without Sharing
 
 
 
@@ -61,14 +61,14 @@ duoshuo_share: true                     # set to false if you want to use Commen
 # Baidu Analytics
 #ba_track_id: 4cc1f2d8f3067386cc5cdb626a202900
 # Google Analytics
-ga_track_id: 'UA-49627206-1'            # Format: UA-xxxxxx-xx
-ga_domain: huangxuan.me
+ga_track_id: 'UA-102635433-1'            # Format: UA-xxxxxx-xx
+ga_domain: miyunluo.com
 
 
 
 # Sidebar settings
 sidebar: true                           # whether or not using Sidebar.
-sidebar-about-description: "不懂生活，不解风情，写写代码，弹弹吉他。"
+sidebar-about-description: "不负如来不负卿，也无风雨也无晴。"
 sidebar-avatar: /img/avatar-myl.jpg      # use absolute URL, seeing it's used in both `/` and `/about/`
 
 
