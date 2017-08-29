@@ -68,7 +68,7 @@ ga_domain: miyunluo.com
 
 # Sidebar settings
 sidebar: true                           # whether or not using Sidebar.
-sidebar-about-description: "不负如来不负卿，也无风雨也无晴。"
+sidebar-about-description: "桃李春风一杯酒\n江湖夜雨十年灯\n不负如来不负卿\n也无风雨也无晴"
 sidebar-avatar: /img/avatar-myl.jpg      # use absolute URL, seeing it's used in both `/` and `/about/`
 
 

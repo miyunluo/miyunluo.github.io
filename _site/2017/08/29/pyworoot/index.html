@@ -10,9 +10,9 @@
     <meta name="keyword"  content="罗煜东, 芈云落, Miyunluo, 罗煜东的博客, Miyunluo Blog">
     <link rel="shortcut icon" href="/img/favicon.ico">
 
-    <title>Learning Transferanle Features with Deep Adapation Networks - 罗煜东的博客 | Miyunluo Blog</title>
+    <title>Install Python and Pip without Root - 罗煜东的博客 | Miyunluo Blog</title>
 
-    <link rel="canonical" href="http://localhost:4000/2017/02/05/LTFwDAN/">
+    <link rel="canonical" href="http://localhost:4000/2017/08/29/pyworoot/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -132,12 +132,12 @@
 
     <!-- Image to hack wechat -->
 <!-- <img src="/img/icon_wechat.png" width="0" height="0"> -->
-<!-- <img src="/img/post-bg-UDAbB.jpg" width="0" height="0"> -->
+<!-- <img src="/img/post-bg-pyerror.png" width="0" height="0"> -->
 
 <!-- Post Header -->
 <style type="text/css">
     header.intro-header{
-        background-image: url('/img/post-bg-UDAbB.jpg')
+        background-image: url('/img/post-bg-pyerror.png')
     }
 </style>
 <header class="intro-header" >
@@ -147,15 +147,15 @@
                 <div class="post-heading">
                     <div class="tags">
                         
-                        <a class="tag" href="/tags/#Notes" title="Notes">Notes</a>
+                        <a class="tag" href="/tags/#Python" title="Python">Python</a>
                         
                     </div>
-                    <h1>Learning Transferanle Features with Deep Adapation Networks</h1>
+                    <h1>Install Python and Pip without Root</h1>
                     
                     
-                    <h2 class="subheading"> "Some notes"</h2>
+                    <h2 class="subheading"> "真爱生命，远离编程"</h2>
                     
-                    <span class="meta">Posted by Miyunluo on February 5, 2017</span>
+                    <span class="meta">Posted by Miyunluo on August 29, 2017</span>
                 </div>
             </div>
         </div>
@@ -174,83 +174,110 @@
                 post-container">
 
 				<blockquote>
-  <p>“It’s a good habite to take notes”</p>
+  <p>“配环境什么的最烦了。”</p>
 </blockquote>
 
 <h2 id="前言">前言</h2>
 
-<p>You can find the related paper from the following address.</p>
+<p>使用Linux最坏的情况就是没有root权限，然而这种情况普遍存在于ssh到服务器的时候。当然不赋予root权限是出于安全性的考虑，此时我的脑海中又浮现出那个场景…那日秋风萧瑟，残阳滴血，红铜铁马，万古如昨，tian哥以super_user的身份敲下了enter，那一键荡气回肠，然后老师的服务器就宕机了。咳咳，扯远了。。</p>
 
-<p><a href="http://jmlr.org/proceedings/papers/v37/long15.pdf">Learning Transferable Features with Deep Adaptation Networks</a>(1)</p>
-
-<p><a href="http://papers.nips.cc/paper/5347-how-transferable-are-features-in-deep-neural-networks.pdf">How transferable are features in deep neural networks?</a>(2)</p>
-
-<p><a href="http://jmlr.org/papers/volume13/gretton12a/gretton12a.pdf">A Kernel Two-Sample Test</a>(3)</p>
-
-<hr />
+<p>且说我遇到的问题是，需要登录的服务器是一个集群 (和SJTU的pi集群类似)，运行程序时需将其提交至一个节点(node)来运行，但是我发现自己本地的python(2.7.5)版本与node上的python(2.7.13)版本并不一致… (不是很懂这种设计的初衷是什么-_-\)，从log error看似乎是两个版本python不兼容，程序试图从我的本地import一些模块，然而模块报错了。这么一个性能怪兽没法使用真是难受，于是就起了重装python的念头。</p>
 
 <h2 id="正文">正文</h2>
 
-<p>Deep neutral network can learn transferable transferable features which generalize well to novel tasks for domain adaptation.(1)</p>
+<p>具体流程如下</p>
 
-<p>The usual transfer learning approach is to train a base network and then copy its first n layers to the first n layers of a target network. The remaining layers of the target network are then randomly initialized toword the target task. (2)</p>
+<h3 id="1compile-python-in-local-directory">1.Compile python in local directory</h3>
 
-<p>Here comes some related terms.</p>
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code>mkdir ~/python 
+<span class="nb">cd</span> ~/python
+wget https://www.python.org/ftp/python/2.7.13/Python-2.7.13.tgz
+tar zxfv Python-2.7.13.tgz
+find ~/python -type d | xargs chmod 0755
+<span class="nb">cd </span>Python-2.7.13
+</code></pre>
+</div>
 
-<h3 id="rkhs">RKHS</h3>
+<p>我选择的安装目录是”~/python”。解压完进入文件夹，接下就是编译了</p>
 
-<p>RHKS means reproducing kernel Hilbert space.(再生核希尔伯特空间)</p>
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code>./configure --prefix<span class="o">=</span><span class="nv">$HOME</span>/python
+make <span class="o">&amp;&amp;</span> make install
+</code></pre>
+</div>
 
-<p>First Hilbert space, it is a generalization of Euclidean space. Beginning with the basic vector space, define an  inner product operation in this vector space, the space will be upgraded to an inner product space. The norm is defined:</p>
+<p><em>$HOME/python</em> 是引导其安装在自己的目录里(即就是~/python)，否则默认安装路径在/usr下，一般用户没有权限读写此文件夹。</p>
 
-<p>\begin{aligned} |x|^2=\langle x, x\rangle \end{aligned}</p>
+<p>编译完成后需要让系统知道python的安装位置，vim打开~/.bashrc_profile设置如下环境变量。这里默认一般服务器使用bash，其他类似。</p>
 
-<p>So, it becomes an normed vector space. Norms can define a metric:</p>
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span><span class="nv">$HOME</span>/python/Python-2.7.13/:<span class="nv">$PATH</span>
+<span class="nb">export </span><span class="nv">PYTHONPATH</span><span class="o">=</span><span class="nv">$HOME</span>/python/Python-2.7.13
+</code></pre>
+</div>
 
-<p>\begin{aligned} d(x_1,x_2) = |x_1-x_2| \end{aligned}</p>
+<p>然后使用 <em>source</em> 让环境变量生效</p>
 
-<p>Then it becomes a metic space. If it is complete under this metric, the space is called Hilbert Space. In brief, Hilbert space is a complete inner product space.</p>
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="nb">source</span> ~/.bashrc_profile
+</code></pre>
+</div>
 
-<p>Then retroducing kernel.</p>
+<p>这里可以使用 <em>which python</em> 确认一下位置，正确应该返</p>
 
-<p>Remember in SVM, when the dataset is not linearly separable, we map the data point to a higher dimesional space and the data may become linearly separable. This higer dimentional space is called “reproducing kernel Hilbert space”. However, it is usually hard to figure out the mapping function because the growth of dimentional number is explosive. Here we need <strong>Kernel Function</strong> to handel this problem. It calculates inner product of two vectors in RKHS.</p>
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code>~/python/Python-2.7.13/python
+</code></pre>
+</div>
 
-<p>One useful property is that the same demensional space is isomorphic to each other, which means the inner product, norm, metric and vector operations, etc. can be maintained in the conversion between different space.</p>
+<h3 id="2install-pip">2.Install pip</h3>
 
-<h3 id="mmd">MMD</h3>
+<p>Pip是python常用的包管理器，使用还算方便，顺手安装。</p>
 
-<p>MMD means maximum mean discrepancy.(最大平均差异) It is used to determine whether the two distributions <strong>p</strong> and <strong>q</strong> are the same. For all the function f whose input is the sample space complying with the certain distribution, if the mean value is same, we assume those two distritions are the same.</p>
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code>wget --no-check-certificate https://bootstrap.pypa.io/get-pip.py -O - | python - --user
+</code></pre>
+</div>
 
-<p>Or rather, by finding a continuous function f in the sample space, we get two mean value with different distribution. Then we get <strong>mean discrepancy</strong> by subtracting. Find a f to maximum the mean discrepancy and we get MMD.</p>
+<p>运行完后，去~/.bashrc_profile里添加</p>
 
-<p>For a two-sample test, there are two hypotheses. Null hypothesis: p = q. The alternative hypothesis: p != q.</p>
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span><span class="nv">$HOME</span>/.local/bin:<span class="nv">$PATH</span>
+</code></pre>
+</div>
 
-<p>In RKHS, we have:(3)</p>
+<p>同时使用 <em>source</em> 使其生效。同理可以用 <em>which pip</em> 看看安装位置，正确应返回</p>
 
-<p>\begin{aligned} MMD^2[f,p,q]=|\mu_{p}-\mu_{q}|^2_{H} \end{aligned}</p>
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code>~/.local/bin/pip
+</code></pre>
+</div>
 
-<h3 id="mk-mmd">MK-MMD</h3>
+<h2 id="遇到的问题">遇到的问题</h2>
 
-<p>MK-MMD means multiple kernel variant of MMD and it minimize Type two error.</p>
+<p>一共编译三次，虽然每次都提醒 “your build may be uncompleted” 但最后一次使用pip安装了需要的包后基本正常，可以使用。</p>
 
-<ul>
-  <li>Type one error: 存伪</li>
-  <li>Type two error: 弃真</li>
-</ul>
+<p>第一次编译完后，安装theano，调用时显示如下错误</p>
 
-<hr />
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code>Exception: Compilation failed <span class="o">(</span><span class="k">return </span><span class="nv">status</span><span class="o">=</span>1<span class="o">)</span>:
+/usr/bin/ld:/usr/local/lib/libpython2.7.a<span class="o">(</span>abstract.o<span class="o">)</span>:
+relocation R_X86_64_32 against <span class="s1">'a local symbol'</span>can not be used
+when making a shared object; recompile with -fPIC.
+/usr/local/lib/libpython2.7.a: could not <span class="nb">read </span>symbols: Bad
+value. collect2: ld returned 1 <span class="nb">exit </span>status.
+</code></pre>
+</div>
 
-<h3 id="modeldan">Model(DAN)</h3>
+<p>似乎是python没编译好，报错建议 “recompile with -fPIC”，于是添加这个选项重新编译</p>
 
-<p><img src="/img/in-post/post-blog-DANmdoel.png" alt="img" /></p>
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code>./configure --prefix<span class="o">=</span><span class="nv">$HOME</span>/python -enable-shared <span class="nv">CFLAGS</span><span class="o">=</span>-fPIC 
+make <span class="o">&amp;&amp;</span> make install
+</code></pre>
+</div>
 
-<p>The basic architecture is <strong>AlexNet</strong>, which is comprised of five convolutional layers (conv1-conv5) and three fully connected layers (fc6-fc8). The output layer is softmax.</p>
+<p>这次编译完后，python直接无法使用了。于是把~/python目录清空，重新解压，第三次编译，不使用“fPIC”。</p>
 
-<p>Because features in lower convolutional layers are general, the author starts with an AlexNet model pertained on ImageNet 2012 and copies conv1-conv3 from pertained model, then fine-tunes conv4-conv5 and fully connected layers fc6-fc7, and trains classifier layer fc8, both via backpropagation.</p>
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code>./configure --prefix<span class="o">=</span><span class="nv">$HOME</span>/python
+make <span class="o">&amp;&amp;</span> make install
+</code></pre>
+</div>
 
-<p>The author adds an MK-MMD-based multi-layer adaptation regularizer to CNN risk so that the distributions on the source and target become similar under the hidden representations of fully connected layers fc6-fc8.</p>
+<p>至于第三次为什么没有严重错误，自己也不是十分清楚，但也不能归于玄学范畴。我猜测第一次失败可能是之前2.7.5版本python的各种库依然存在，虽然reinstall过了，但不能保证没有遗漏。进行第三次前对旧文件删除的比较彻底，所有的模块都重新安装，于是没有产生致命错误。</p>
 
-<p>– miyunluo 于2017.02</p>
+<p>– miyunluo 于2017.08</p>
 
 
                 <hr>
@@ -261,13 +288,9 @@
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/2017/02/01/UDAbB/" data-toggle="tooltip" data-placement="top" title="Unsupervised Domain Adaptation by Backpropagation">&larr; Previous Post</a>
+                        <a href="/2017/07/24/merlionRes/" data-toggle="tooltip" data-placement="top" title="狮城随笔">&larr; Previous Post</a>
                     </li>
                     
-                    
-                    <li class="next">
-                        <a href="/2017/04/27/junmidRev/" data-toggle="tooltip" data-placement="top" title="对近期生活的一些反思">Next Post &rarr;</a>
-                    </li>
                     
                 </ul>
 
@@ -356,8 +379,8 @@
 <script type="text/javascript">
     /* * * CONFIGURATION VARIABLES * * */
     var disqus_shortname = "miyunluo";
-    var disqus_identifier = "/2017/02/05/LTFwDAN";
-    var disqus_url = "http://localhost:4000/2017/02/05/LTFwDAN/";
+    var disqus_identifier = "/2017/08/29/pyworoot";
+    var disqus_url = "http://localhost:4000/2017/08/29/pyworoot/";
 
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;

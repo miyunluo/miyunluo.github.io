@@ -5,9 +5,126 @@
     <description>关于学习和生活 | 这里是 @Miyunluo罗煜东 的个人博客</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Wed, 26 Jul 2017 17:25:54 +0800</pubDate>
-    <lastBuildDate>Wed, 26 Jul 2017 17:25:54 +0800</lastBuildDate>
+    <pubDate>Tue, 29 Aug 2017 17:17:59 +0800</pubDate>
+    <lastBuildDate>Tue, 29 Aug 2017 17:17:59 +0800</lastBuildDate>
     <generator>Jekyll v3.3.1</generator>
+    
+      <item>
+        <title>Install Python and Pip without Root</title>
+        <description>&lt;blockquote&gt;
+  &lt;p&gt;“配环境什么的最烦了。”&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;前言&quot;&gt;前言&lt;/h2&gt;
+
+&lt;p&gt;使用Linux最坏的情况就是没有root权限，然而这种情况普遍存在于ssh到服务器的时候。当然不赋予root权限是出于安全性的考虑，此时我的脑海中又浮现出那个场景…那日秋风萧瑟，残阳滴血，红铜铁马，万古如昨，tian哥以super_user的身份敲下了enter，那一键荡气回肠，然后老师的服务器就宕机了。咳咳，扯远了。。&lt;/p&gt;
+
+&lt;p&gt;且说我遇到的问题是，需要登录的服务器是一个集群 (和SJTU的pi集群类似)，运行程序时需将其提交至一个节点(node)来运行，但是我发现自己本地的python(2.7.5)版本与node上的python(2.7.13)版本并不一致… (不是很懂这种设计的初衷是什么-_-\)，从log error看似乎是两个版本python不兼容，程序试图从我的本地import一些模块，然而模块报错了。这么一个性能怪兽没法使用真是难受，于是就起了重装python的念头。&lt;/p&gt;
+
+&lt;h2 id=&quot;正文&quot;&gt;正文&lt;/h2&gt;
+
+&lt;p&gt;具体流程如下&lt;/p&gt;
+
+&lt;h3 id=&quot;1compile-python-in-local-directory&quot;&gt;1.Compile python in local directory&lt;/h3&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;mkdir ~/python 
+&lt;span class=&quot;nb&quot;&gt;cd&lt;/span&gt; ~/python
+wget https://www.python.org/ftp/python/2.7.13/Python-2.7.13.tgz
+tar zxfv Python-2.7.13.tgz
+find ~/python -type d | xargs chmod 0755
+&lt;span class=&quot;nb&quot;&gt;cd &lt;/span&gt;Python-2.7.13
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;我选择的安装目录是”~/python”。解压完进入文件夹，接下就是编译了&lt;/p&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;./configure --prefix&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$HOME&lt;/span&gt;/python
+make &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; make install
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;em&gt;$HOME/python&lt;/em&gt; 是引导其安装在自己的目录里(即就是~/python)，否则默认安装路径在/usr下，一般用户没有权限读写此文件夹。&lt;/p&gt;
+
+&lt;p&gt;编译完成后需要让系统知道python的安装位置，vim打开~/.bashrc_profile设置如下环境变量。这里默认一般服务器使用bash，其他类似。&lt;/p&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;PATH&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$HOME&lt;/span&gt;/python/Python-2.7.13/:&lt;span class=&quot;nv&quot;&gt;$PATH&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;PYTHONPATH&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$HOME&lt;/span&gt;/python/Python-2.7.13
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;然后使用 &lt;em&gt;source&lt;/em&gt; 让环境变量生效&lt;/p&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;source&lt;/span&gt; ~/.bashrc_profile
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;这里可以使用 &lt;em&gt;which python&lt;/em&gt; 确认一下位置，正确应该返&lt;/p&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;~/python/Python-2.7.13/python
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&quot;2install-pip&quot;&gt;2.Install pip&lt;/h3&gt;
+
+&lt;p&gt;Pip是python常用的包管理器，使用还算方便，顺手安装。&lt;/p&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;wget --no-check-certificate https://bootstrap.pypa.io/get-pip.py -O - | python - --user
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;运行完后，去~/.bashrc_profile里添加&lt;/p&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;PATH&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$HOME&lt;/span&gt;/.local/bin:&lt;span class=&quot;nv&quot;&gt;$PATH&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;同时使用 &lt;em&gt;source&lt;/em&gt; 使其生效。同理可以用 &lt;em&gt;which pip&lt;/em&gt; 看看安装位置，正确应返回&lt;/p&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;~/.local/bin/pip
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&quot;遇到的问题&quot;&gt;遇到的问题&lt;/h2&gt;
+
+&lt;p&gt;一共编译三次，虽然每次都提醒 “your build may be uncompleted” 但最后一次使用pip安装了需要的包后基本正常，可以使用。&lt;/p&gt;
+
+&lt;p&gt;第一次编译完后，安装theano，调用时显示如下错误&lt;/p&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Exception: Compilation failed &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;return &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;status&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;1&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;:
+/usr/bin/ld:/usr/local/lib/libpython2.7.a&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;abstract.o&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;:
+relocation R_X86_64_32 against &lt;span class=&quot;s1&quot;&gt;'a local symbol'&lt;/span&gt;can not be used
+when making a shared object; recompile with -fPIC.
+/usr/local/lib/libpython2.7.a: could not &lt;span class=&quot;nb&quot;&gt;read &lt;/span&gt;symbols: Bad
+value. collect2: ld returned 1 &lt;span class=&quot;nb&quot;&gt;exit &lt;/span&gt;status.
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;似乎是python没编译好，报错建议 “recompile with -fPIC”，于是添加这个选项重新编译&lt;/p&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;./configure --prefix&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$HOME&lt;/span&gt;/python -enable-shared &lt;span class=&quot;nv&quot;&gt;CFLAGS&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;-fPIC 
+make &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; make install
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;这次编译完后，python直接无法使用了。于是把~/python目录清空，重新解压，第三次编译，不使用“fPIC”。&lt;/p&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;./configure --prefix&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$HOME&lt;/span&gt;/python
+make &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; make install
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;至于第三次为什么没有严重错误，自己也不是十分清楚，但也不能归于玄学范畴。我猜测第一次失败可能是之前2.7.5版本python的各种库依然存在，虽然reinstall过了，但不能保证没有遗漏。进行第三次前对旧文件删除的比较彻底，所有的模块都重新安装，于是没有产生致命错误。&lt;/p&gt;
+
+&lt;p&gt;– miyunluo 于2017.08&lt;/p&gt;
+</description>
+        <pubDate>Tue, 29 Aug 2017 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2017/08/29/pyworoot/</link>
+        <guid isPermaLink="true">http://localhost:4000/2017/08/29/pyworoot/</guid>
+        
+        <category>Python</category>
+        
+        
+      </item>
     
       <item>
         <title>狮城随笔</title>
@@ -1026,126 +1143,6 @@
         <guid isPermaLink="true">http://localhost:4000/2016/10/12/Lucene/</guid>
         
         <category>Lucene</category>
-        
-        
-      </item>
-    
-      <item>
-        <title>KMP算法之鄙见</title>
-        <description>&lt;blockquote&gt;
-  &lt;p&gt;“想起了那晚站在代码巅峰的ZK大神. ”&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h2 id=&quot;前言&quot;&gt;前言&lt;/h2&gt;
-
-&lt;p&gt;前一阵子看&lt;strong&gt;《编译原理 第二版》&lt;/strong&gt;，在&lt;strong&gt;“3.4.5   3.4节的练习”&lt;/strong&gt;(P86)中看到了这么一道题（&lt;em&gt;练习3.4.2&lt;/em&gt;），大意是要在一个字符串中识别一个子字符串，于是它定义了一个叫“失效函数”的东西，题目第二段还提到个算法是由 Knuth, Morris, Pratt 这三个人提出的。看着这三个人的名字觉得有些眼熟，首字母拼起来不就是 KMP 么。&lt;/p&gt;
-
-&lt;p&gt;其实这就是 &lt;strong&gt;KMP&lt;/strong&gt; 算法，解决在字符串中找子字符串的问题。在这里给没听过子字符串概念的同学解释一下子字符串，子字符串就是删除某前缀和某后缀后得到的字符串。比如，String A = miyunluo，String B = yun，那么 B 就是 A 的子串。&lt;/p&gt;
-
-&lt;p&gt;讲道理KMP算法的讲解，网上能搜出来一卡车，套路都差不多，基本上都涉及到什么 &lt;strong&gt;移动&lt;/strong&gt; 再加 &lt;strong&gt;Next[]&lt;/strong&gt; 数组，不管你怎么看，反正我在差不多一年前看这些东西是没看懂（还是在ZK大神讲解的情况下…）。于是借着这道题，再加上又看了一些博客，我也来写一写KMP，尽量写的清楚，希望大家可以看懂。&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;h2 id=&quot;正文&quot;&gt;正文&lt;/h2&gt;
-
-&lt;p&gt;对于题目中的失效函数，放在后面来说，我们先来看看KMP算法的过程。&lt;/p&gt;
-
-&lt;p&gt;借用 &lt;strong&gt;练习3.3.7&lt;/strong&gt; 中的例子，为了使得过程可以尽量长一些，对题目(1)的串做一些修改。设String A = &lt;strong&gt;abababaababac&lt;/strong&gt;, String B = &lt;strong&gt;ababac&lt;/strong&gt;，下面运行KMP算法。&lt;/p&gt;
-
-&lt;p&gt;用指针 i, j 表示 A，B 当前匹配的位置，即就是A[i-j+1 … i] 与 B[1 … j]完全相等。对于整个过程而言，i 是不断增加的，j 做相应的调整，当 j 等于B的长度时，就结束了，匹配成功。也就是说，我们顺序遍历A串，某一时刻已经满足A[i-j+1 … i] == B[1 … j]，但是下一位B[j+1] != A[i+1]，这时就要调整 j 的值（当然减小 j），设减小后是 j’ ，使得B[1 … j’]依然可以与A[i-j’+1 … i]匹配（注意这里A的起始匹配地址已经变成了i-j’+1），当然这里的 j’ 越大越好。接下来看过程。&lt;/p&gt;
-
-&lt;p&gt;i = 1 2 3 4 &lt;strong&gt;5&lt;/strong&gt; 6 7 8 9&lt;br /&gt;
-A = a b a b &lt;strong&gt;a&lt;/strong&gt; b a a b a b a c&lt;br /&gt;
-B = a b a b &lt;strong&gt;a&lt;/strong&gt; c&lt;br /&gt;
-j = 1 2 3 4 &lt;strong&gt;5&lt;/strong&gt; 6&lt;/p&gt;
-
-&lt;p&gt;现在 A 和 B 匹配到了 i = 5, j = 5 的地方，但是二者的下一位 A[i+1] 与 B[j+1] 并不相等，说明这时继续向后匹配失败，需要减小 j 的值，使得 j’ 可以在 i = 5 的地方继续匹配，现在 A[1 … 5] = ababa，我们发现 j’ = 3 时 B[1 … 3] = aba 可以与 A[5-3+1 … 5] 即 A[3 … 5]匹配，于是新的 j = 3.&lt;/p&gt;
-
-&lt;p&gt;i = 1 2 3 4 &lt;strong&gt;5&lt;/strong&gt; 6 7 8 9&lt;br /&gt;
-A = a b a b &lt;strong&gt;a&lt;/strong&gt; b a a b a b a c&lt;br /&gt;
-B =     a b &lt;strong&gt;a&lt;/strong&gt; b a c&lt;br /&gt;
-j =     1 2 &lt;strong&gt;3&lt;/strong&gt; 4 5 6&lt;/p&gt;
-
-&lt;p&gt;继续增加 i ，同时向后匹配 j ，当匹配到 i = 7, j = 5 时，又出现下一位不相等的情况&lt;/p&gt;
-
-&lt;p&gt;i = 1 2 3 4 5 6 &lt;strong&gt;7&lt;/strong&gt; 8 9&lt;br /&gt;
-A = a b a b a b &lt;strong&gt;a&lt;/strong&gt; a b a b a c&lt;br /&gt;
-B =     a b a b &lt;strong&gt;a&lt;/strong&gt; c&lt;br /&gt;
-j =     1 2 3 4 &lt;strong&gt;5&lt;/strong&gt; 6&lt;/p&gt;
-
-&lt;p&gt;由上一步知道，此时又应该将 j 减小为 j ＝ 3。这样可以使得 A[5 … 7] == B[1 … 3].&lt;/p&gt;
-
-&lt;p&gt;i = 1 2 3 4 5 6 &lt;strong&gt;7&lt;/strong&gt; 8 9&lt;br /&gt;
-A = a b a b a b &lt;strong&gt;a&lt;/strong&gt; a b a b a c&lt;br /&gt;
-B =         a b &lt;strong&gt;a&lt;/strong&gt; b a c&lt;br /&gt;
-j =         1 2 &lt;strong&gt;3&lt;/strong&gt; 4 5 6&lt;/p&gt;
-
-&lt;p&gt;继续向后匹配，又出现了 A[i+1] != B[j+1] 的情况看。这时需要减小 j ，使得 B[1 … j]仍然可以在 i = 7 处匹配，于是只能将 j 减小为1.&lt;/p&gt;
-
-&lt;p&gt;i = 1 2 3 4 5 6 &lt;strong&gt;7&lt;/strong&gt; 8 9&lt;br /&gt;
-A = a b a b a b &lt;strong&gt;a&lt;/strong&gt; a b a b a c&lt;br /&gt;
-B =             &lt;strong&gt;a&lt;/strong&gt; b a b a c&lt;br /&gt;
-j =             &lt;strong&gt;1&lt;/strong&gt; 2 3 4 5 6&lt;/p&gt;
-
-&lt;p&gt;此时B紧接着第二位就不匹配了，j 已经减小到了最小值1，说明j已经无法调整了，那我们只好放弃 i = 7,从下一个与B[1]相等的地方开始。在目前的情况下，很碰巧，下一个A[i] == B[1] 的地方就是 i ＝ 8，于是我们从 i = 8 的地方重新开始。&lt;/p&gt;
-
-&lt;p&gt;i = 1 2 3 4 5 6 7 &lt;strong&gt;8&lt;/strong&gt; 9&lt;br /&gt;
-A = a b a b a b a &lt;strong&gt;a&lt;/strong&gt; b a b a c&lt;br /&gt;
-B =               &lt;strong&gt;a&lt;/strong&gt; b a b a c&lt;br /&gt;
-j =               &lt;strong&gt;1&lt;/strong&gt; 2 3 4 5 6&lt;/p&gt;
-
-&lt;p&gt;继续向后，匹配完成。&lt;/p&gt;
-
-&lt;p&gt;KMP的过程便是如此，但是我们每次要怎么减小 j 到适当的值似乎还没有解决。这就是课本上提到的失效函数，用它来解决当我们某一步匹配失效的时候，调整 j 的问题。假设我们用这个失效函数预先处理一下 B 字符串，得到了一个数组，叫它 Pre 数组好了（&lt;em&gt;先不用管它是如何实现的&lt;/em&gt;），保存的值是，当某一个 j 失效时，应该调整为的 j’ 值，借用上面的例子，第一次失效时，j = 5，应该调整为 j’ = 3，那么 Pre[5]的值就是 3，第二次失效时 j = 3，应该调整为 j’ = 1，那么 Pre[3] 的值就是 1。因此，当某一个 j 失效时，我们只要查一下 Pre[] 数组，就可以知道我们要减小到的 j’ 值，即 j’ = Pre[j]。&lt;/p&gt;
-
-&lt;p&gt;有了 Pre[] 数组，我们就可以写出 KMP 算法的代码了，设 A 串长为 n，B 串长为 m。&lt;/p&gt;
-
-&lt;div class=&quot;language-c++ highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;j&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;++&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-	&lt;span class=&quot;k&quot;&gt;while&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;j&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;B&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;j&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;A&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;j&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Pre&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;j&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
-	&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;B&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;j&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;A&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;j&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;j&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-	&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;j&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;m&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-	&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-		&lt;span class=&quot;n&quot;&gt;cout&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;匹配开始于: &quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;m&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;endl&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-		&lt;span class=&quot;n&quot;&gt;j&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Pre&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;j&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
-	&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;现在考虑 Pre[] 这个数组的意义与这个数组如何得到。还是用上面的例子。&lt;/p&gt;
-
-&lt;p&gt;i = 1 2 3 4 &lt;strong&gt;5&lt;/strong&gt; 6 7 8 9&lt;br /&gt;
-A = a b a b &lt;strong&gt;a&lt;/strong&gt; b a a b a b a c&lt;br /&gt;
-B = a b a b &lt;strong&gt;a&lt;/strong&gt; c&lt;br /&gt;
-j = 1 2 3 4 &lt;strong&gt;5&lt;/strong&gt; 6&lt;/p&gt;
-
-&lt;p&gt;现在相当于 A B 两个字符串都是从头开始比较的，但是在 i = 5, j = 5 时发现无法再向后匹配了，比较直观的做法是，放弃这次比较，从 i = 2 的地方开始与 B 字符串重新比较，这样的时间复杂度显然是 O(mn) 的，因为我们没有考虑 B 字符串本身的一些特性。对于 j ＝ 5，对应的B的前缀为ababa，我们发现 B[1 … 3] == B[3 … 5] == aba，正是基于此，我们可以减小 j到3，（相当于后移B）使得此时在 i = 5, j = 3 处又可以继续向后进行。&lt;/p&gt;
-
-&lt;p&gt;从上面的解释中，我们可以看出求 Pre[] 数组，就相当于对于 B 的每一个前缀 B’ ，求 B’ 的&lt;strong&gt;最长相同前缀与后缀&lt;/strong&gt;。代码如下&lt;/p&gt;
-
-&lt;div class=&quot;language-c++ highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;j&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;Pre&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;m&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;++&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-	&lt;span class=&quot;k&quot;&gt;while&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;j&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;B&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;j&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;B&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;j&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Pre&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;j&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
-	&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;B&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;j&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;B&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;j&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;j&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-	&lt;span class=&quot;n&quot;&gt;Pre&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;j&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;为什么这个代码与 KMP 的代码如此相似，没错，你可以这么想，现在要求 B 的&lt;strong&gt;所有前缀&lt;/strong&gt; 的 &lt;strong&gt;最长相同前缀与后缀&lt;/strong&gt;（有点绕），那么就相当于是 B 的自匹配嘛。指针 i 所指的位置，就是 B’结束的位置，即 B’ = B[1 … i]（B’现在是B的一个前缀）, j 指针的位置就是 B’ 的一个前缀，这不就是 B’ 的前缀与 B’ 的后缀匹配了嘛。&lt;/p&gt;
-
-&lt;p&gt;以上就是传说中的 KMP 算法。&lt;br /&gt;
-写的好累＝。＝&lt;/p&gt;
-
-&lt;p&gt;– miyunluo 于2016.10&lt;/p&gt;
-</description>
-        <pubDate>Fri, 07 Oct 2016 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/2016/10/07/KMP/</link>
-        <guid isPermaLink="true">http://localhost:4000/2016/10/07/KMP/</guid>
-        
-        <category>Algorithm</category>
         
         
       </item>
