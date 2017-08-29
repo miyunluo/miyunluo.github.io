@@ -1,10 +1,10 @@
 # Site settings
-title: Miyunluo Blog
-SEOTitle: 罗煜东的博客 | Miyunluo Blog
+title: miyunLuo Blog
+SEOTitle: 罗煜东的博客 | miyunLuo Blog
 header-img: img/home-bg.jpg
 email: miyunluo@foxmail.com
 description: "关于学习和生活 | 这里是 @Miyunluo罗煜东 的个人博客"
-keyword: "罗煜东, 芈云落, Miyunluo, 罗煜东的博客, Miyunluo Blog"
+keyword: "罗煜东, 芈云落, miyunLuo, 罗煜东的博客, miyunLuo Blog"
 url: "http://miyunluo.github.io"              # your host, for absolute URL
 baseurl: ""         # for example, '/blog' if your blog hosted on 'host/blog'
 
