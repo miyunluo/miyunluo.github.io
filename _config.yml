@@ -83,15 +83,15 @@ featured-condition-size: 1              # A tag will be featured if the size of 
 friends: [
     {
         title: "GinYM",
-        href: "http://www.eamonalbert.com"
+        href: "http://www.eamonalbert.com/"
     },{
         title: "Chao.G",
-        href: "https://chasingegg.github.io"
+        href: "https://chasingegg.github.io/"
     },{
     	title: "emile-li",
-        href: "http://www.emile-li.me"
+        href: "http://www.emile-li.me/"
     },{
         title: "TingEr",
-        href: "https://dusmart.github.io"
+        href: "https://dusmart.github.io/"
     }
 ]
