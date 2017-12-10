@@ -5,8 +5,8 @@
     <description>学习和生活</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Mon, 11 Dec 2017 03:22:19 +0800</pubDate>
-    <lastBuildDate>Mon, 11 Dec 2017 03:22:19 +0800</lastBuildDate>
+    <pubDate>Mon, 11 Dec 2017 03:24:57 +0800</pubDate>
+    <lastBuildDate>Mon, 11 Dec 2017 03:24:57 +0800</lastBuildDate>
     <generator>Jekyll v3.6.2</generator>
     
       <item>
@@ -53,7 +53,7 @@
 
 &lt;p&gt;其中upload.php很大，有1.9M，以二进制打开，发现文件里有flag1.png，同时有一个zip文件头504B 0304。&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;/img/in-post/post-blog-jserv1.png&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/img/in-post/post-blog-j0serv1.png&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;将不重要的部分删掉，得到文件更改后缀名为zip解压，得到一张图片（还挺好看的 (●ﾟωﾟ●)。&lt;/p&gt;
 
