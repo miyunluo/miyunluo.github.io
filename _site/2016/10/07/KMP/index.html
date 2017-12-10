@@ -241,7 +241,7 @@ j =               <strong>1</strong> 2 3 4
 
 <p>有了 Pre[] 数组，我们就可以写出 KMP 算法的代码了，设 A 串长为 n，B 串长为 m。</p>
 
-<div class="language-c++ highlighter-rouge"><pre class="highlight"><code><span class="kt">int</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">int</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
 <span class="k">for</span><span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;=</span><span class="n">n</span><span class="p">;</span><span class="o">++</span><span class="n">i</span><span class="p">)</span>
 <span class="p">{</span>
 	<span class="k">while</span><span class="p">(</span><span class="n">j</span><span class="o">&gt;</span><span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">B</span><span class="p">[</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="n">j</span> <span class="o">=</span> <span class="n">Pre</span><span class="p">[</span><span class="n">j</span><span class="p">];</span>
@@ -252,8 +252,7 @@ j =               <strong>1</strong> 2 3 4
 		<span class="n">j</span> <span class="o">=</span> <span class="n">Pre</span><span class="p">[</span><span class="n">j</span><span class="p">];</span>
 	<span class="p">}</span>
 <span class="p">}</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 <p>现在考虑 Pre[] 这个数组的意义与这个数组如何得到。还是用上面的例子。</p>
 
 <p>i = 1 2 3 4 <strong>5</strong> 6 7 8 9<br />
@@ -265,7 +264,7 @@ j = 1 2 3 4 <strong>5</strong> 6</p>
 
 <p>从上面的解释中，我们可以看出求 Pre[] 数组，就相当于对于 B 的每一个前缀 B’ ，求 B’ 的<strong>最长相同前缀与后缀</strong>。代码如下</p>
 
-<div class="language-c++ highlighter-rouge"><pre class="highlight"><code><span class="kt">int</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">int</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="o">=</span><span class="mi">0</span><span class="p">;</span>
 <span class="n">Pre</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
 <span class="k">for</span><span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;=</span><span class="n">m</span><span class="p">;</span><span class="o">++</span><span class="n">i</span><span class="p">)</span>
 <span class="p">{</span>
@@ -273,8 +272,7 @@ j = 1 2 3 4 <strong>5</strong> 6</p>
 	<span class="k">if</span><span class="p">(</span><span class="n">B</span><span class="p">[</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">B</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="n">j</span> <span class="o">=</span> <span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">;</span>
 	<span class="n">Pre</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">j</span><span class="p">;</span>
 <span class="p">}</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 <p>为什么这个代码与 KMP 的代码如此相似，没错，你可以这么想，现在要求 B 的<strong>所有前缀</strong> 的 <strong>最长相同前缀与后缀</strong>（有点绕），那么就相当于是 B 的自匹配嘛。指针 i 所指的位置，就是 B’结束的位置，即 B’ = B[1 … i]（B’现在是B的一个前缀）, j 指针的位置就是 B’ 的一个前缀，这不就是 B’ 的前缀与 B’ 的后缀匹配了嘛。</p>
 
 <p>以上就是传说中的 KMP 算法。<br />
@@ -351,6 +349,8 @@ j = 1 2 3 4 <strong>5</strong> 6</p>
                 				<a href="/tags/#Notes" title="Notes" rel="2">
                                     Notes
                                 </a>
+                            
+        				
                             
         				
                             

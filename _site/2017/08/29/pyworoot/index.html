@@ -189,62 +189,54 @@
 
 <h3 id="1compile-python-in-local-directory">1.Compile python in local directory</h3>
 
-<div class="language-shell highlighter-rouge"><pre class="highlight"><code>mkdir ~/python 
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mkdir ~/python 
 <span class="nb">cd</span> ~/python
 wget https://www.python.org/ftp/python/2.7.13/Python-2.7.13.tgz
-tar zxfv Python-2.7.13.tgz
-find ~/python -type d | xargs chmod 0755
+<span class="nb">tar </span>zxfv Python-2.7.13.tgz
+find ~/python <span class="nt">-type</span> d | xargs chmod 0755
 <span class="nb">cd </span>Python-2.7.13
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>我选择的安装目录是”~/python”。解压完进入文件夹，接下就是编译了</p>
 
-<div class="language-shell highlighter-rouge"><pre class="highlight"><code>./configure --prefix<span class="o">=</span><span class="nv">$HOME</span>/python
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./configure <span class="nt">--prefix</span><span class="o">=</span><span class="nv">$HOME</span>/python
 make <span class="o">&amp;&amp;</span> make install
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p><em>$HOME/python</em> 是引导其安装在自己的目录里(即就是~/python)，否则默认安装路径在/usr下，一般用户没有权限读写此文件夹。</p>
 
 <p>编译完成后需要让系统知道python的安装位置，vim打开~/.bashrc_profile设置如下环境变量。这里默认一般服务器使用bash，其他类似。</p>
 
-<div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span><span class="nv">$HOME</span>/python/Python-2.7.13/:<span class="nv">$PATH</span>
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span><span class="nv">$HOME</span>/python/Python-2.7.13/:<span class="nv">$PATH</span>
 <span class="nb">export </span><span class="nv">PYTHONPATH</span><span class="o">=</span><span class="nv">$HOME</span>/python/Python-2.7.13
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>然后使用 <em>source</em> 让环境变量生效</p>
 
-<div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="nb">source</span> ~/.bashrc_profile
-</code></pre>
-</div>
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">source</span> ~/.bashrc_profile
+</code></pre></div></div>
 
 <p>这里可以使用 <em>which python</em> 确认一下位置，正确应该返</p>
 
-<div class="language-shell highlighter-rouge"><pre class="highlight"><code>~/python/Python-2.7.13/python
-</code></pre>
-</div>
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~/python/Python-2.7.13/python
+</code></pre></div></div>
 
 <h3 id="2install-pip">2.Install pip</h3>
 
 <p>Pip是python常用的包管理器，使用还算方便，顺手安装。</p>
 
-<div class="language-shell highlighter-rouge"><pre class="highlight"><code>wget --no-check-certificate https://bootstrap.pypa.io/get-pip.py -O - | python - --user
-</code></pre>
-</div>
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>wget <span class="nt">--no-check-certificate</span> https://bootstrap.pypa.io/get-pip.py <span class="nt">-O</span> - | python - <span class="nt">--user</span>
+</code></pre></div></div>
 
 <p>运行完后，去~/.bashrc_profile里添加</p>
 
-<div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span><span class="nv">$HOME</span>/.local/bin:<span class="nv">$PATH</span>
-</code></pre>
-</div>
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span><span class="nv">$HOME</span>/.local/bin:<span class="nv">$PATH</span>
+</code></pre></div></div>
 
 <p>同时使用 <em>source</em> 使其生效。同理可以用 <em>which pip</em> 看看安装位置，正确应返回</p>
 
-<div class="language-shell highlighter-rouge"><pre class="highlight"><code>~/.local/bin/pip
-</code></pre>
-</div>
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~/.local/bin/pip
+</code></pre></div></div>
 
 <h2 id="遇到的问题">遇到的问题</h2>
 
@@ -252,28 +244,25 @@ make <span class="o">&amp;&amp;</span> make install
 
 <p>第一次编译完后，安装theano，调用时显示如下错误</p>
 
-<div class="language-shell highlighter-rouge"><pre class="highlight"><code>Exception: Compilation failed <span class="o">(</span><span class="k">return </span><span class="nv">status</span><span class="o">=</span>1<span class="o">)</span>:
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Exception: Compilation failed <span class="o">(</span><span class="k">return </span><span class="nv">status</span><span class="o">=</span>1<span class="o">)</span>:
 /usr/bin/ld:/usr/local/lib/libpython2.7.a<span class="o">(</span>abstract.o<span class="o">)</span>:
 relocation R_X86_64_32 against <span class="s1">'a local symbol'</span>can not be used
-when making a shared object; recompile with -fPIC.
+when making a shared object<span class="p">;</span> recompile with <span class="nt">-fPIC</span><span class="nb">.</span>
 /usr/local/lib/libpython2.7.a: could not <span class="nb">read </span>symbols: Bad
 value. collect2: ld returned 1 <span class="nb">exit </span>status.
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>似乎是python没编译好，报错建议 “recompile with -fPIC”，于是添加这个选项重新编译</p>
 
-<div class="language-shell highlighter-rouge"><pre class="highlight"><code>./configure --prefix<span class="o">=</span><span class="nv">$HOME</span>/python -enable-shared <span class="nv">CFLAGS</span><span class="o">=</span>-fPIC 
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./configure <span class="nt">--prefix</span><span class="o">=</span><span class="nv">$HOME</span>/python <span class="nt">-enable-shared</span> <span class="nv">CFLAGS</span><span class="o">=</span><span class="nt">-fPIC</span> 
 make <span class="o">&amp;&amp;</span> make install
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>这次编译完后，python直接无法使用了。于是把~/python目录清空，重新解压，第三次编译，不使用“fPIC”。</p>
 
-<div class="language-shell highlighter-rouge"><pre class="highlight"><code>./configure --prefix<span class="o">=</span><span class="nv">$HOME</span>/python
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./configure <span class="nt">--prefix</span><span class="o">=</span><span class="nv">$HOME</span>/python
 make <span class="o">&amp;&amp;</span> make install
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>至于第三次为什么没有严重错误，自己也不是十分清楚，但也不能归于玄学范畴。我猜测第一次失败可能是之前2.7.5版本python的各种库依然存在，虽然reinstall过了，但不能保证没有遗漏。进行第三次前对旧文件删除的比较彻底，所有的模块都重新安装，于是没有产生致命错误。</p>
 
@@ -291,6 +280,10 @@ make <span class="o">&amp;&amp;</span> make install
                         <a href="/2017/07/24/merlionRes/" data-toggle="tooltip" data-placement="top" title="狮城随笔">&larr; Previous Post</a>
                     </li>
                     
+                    
+                    <li class="next">
+                        <a href="/2017/12/10/jun0ctf/" data-toggle="tooltip" data-placement="top" title="Junior 0CTF 2017">Next Post &rarr;</a>
+                    </li>
                     
                 </ul>
 
@@ -344,6 +337,8 @@ make <span class="o">&amp;&amp;</span> make install
                 				<a href="/tags/#Notes" title="Notes" rel="2">
                                     Notes
                                 </a>
+                            
+        				
                             
         				
                             

@@ -203,7 +203,7 @@
   <p>如果原始的二分搜索对你来说太过容易，那么请试试这个演化后的版本：把 t 在数组中第一次出现的位置返回给 p。要求代码对数组元素进行对数次比较（该任务可以在 log2(n) 次比较之内完成）。</p>
 </blockquote>
 
-<div class="language-c++ highlighter-rouge"><pre class="highlight"><code><span class="c1">// a是排序好的数组，l,r 为左右界，t为查找的数
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// a是排序好的数组，l,r 为左右界，t为查找的数
 </span><span class="kt">int</span> <span class="nf">BinarySearch</span><span class="p">(</span><span class="kt">int</span> <span class="o">*</span><span class="n">a</span><span class="p">,</span> <span class="kt">int</span> <span class="n">l</span><span class="p">,</span> <span class="kt">int</span> <span class="n">r</span><span class="p">,</span> <span class="kt">int</span> <span class="n">t</span><span class="p">)</span>
 <span class="p">{</span>
 	<span class="k">while</span><span class="p">(</span><span class="n">l</span> <span class="o">&lt;=</span> <span class="n">r</span><span class="p">)</span>
@@ -216,8 +216,7 @@
 	<span class="p">}</span>
 	<span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>  <span class="c1">//not find return -1
 </span><span class="p">}</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 <p>思路很好理解，因为我们要找最先出现的位置，那么我们总是要寻找尽量靠左的部分，于是我们每次都尽可能往左递归。</p>
 
 <h3 id="chapter-4-exe5">Chapter 4 exe5</h3>
@@ -226,13 +225,12 @@
   <p>证明下面的程序在输入 x 为正整数时能够终止。</p>
 </blockquote>
 
-<div class="language-c++ highlighter-rouge"><pre class="highlight"><code><span class="k">while</span> <span class="n">x</span> <span class="o">!=</span> <span class="mi">1</span> <span class="k">do</span>
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">while</span> <span class="n">x</span> <span class="o">!=</span> <span class="mi">1</span> <span class="k">do</span>
 	<span class="k">if</span> <span class="n">even</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 		<span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">/</span><span class="mi">2</span>
 	<span class="k">else</span>
 		<span class="n">x</span> <span class="o">=</span> <span class="mi">3</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span> <span class="mi">1</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>这题开始感觉挺简单的，后来愈发感觉不对劲，上网查了查发现这是一个著名的数学猜想，名字比较多，就取其中一个通用的，叫它3x+1问题好了。（感觉作者把这个题放在这里略不厚道）</p>
 
@@ -309,6 +307,8 @@
                 				<a href="/tags/#Notes" title="Notes" rel="2">
                                     Notes
                                 </a>
+                            
+        				
                             
         				
                             

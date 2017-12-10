@@ -201,7 +201,7 @@
 
 <p>在快速选择时，因为我们要寻找第k大的数，所以我们可以记录一下在上面斜体字执行完后，pivot 是这个数组中的第几个（假设为第 m 个），如果k == m，那么 pivot就是第k大的数，如果k &lt; m，那么第 k 大的数在 pivot 左边的数组中，依然是第k大，否则在 pivot 右边的数组中，是第 k - m 大。</p>
 
-<div class="language-c++ highlighter-rouge"><pre class="highlight"><code><span class="c1">// 伪代码
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// 伪代码
 </span><span class="kt">int</span> <span class="nf">QuickSelect</span><span class="p">(</span><span class="n">array</span> <span class="n">A</span><span class="p">,</span> <span class="kt">int</span> <span class="n">k</span><span class="p">)</span>
 <span class="p">{</span>
 	<span class="k">if</span> <span class="o">|</span><span class="n">A</span><span class="o">|</span> <span class="o">==</span> <span class="mi">0</span> <span class="o">:</span> <span class="n">error</span>
@@ -217,8 +217,7 @@
 	<span class="k">if</span> <span class="n">k</span> <span class="o">&lt;</span> <span class="n">m</span> <span class="o">:</span> <span class="k">return</span> <span class="n">QuickSelect</span><span class="p">(</span><span class="n">Left</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span>
 	<span class="k">else</span> <span class="o">:</span> <span class="k">return</span> <span class="n">QuickSelect</span><span class="p">(</span><span class="n">Right</span><span class="p">,</span> <span class="n">k</span><span class="o">-</span><span class="n">m</span><span class="p">)</span>
 <span class="p">}</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 <p>由于quicksort对于 pivot 选择的随机性，我们可以计算它的average running time 的 worst case。</p>
 
 <p><img src="/img/in-post/post-blog-devidearray.png" alt="img" /></p>
@@ -245,13 +244,12 @@
 
 <p>考虑我们的输入数组为</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>100 93 78 76 34
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>100 93 78 76 34
 25 22 9 6 1024
 135 68 24 153 1
 56 89 111 14 46
 1034 45 12
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>我们将这个数组以五个数为一组进行划分并排序，得到</p>
 
@@ -275,7 +273,7 @@
 
 <p>下面是算法的代码实现，在实际过程中，我们没必要对5个数的小数组再进行按照中位数排序，只要递归找到中位数的中位数即可（上面对5个小数组排序只是为了说明所占比例问题）</p>
 
-<div class="language-c++ highlighter-rouge"><pre class="highlight"><code><span class="c1">//
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//
 //  main.cpp
 //  deterministic_select
 //
@@ -388,8 +386,7 @@
     <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">ans</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
     <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
 <span class="p">}</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>– miyunluo 于2016.10</p>
 
@@ -462,6 +459,8 @@
                 				<a href="/tags/#Notes" title="Notes" rel="2">
                                     Notes
                                 </a>
+                            
+        				
                             
         				
                             
