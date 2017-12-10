@@ -49,19 +49,19 @@ a = base64.b64decode(s)
 
 题目给了一个link[[flag.pcap](https://ctf.0ops.sjtu.cn/upload/flag.pcap)]，是一个通信包文件，但是用wireshark打开提示格式不正确，于是需要先修复pcap文件，可以使用[[pcapfix](https://f00l.de/pcapfix/)]软件修复。之后使用wireshark打开，过滤http请求，导出http通信包，有三个文件。
 
-![img](/img/in-post/post-blog-j0serv2.png)
+![img](/img/in-post/post-blog-jserv0.png)
 
 其中upload.php很大，有1.9M，以二进制打开，发现文件里有flag1.png，同时有一个zip文件头504B 0304。
 
-![img](/img/in-post/post-blog-j0serv4.png)
+![img](/img/in-post/post-blog-jserv1.png)
 
 将不重要的部分删掉，得到文件更改后缀名为zip解压，得到一张图片（还挺好看的 (●ﾟωﾟ●)。
 
-![img](/img/in-post/post-blog-j0serv5.png)
+![img](/img/in-post/post-blog-jserv2.png)
 
 一般套路都是图片里隐写信息，将图片二进制打开，直接去文件尾，得到flag。
 
-![img](/img/in-post/post-blog-j0serv6.png)
+![img](/img/in-post/post-blog-jserv3.png)
 
 ### 4.AES-server 100
 
@@ -119,7 +119,7 @@ if __name__ == "__main__":
 
 这里使用异或算法的trick来求解。先自己构造一对iv0，c0，服务器会返回一个p0，记目标初始向量（ “admin……….”）为iv1。p0 = XOR( iv0, fk(c0) )，XOR( iv1, p0 ) = a = XOR( iv1, XOR( iv0, fk(c0) ) ) ，于是得到了XOR( iv1, fk(c0) ) = XOR( a, iv1 )。也就是只要再次发送报文，初始向量为iv1，密文还为c0即可。这里构造iv0, c0为全0字节，admin后面也以0补齐，具体过程见下图。
 
-![img](/img/in-post/post-blog-j0serv3.png)
+![img](/img/in-post/post-blog-jserv4.png)
 
 ### 5.babyrsa 100
 
@@ -147,7 +147,7 @@ e = long(pub.e)
 
 题目描述“Google Shatter Sha256, so cooooooooooool! Can you break the sha512 algorithm to prove that you are a great genius?” 下面是一个链接，点进去是一个页面，显示如下内容，需要找到两个不同的值x和y，使得hash值一样。
 
-![img](/img/in-post/post-blog-j0serv0.png)
+![img](/img/in-post/post-blog-jserv5.png)
 
 题目说要攻破SHA512，显然目前是不可能的，于是需要找php的漏洞，使得x与y不等但是hash值相等。由于参数传递为GET方法，可以在参数上做手脚，使用如下url
 
@@ -163,7 +163,7 @@ e = long(pub.e)
 
 链接点进去是如下界面
 
-![img](/img/in-post/post-blog-j0serv1.png)
+![img](/img/in-post/post-blog-jserv6.png)
 
 这个题目及其恶心，暂时不表。
 

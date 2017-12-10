@@ -5,8 +5,8 @@
     <description>学习和生活</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Mon, 11 Dec 2017 03:08:45 +0800</pubDate>
-    <lastBuildDate>Mon, 11 Dec 2017 03:08:45 +0800</lastBuildDate>
+    <pubDate>Mon, 11 Dec 2017 03:20:12 +0800</pubDate>
+    <lastBuildDate>Mon, 11 Dec 2017 03:20:12 +0800</lastBuildDate>
     <generator>Jekyll v3.6.2</generator>
     
       <item>
@@ -49,19 +49,19 @@
 
 &lt;p&gt;题目给了一个link[&lt;a href=&quot;https://ctf.0ops.sjtu.cn/upload/flag.pcap&quot;&gt;flag.pcap&lt;/a&gt;]，是一个通信包文件，但是用wireshark打开提示格式不正确，于是需要先修复pcap文件，可以使用[&lt;a href=&quot;https://f00l.de/pcapfix/&quot;&gt;pcapfix&lt;/a&gt;]软件修复。之后使用wireshark打开，过滤http请求，导出http通信包，有三个文件。&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;/img/in-post/post-blog-j0serv2.png&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/img/in-post/post-blog-jserv0.png&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;其中upload.php很大，有1.9M，以二进制打开，发现文件里有flag1.png，同时有一个zip文件头504B 0304。&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;/img/in-post/post-blog-j0serv4.png&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/img/in-post/post-blog-jserv1.png&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;将不重要的部分删掉，得到文件更改后缀名为zip解压，得到一张图片（还挺好看的 (●ﾟωﾟ●)。&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;/img/in-post/post-blog-j0serv5.png&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/img/in-post/post-blog-jserv2.png&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;一般套路都是图片里隐写信息，将图片二进制打开，直接去文件尾，得到flag。&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;/img/in-post/post-blog-j0serv6.png&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/img/in-post/post-blog-jserv3.png&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;
 
 &lt;h3 id=&quot;4aes-server-100&quot;&gt;4.AES-server 100&lt;/h3&gt;
 
@@ -118,7 +118,7 @@ class handler&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;SocketServer.BaseRequ
 
 &lt;p&gt;这里使用异或算法的trick来求解。先自己构造一对iv0，c0，服务器会返回一个p0，记目标初始向量（ “admin……….”）为iv1。p0 = XOR( iv0, fk(c0) )，XOR( iv1, p0 ) = a = XOR( iv1, XOR( iv0, fk(c0) ) ) ，于是得到了XOR( iv1, fk(c0) ) = XOR( a, iv1 )。也就是只要再次发送报文，初始向量为iv1，密文还为c0即可。这里构造iv0, c0为全0字节，admin后面也以0补齐，具体过程见下图。&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;/img/in-post/post-blog-j0serv3.png&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/img/in-post/post-blog-jserv4.png&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;
 
 &lt;h3 id=&quot;5babyrsa-100&quot;&gt;5.babyrsa 100&lt;/h3&gt;
 
@@ -145,7 +145,7 @@ class handler&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;SocketServer.BaseRequ
 
 &lt;p&gt;题目描述“Google Shatter Sha256, so cooooooooooool! Can you break the sha512 algorithm to prove that you are a great genius?” 下面是一个链接，点进去是一个页面，显示如下内容，需要找到两个不同的值x和y，使得hash值一样。&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;/img/in-post/post-blog-j0serv0.png&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/img/in-post/post-blog-jserv5.png&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;题目说要攻破SHA512，显然目前是不可能的，于是需要找php的漏洞，使得x与y不等但是hash值相等。由于参数传递为GET方法，可以在参数上做手脚，使用如下url&lt;/p&gt;
 
@@ -160,7 +160,7 @@ class handler&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;SocketServer.BaseRequ
 
 &lt;p&gt;链接点进去是如下界面&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;/img/in-post/post-blog-j0serv1.png&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/img/in-post/post-blog-jserv6.png&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;这个题目及其恶心，暂时不表。&lt;/p&gt;
 
