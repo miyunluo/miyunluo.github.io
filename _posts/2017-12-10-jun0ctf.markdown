@@ -139,6 +139,18 @@ if __name__ == "__main__":
 
 ![img](/img/in-post/post-blog-jserv4.png)
 
+```shell
+>>nc 202.121.178.199 9999
+>>0000000000000000000000000000000000000000000000000000000000000000
+>>python
+>>'_\xf7;>\xca\xdeQ\x16\x96\xe4y\xa7\x92\xfc\x9b\xbd'.encode('hex')
+>>'admin\00\00\00\00\00\00\00\00\00\00\00'.encode('hex')
+>>hex(0x5ff73b3ecade511696e479a792fc9bbd^0x61646d696e0000000000000000000000)
+>>exit()
+>>nc 202.121.178.199 9999
+>>3e935657a4de511696e479a792fc9bbd00000000000000000000000000000000
+```
+
 <p id = "j4"></p>
 ### 4.babyrsa 100
 
@@ -310,14 +322,63 @@ print(flag)
 
 ![img](/img/in-post/post-blog-jserv12.png)
 
-使用IDA打开encoder进行分析。main函数如下，主要调用了sub_4006D6()这个函数
+使用IDA打开encoder进行分析。```main```函数如下，主要调用了```sub_4006D6()```这个函数
+
 ![img](/img/in-post/post-blog-jserv13.png)
 
-sub_4006D6()函数如下，是主要的加密过程
+函数```sub_4006D6()```内容如下，是主要的加密过程
+
 ![img](/img/in-post/post-blog-jserv14.png)
 
-sub_4006D6()函数内使用了两个数组，数组内容如下
+在函数```sub_4006D6()```内使用了两个数组（上图红线部分），数组内容如下。注意```byte_601080[]```第一位为```61h```是字符a，所以数组内容为```'afe7WlyVd12XKLhnqvzQb5B6sNR8gYME'```，解题过程中就遇到了所给密文中有a，而找不到a在哪里的尴尬局面。
+
 ![img](/img/in-post/post-blog-jserv15.png)
+
+反编译出的c代码的问题是变量名不易于理解，需要先来理解```sub_4006D6()```的主要过程。main函数中变量```s```为输入字符串的地址，变量```v6```为字符串的长度。于是可以得到```shb_4006D6()```函数中变量```a1```为字符串起始地址，```a2```为字符串长度。接下来```malloc()```函数分配空间，应该是给密文分配空间的，从```8*(len/5+1)+1```可以看出算法是分组加密，每5个字符加密出8个字符。```v7```是将输入字符的一个分组取出来，重点在到```v9[] = byte_601080[v7 & 0x1F]```也就是取```v7```的后5位去```byte_601080[]```中查询一个字符出来反向放置作为加密结果。对于不满足5位的情况在，算法会在后面补上“=”。下面给出一个修改过变量名的版本，易于理解。
+
+```c++
+_BYTE *__fastcall sub_4006D6(unsigned __int64 messagePtr, signed int len)
+{
+  signed int i; // [sp+14h] [bp-2Ch]@4
+  signed int j; // [sp+14h] [bp-2Ch]@9
+  signed int left_len; // [sp+18h] [bp-28h]@2
+  int v6; // [sp+1Ch] [bp-24h]@9
+  unsigned __int64 check_sum; // [sp+20h] [bp-20h]@2
+  unsigned __int64 new_message_ptr; // [sp+28h] [bp-18h]@1
+  _BYTE *group_secret; // [sp+30h] [bp-10h]@1
+  _BYTE *secret; // [sp+38h] [bp-8h]@1
+
+  secret = malloc(8 * (len / 5 + 1) + 1);
+  new_message_ptr = messagePtr;
+  group_secret = secret;
+  while ( len + messagePtr > new_message_ptr )
+  {
+    check_sum = 0LL;
+    left_len = len + messagePtr - new_message_ptr;
+    if ( left_len > 5 )
+      left_len = 5;
+    for ( i = 0; i <= 4; ++i )
+    {
+      check_sum <<= 8;
+      if ( i < left_len )
+        check_sum |= *(_BYTE *)(i + new_message_ptr);
+    }
+    v6 = dword_6010B0[left_len - 1];
+    for ( j = 7; j >= 0; --j )
+    {
+      group_secret[j] = byte_601080[check_sum & 0x1F];
+      check_sum >>= 5;
+    }
+    if ( v6 )
+      memset(&group_secret[8LL - v6], 61, v6);
+    new_message_ptr += 5LL;
+    group_secret += 8;
+  }
+  *group_secret = 0;
+  return secret;
+}
+```
+那么解密过程就是，对于密文的每8个字符的分组，去```byte_601080[]```中查询index
 
 ```python
 def decode(secret):
@@ -354,8 +415,29 @@ print("".join(decode("KNByeN88")+decode("KqslM52E")+decode("1L67aYRE")+decode("K
 <p id = "j10"></p>
 ### 10.seabreeze's stack 100
 
-题目内容为“nc 202.121.178.181 12321”与一个下载链接[[stack_55a49bdfcdafd0c31657649e905486a4](https://ctf.0ops.sjtu.cn/attachment/download/stack)]，使用IDA打开分析。
+题目内容为“nc 202.121.178.181 12321”与一个下载链接[[stack_55a49bdfcdafd0c31657649e905486a4](https://ctf.0ops.sjtu.cn/attachment/download/stack)]，得到一个名为stack的二进制文件。使用strings指令查看一下内部字符内容
 
+![img](/img/in-post/post-blog-jserv16.png)
+
+可以看到Sell Gotten与三个问题。执行nc指令
+
+![img](/img/in-post/post-blog-jserv17.png)
+
+需要回答的问题与文件中的内容一致，但是之后还需要输入内容。根据上文的Sell Gotten，显然这里我们需要得到shell的控制权，再根据题目名字stack，考虑为栈溢出问题。
+
+使用IDA-win32打开，main函数的主体是work函数，work函数如下，就是之前要回答的三个问题。
+
+![img](/img/in-post/post-blog-jserv18.png)
+
+还有一个没有用到的函数getshell()
+
+![img](/img/in-post/post-blog-jserv19.png)
+
+只需要程序的返回地址为getshell()的地址，就会触发执行了。查询得到getshell的起始地址为0804 85cb
+
+![img](/img/in-post/post-blog-jserv20.png)
+
+栈溢出的原理可以参考链接[[栈溢出](https://ctf-wiki.github.io/ctf-wiki/pwn/stackoverflow/stackoverflow_basic.html)]
 
 ```python
 from zio import *
@@ -372,6 +454,12 @@ payload = 'a' * 0x3fc + "bbbb" + p32(success_addr)
 io.writeline(payload)  
 io.interact()  
 ```
+
+运行代码
+![img](/img/in-post/post-blog-jserv21.png)
+
+cd 进入 /home/.../stack 目录，cat 显示flag。
+![img](/img/in-post/post-blog-jserv22.png)
 
 ## Have Idea
 
