@@ -132,12 +132,12 @@
 
     <!-- Image to hack wechat -->
 <!-- <img src="/img/icon_wechat.png" width="0" height="0"> -->
-<!-- <img src="/img/post-bg-0ops.png" width="0" height="0"> -->
+<!-- <img src="/img/post-bg-SJTU0CTF.png" width="0" height="0"> -->
 
 <!-- Post Header -->
 <style type="text/css">
     header.intro-header{
-        background-image: url('/img/post-bg-0ops.png')
+        background-image: url('/img/post-bg-SJTU0CTF.png')
     }
 </style>
 <header class="intro-header" >
@@ -476,7 +476,7 @@ class handler<span class="o">(</span>SocketServer.BaseRequestHandler<span class=
     <span class="k">print</span> <span class="s">'Wrong!'</span>
 </code></pre></div></div>
 
-<p>这个看代码是典型的Feistel加密，Feistel结构如下，每轮涉及异或与前后互换，解密就是把过程逆回去。</p>
+<p>这个看代码是典型的Feistel加密，Feistel结构如下，每轮涉及异或与互换，解密就是把过程逆回去。</p>
 
 <p><img src="/img/in-post/post-blog-jserv11.png" alt="img" /></p>
 
@@ -498,12 +498,21 @@ class handler<span class="o">(</span>SocketServer.BaseRequestHandler<span class=
 <span class="o">&gt;&gt;</span><span class="n">flag</span><span class="p">{</span><span class="mi">1</span><span class="n">nt3re5tiNg_F3iste1_ciPh3R</span><span class="p">}</span>
 </code></pre></div></div>
 
-<p id="9"></p>
+<p id="j9"></p>
 <h3 id="9encoder-200">9.encoder 200</h3>
 
-<p>逆向题目，链接为[<a href="https://ctf.0ops.sjtu.cn/attachment/download/encoder.zip">encoder.zip</a>]，解压后一个可执行文件，一个加密后的flag”KNByeN88KqslM52E1L67aYREK1qQ2N1QydYlaEd=”。使用IDA打开可执行文件进行分析。</p>
+<p>逆向题目，链接为[<a href="https://ctf.0ops.sjtu.cn/attachment/download/encoder.zip">encoder.zip</a>]，解压后一个名为encoder的可执行文件，一个加密后的flag”KNByeN88KqslM52E1L67aYREK1qQ2N1QydYlaEd=”。执行encoder，发现就是一个加密算法，输入明文，返回密文。那么解题思路就是找到上述密文对应的明文就是flag。</p>
 
-<p>（涉及到IDA，之后添加分析与图）</p>
+<p><img src="/img/in-post/post-blog-jserv12.png" alt="img" /></p>
+
+<p>使用IDA打开encoder进行分析。main函数如下，主要调用了sub_4006D6()这个函数
+<img src="/img/in-post/post-blog-jserv13.png" alt="img" /></p>
+
+<p>sub_4006D6()函数如下，是主要的加密过程
+<img src="/img/in-post/post-blog-jserv14.png" alt="img" /></p>
+
+<p>sub_4006D6()函数内使用了两个数组，数组内容如下
+<img src="/img/in-post/post-blog-jserv15.png" alt="img" /></p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">decode</span><span class="p">(</span><span class="n">secret</span><span class="p">):</span>
     <span class="n">table</span> <span class="o">=</span> <span class="s">'afe7WlyVd12XKLhnqvzQb5B6sNR8gYME'</span>
@@ -540,8 +549,6 @@ class handler<span class="o">(</span>SocketServer.BaseRequestHandler<span class=
 <h3 id="10seabreezes-stack-100">10.seabreeze’s stack 100</h3>
 
 <p>题目内容为“nc 202.121.178.181 12321”与一个下载链接[<a href="https://ctf.0ops.sjtu.cn/attachment/download/stack">stack_55a49bdfcdafd0c31657649e905486a4</a>]，使用IDA打开分析。</p>
-
-<p>（涉及到IDA，之后添加分析与图）</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">zio</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="kn">from</span> <span class="nn">pwn</span> <span class="kn">import</span> <span class="o">*</span>

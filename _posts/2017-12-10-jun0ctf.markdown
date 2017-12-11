@@ -4,7 +4,7 @@ title:      "Junior 0CTF 2017 WriteUp (部分)"
 subtitle:   " \"SJTU校内赛\""
 date:       2017-12-10
 author:     "Miyunluo"
-header-img: "img/post-bg-0ops.png"
+header-img: "img/post-bg-SJTU0CTF.png"
 tags:
     - CTF
 ---
@@ -280,7 +280,7 @@ else:
     print 'Wrong!'
 ```
 
-这个看代码是典型的Feistel加密，Feistel结构如下，每轮涉及异或与前后互换，解密就是把过程逆回去。
+这个看代码是典型的Feistel加密，Feistel结构如下，每轮涉及异或与互换，解密就是把过程逆回去。
 
 ![img](/img/in-post/post-blog-jserv11.png)
 
@@ -303,12 +303,21 @@ print(flag)
 >>flag{1nt3re5tiNg_F3iste1_ciPh3R}
 ```
 
-<p id = "9"></p>
+<p id = "j9"></p>
 ### 9.encoder 200
 
-逆向题目，链接为[[encoder.zip](https://ctf.0ops.sjtu.cn/attachment/download/encoder.zip)]，解压后一个可执行文件，一个加密后的flag"KNByeN88KqslM52E1L67aYREK1qQ2N1QydYlaEd="。使用IDA打开可执行文件进行分析。
+逆向题目，链接为[[encoder.zip](https://ctf.0ops.sjtu.cn/attachment/download/encoder.zip)]，解压后一个名为encoder的可执行文件，一个加密后的flag"KNByeN88KqslM52E1L67aYREK1qQ2N1QydYlaEd="。执行encoder，发现就是一个加密算法，输入明文，返回密文。那么解题思路就是找到上述密文对应的明文就是flag。
 
-（涉及到IDA，之后添加分析与图）
+![img](/img/in-post/post-blog-jserv12.png)
+
+使用IDA打开encoder进行分析。main函数如下，主要调用了sub_4006D6()这个函数
+![img](/img/in-post/post-blog-jserv13.png)
+
+sub_4006D6()函数如下，是主要的加密过程
+![img](/img/in-post/post-blog-jserv14.png)
+
+sub_4006D6()函数内使用了两个数组，数组内容如下
+![img](/img/in-post/post-blog-jserv15.png)
 
 ```python
 def decode(secret):
@@ -347,7 +356,6 @@ print("".join(decode("KNByeN88")+decode("KqslM52E")+decode("1L67aYRE")+decode("K
 
 题目内容为“nc 202.121.178.181 12321”与一个下载链接[[stack_55a49bdfcdafd0c31657649e905486a4](https://ctf.0ops.sjtu.cn/attachment/download/stack)]，使用IDA打开分析。
 
-（涉及到IDA，之后添加分析与图）
 
 ```python
 from zio import *

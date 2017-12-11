@@ -5,8 +5,8 @@
     <description>学习和生活</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Mon, 11 Dec 2017 14:16:19 +0800</pubDate>
-    <lastBuildDate>Mon, 11 Dec 2017 14:16:19 +0800</lastBuildDate>
+    <pubDate>Mon, 11 Dec 2017 15:22:44 +0800</pubDate>
+    <lastBuildDate>Mon, 11 Dec 2017 15:22:44 +0800</lastBuildDate>
     <generator>Jekyll v3.6.2</generator>
     
       <item>
@@ -314,7 +314,7 @@ class handler&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;SocketServer.BaseRequ
     &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'Wrong!'&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;这个看代码是典型的Feistel加密，Feistel结构如下，每轮涉及异或与前后互换，解密就是把过程逆回去。&lt;/p&gt;
+&lt;p&gt;这个看代码是典型的Feistel加密，Feistel结构如下，每轮涉及异或与互换，解密就是把过程逆回去。&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;/img/in-post/post-blog-jserv11.png&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;
 
@@ -336,12 +336,21 @@ class handler&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;SocketServer.BaseRequ
 &lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;flag&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;nt3re5tiNg_F3iste1_ciPh3R&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p id=&quot;9&quot;&gt;&lt;/p&gt;
+&lt;p id=&quot;j9&quot;&gt;&lt;/p&gt;
 &lt;h3 id=&quot;9encoder-200&quot;&gt;9.encoder 200&lt;/h3&gt;
 
-&lt;p&gt;逆向题目，链接为[&lt;a href=&quot;https://ctf.0ops.sjtu.cn/attachment/download/encoder.zip&quot;&gt;encoder.zip&lt;/a&gt;]，解压后一个可执行文件，一个加密后的flag”KNByeN88KqslM52E1L67aYREK1qQ2N1QydYlaEd=”。使用IDA打开可执行文件进行分析。&lt;/p&gt;
+&lt;p&gt;逆向题目，链接为[&lt;a href=&quot;https://ctf.0ops.sjtu.cn/attachment/download/encoder.zip&quot;&gt;encoder.zip&lt;/a&gt;]，解压后一个名为encoder的可执行文件，一个加密后的flag”KNByeN88KqslM52E1L67aYREK1qQ2N1QydYlaEd=”。执行encoder，发现就是一个加密算法，输入明文，返回密文。那么解题思路就是找到上述密文对应的明文就是flag。&lt;/p&gt;
 
-&lt;p&gt;（涉及到IDA，之后添加分析与图）&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/img/in-post/post-blog-jserv12.png&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;使用IDA打开encoder进行分析。main函数如下，主要调用了sub_4006D6()这个函数
+&lt;img src=&quot;/img/in-post/post-blog-jserv13.png&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;sub_4006D6()函数如下，是主要的加密过程
+&lt;img src=&quot;/img/in-post/post-blog-jserv14.png&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;sub_4006D6()函数内使用了两个数组，数组内容如下
+&lt;img src=&quot;/img/in-post/post-blog-jserv15.png&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;
 
 &lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;decode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;secret&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
     &lt;span class=&quot;n&quot;&gt;table&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'afe7WlyVd12XKLhnqvzQb5B6sNR8gYME'&lt;/span&gt;
@@ -378,8 +387,6 @@ class handler&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;SocketServer.BaseRequ
 &lt;h3 id=&quot;10seabreezes-stack-100&quot;&gt;10.seabreeze’s stack 100&lt;/h3&gt;
 
 &lt;p&gt;题目内容为“nc 202.121.178.181 12321”与一个下载链接[&lt;a href=&quot;https://ctf.0ops.sjtu.cn/attachment/download/stack&quot;&gt;stack_55a49bdfcdafd0c31657649e905486a4&lt;/a&gt;]，使用IDA打开分析。&lt;/p&gt;
-
-&lt;p&gt;（涉及到IDA，之后添加分析与图）&lt;/p&gt;
 
 &lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;zio&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;
 &lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;pwn&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;
