@@ -10,7 +10,7 @@
     <meta name="keyword"  content=" 芈云落, miyunLuo, MiyunLuo Blog">
     <link rel="shortcut icon" href="/img/favicon.ico">
 
-    <title>Junior 0CTF 2017 - Blog Nullptr</title>
+    <title>Junior 0CTF 2017 WriteUp (部分) - Blog Nullptr</title>
 
     <link rel="canonical" href="http://localhost:4000/2017/12/10/jun0ctf/">
 
@@ -150,7 +150,7 @@
                         <a class="tag" href="/tags/#CTF" title="CTF">CTF</a>
                         
                     </div>
-                    <h1>Junior 0CTF 2017</h1>
+                    <h1>Junior 0CTF 2017 WriteUp (部分)</h1>
                     
                     
                     <h2 class="subheading"> "SJTU校内赛"</h2>
@@ -179,26 +179,51 @@
 
 <h2 id="前言">前言</h2>
 
-<p>SJTU 0ops 举办的0CTF校内交流赛，12月9号到10号。</p>
+<p>SJTU 0ops 举办的0CTF校内交流赛，12月9号到10号。题目索引如下（文中涉及的文件下载[<a href="/img/in-post/Junior0ctfQuestion.zip">链接</a>]</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td><a href="#j0">QQ Group </a></td>
+      <td><a href="#j1">Mystery Numbers </a></td>
+      <td><a href="#j2">Easy Traffic Analyze </a></td>
+      <td><a href="#j3">AES-server</a></td>
+    </tr>
+    <tr>
+      <td><a href="#j4">babyrsa </a></td>
+      <td><a href="#j5">Shatter Sha512!</a></td>
+      <td><a href="#j6">Penetrate In </a></td>
+      <td><a href="#j7">Eva</a></td>
+    </tr>
+    <tr>
+      <td><a href="#j8">babyre</a></td>
+      <td><a href="#j9">encoder </a></td>
+      <td><a href="#j10">seabreeze’s stack </a></td>
+      <td><a href="#j11">aes-duet </a></td>
+    </tr>
+  </tbody>
+</table>
 
 <h2 id="solved">Solved</h2>
 
-<h3 id="1qq-group-50">1.QQ Group 50</h3>
+<p id="j0"></p>
+<h3 id="0qq-group-50">0.QQ Group 50</h3>
 
 <p>友情送分题，加入QQ交流群送一个flag。</p>
 
-<h3 id="2mystery-numbers-100">2.Mystery Numbers 100</h3>
+<p id="j1"></p>
+<h3 id="1mystery-numbers-100">1.Mystery Numbers 100</h3>
 
 <p>题目描述没有什么实质性内容。给了一个link[<a href="https://ctf.0ops.sjtu.cn/attachment/download/signal.txt">numbers_f300d7d6dce847a265407e072790370d</a>]，下载得到一个文本文件，内容如下</p>
 
 <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>5a6d78685a33746b4d4639354d48566661323477643139694e44557a4e6a52666144526f4e4638324e44593058336b3065545239
 </code></pre></div></div>
 
-<p>看到全是字母+数字，而且范围是0到f，以16进制解码到ascii，得到</p>
+<p>因为看到全是字母与数字的排列，而且范围是0到f，应该是一串16进制的编码，以16进制解码到ascii，得到如下内容</p>
 
 <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ZmxhZ3tkMF95MHVfa24wd19iNDUzNjRfaDRoNF82NDY0X3k0eTR9
 </code></pre></div></div>
-<p>之后很像base64，尝试解码得到flag。</p>
+<p>应该还是一串被加密的字符，观察密文形式，很像base64，尝试用它来解码，得到flag。</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">base64</span>
 <span class="n">s</span> <span class="o">=</span> <span class="s">'ZmxhZ3tkMF95MHVfa24wd19iNDUzNjRfaDRoNF82NDY0X3k0eTR9'</span>
@@ -206,28 +231,35 @@
 
 <span class="o">&gt;&gt;</span><span class="n">flag</span><span class="p">{</span><span class="n">d0_y0u_kn0w_b45364_h4h4_6464_y4y4</span><span class="p">}</span>
 </code></pre></div></div>
+<p id="j2"></p>
+<h3 id="2easy-traffic-analyze-200">2.Easy Traffic Analyze 200</h3>
 
-<h3 id="3easy-traffic-analyze-200">3.Easy Traffic Analyze 200</h3>
+<p>题目给了一个link[<a href="https://ctf.0ops.sjtu.cn/upload/flag.pcap">flag.pcap</a>]，是一个通信包文件，但是用wireshark打开提示格式不正确，应该是pcap文件受损。需要先修复pcap，可以使用[<a href="https://f00l.de/pcapfix/">pcapfix</a>]软件来修复。</p>
 
-<p>题目给了一个link[<a href="https://ctf.0ops.sjtu.cn/upload/flag.pcap">flag.pcap</a>]，是一个通信包文件，但是用wireshark打开提示格式不正确，于是需要先修复pcap文件，可以使用[<a href="https://f00l.de/pcapfix/">pcapfix</a>]软件修复。之后使用wireshark打开，过滤http请求，导出http通信包，有三个文件。</p>
+<p>之后使用wireshark打开，通信包有很多，过滤一下http请求，发现只有3个</p>
+
+<p><img src="/img/in-post/post-blog-jserv8.png" alt="img" /></p>
+
+<p>选择“文件” -&gt; “导出对象” -&gt; “HTTP”将其导出，得到三个文件。</p>
 
 <p><img src="/img/in-post/post-blog-jserv0.png" alt="img" /></p>
 
-<p>其中upload.php很大，有1.9M，以二进制打开，发现文件里有flag1.png，同时有一个zip文件头504B 0304。</p>
+<p>其中upload.php很大，有1.9M，以二进制打开，发现文件里有flag1.png，同时有一个zip文件标志头信息504B 0304。</p>
 
 <p><img src="/img/in-post/post-blog-j0serv1.png" alt="img" /></p>
 
-<p>将不重要的部分删掉，得到文件更改后缀名为zip解压，得到一张图片（还挺好看的 (●ﾟωﾟ●)。</p>
+<p>将前面不重要的部分删去，得到的文件更改后缀名为zip解压，得到一张图（还挺好看的 (●ﾟωﾟ●)。</p>
 
 <p><img src="/img/in-post/post-blog-jserv2.png" alt="img" /></p>
 
-<p>一般套路都是图片里隐写信息，将图片二进制打开，直接去文件尾，得到flag。</p>
+<p>这里一般的套路是会在图片里隐写信息，将图片以二进制打开，因为文件比较大，在中间寻找flag较困难，考虑到简单的隐写一般在文件结尾处，直接去文件尾查询，得到了flag。</p>
 
 <p><img src="/img/in-post/post-blog-jserv3.png" alt="img" /></p>
 
-<h3 id="4aes-server-100">4.AES-server 100</h3>
+<p id="j3"></p>
+<h3 id="3aes-server-100">3.AES-server 100</h3>
 
-<p>题目给出“nc 202.121.178.199 9999” 与一个文件[<a href="https://ctf.0ops.sjtu.cn/attachment/download/server.py">server.py</a>]，文件内容如下，也即是server的代码。</p>
+<p>题目给出“nc 202.121.178.199 9999” 与一个文件[<a href="https://ctf.0ops.sjtu.cn/attachment/download/server.py">server.py</a>]，其中nc是linux的netcat指令，具体介绍可以自己搜索，在此题中不是重点部分。server.py文件内容如下，也即是服务器上的代码。</p>
 
 <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/usr/bin/env python</span>
 <span class="c"># coding=utf-8</span>
@@ -276,13 +308,20 @@ class handler<span class="o">(</span>SocketServer.BaseRequestHandler<span class=
     server.serve_forever<span class="o">()</span>
 </code></pre></div></div>
 
-<p>代码里显示为CBC模式的解密过程，要求输入初始向量iv与加密字符c的拼接串，同时服务器会返回解密后的明文p。数据关系为 p = XOR( iv, fk(c) )，题目显示需要得到的p前5位为“admin”才会返回flag。</p>
+<p>代码里显示<strong>AES.MODE_CBC</strong>，说明采用的是CBC(密文分组链接)模式，且代码为CBC的解密过程，CBC decryption见下图</p>
 
-<p>这里使用异或算法的trick来求解。先自己构造一对iv0，c0，服务器会返回一个p0，记目标初始向量（ “admin……….”）为iv1。p0 = XOR( iv0, fk(c0) )，XOR( iv1, p0 ) = a = XOR( iv1, XOR( iv0, fk(c0) ) ) ，于是得到了XOR( iv1, fk(c0) ) = XOR( a, iv1 )。也就是只要再次发送报文，初始向量为iv1，密文还为c0即可。这里构造iv0, c0为全0字节，admin后面也以0补齐，具体过程见下图。</p>
+<p><img src="/img/in-post/post-blog-jserv9.png" alt="img" /></p>
+
+<p>代码内容只涉及了一组CBC的解密。要求输入初始向量iv与加密字符c的拼接串，同时服务器会返回解密后的明文p。数据关系为 p = XOR( iv, fk(c) )，题目显示需要得到的p前5位为“admin”才会返回flag。</p>
+
+<p>这里使用异或运算的trick来求解。先自己构造一对iv0，c0，服务器会返回一个p0，记目标初始向量（ “admin……….”）为iv1。p0 = XOR( iv0, fk(c0) )，XOR( iv1, p0 ) = a = XOR( iv1, XOR( iv0, fk(c0) ) ) ，于是得到了XOR( iv1, fk(c0) ) = XOR( a, iv1 ) = b。因为是自己构造的，a与b都是可计算的值。也就是只要再次发送报文，初始向量为iv1，密文还为c0即可。</p>
+
+<p>这里构造iv0, c0为全0字节，admin后面也以0补齐，具体过程见下图。（由此可见异或运算的问题还是挺大的，但是异或在加密中广为应用。</p>
 
 <p><img src="/img/in-post/post-blog-jserv4.png" alt="img" /></p>
 
-<h3 id="5babyrsa-100">5.babyrsa 100</h3>
+<p id="j4"></p>
+<h3 id="4babyrsa-100">4.babyrsa 100</h3>
 
 <p>题目提供了一个压缩文件[<a href="https://ctf.0ops.sjtu.cn/attachment/download/babyrsa.zip">babyrsa.zip</a>]，包含RAS加密的公钥，密文，现在需要求明文。</p>
 
@@ -297,13 +336,14 @@ class handler<span class="o">(</span>SocketServer.BaseRequestHandler<span class=
 <span class="o">&gt;&gt;</span><span class="n">e</span> <span class="o">=</span> <span class="mi">65537</span>
 </code></pre></div></div>
 
-<p>这个公钥的问题出来n选择太小，直接暴力破解质因数，这里可以去[<a href="http://www.factordb.com">factordb</a>]网站查询，也可以用python的包进行破解。(最开始是用python暴力破的，后来发现可以查询到)</p>
+<p>这个公钥的问题出在n选择太小，直接暴力破解质因数，这里可以去[<a href="http://www.factordb.com">factordb</a>]网站查询，也可以用python的包进行破解。(最开始是用python暴力破的，后来发现可以查询到)</p>
 
 <p><img src="/img/in-post/post-blog-j0serv7.png" alt="img" /></p>
 
-<p>在质因子破p，q都得到的情况下，后面就是顺水推舟的求私钥d，解明文p了。</p>
+<p>在质因子p，q都得到的情况下，后面就是顺水推舟的求私钥d，解明文p了。</p>
 
-<h3 id="6shatter-sha512-150">6.Shatter Sha512! 150</h3>
+<p id="j5"></p>
+<h3 id="5shatter-sha512-150">5.Shatter Sha512! 150</h3>
 
 <p>题目描述“Google Shatter Sha256, so cooooooooooool! Can you break the sha512 algorithm to prove that you are a great genius?” 下面是一个链接，点进去是一个页面，显示如下内容，需要找到两个不同的值x和y，使得hash值一样。</p>
 
@@ -318,21 +358,98 @@ class handler<span class="o">(</span>SocketServer.BaseRequestHandler<span class=
 
 <p><strong>flag{php_is_best_language_:P}</strong> 被这个漏洞震惊了，果然PHP是最好的语言。</p>
 
-<h3 id="7penetrate-in-150">7.Penetrate In 150</h3>
+<p id="j6"></p>
+<h3 id="6penetrate-in-150">6.Penetrate In 150</h3>
 
-<p>链接点进去是如下界面</p>
+<p>此题感觉比较复杂，需要详细说明一下，但是很多人很早就做了出来，不知道用的什么方法。链接点进去是如下界面</p>
 
 <p><img src="/img/in-post/post-blog-jserv6.png" alt="img" /></p>
 
-<p>这个题目及其恶心，暂时不表。</p>
+<p>第一次访问会设置一个名为“hmac”的cookie，之后要求以POST的方式提交username与password，其中username字段必须为“admin”，password字段不能为“admin”，但是要求hamc与md5(“ $secret|admin|admin”)相等。</p>
 
-<h3 id="8eva-200">8.Eva 200</h3>
+<h4 id="心路历程">心路历程：</h4>
 
-<p>这个题出了bug，直接爆出了答案，没有认真做。</p>
+<ol>
+  <li>第一次访问该网站时，被设置了一个hmac字段的cookie，该hmac表示的是<code class="highlighter-rouge">md5("$secret|admin|admin")</code>，实际内容为”be9fcfa876db5f4184e1635ce6561de7”。</li>
+  <li>第一想法当然是尝试破解$secret变量，用C++测试了6位以内所有可打印ascii码的组合，并没有找到使得<code class="highlighter-rouge">md5("$secret|admin|admin")</code>等于给定值的组合。然后使用了常用密码组合表去重复同样的操作，未果。</li>
+  <li>然后将思路转移到php本身的缺陷上来，观察到第六行使用了 != 符号，因此在提交数据时，构造字段<code class="highlighter-rouge">payload = {"username":"admin","password[]":"admin"}</code>，发现虽然第六行的比较通过，但是在第七行时校验不通过，因为该字符串变成了$secret|admin|Array，因此放弃了寻找php本身的漏洞。</li>
+  <li>第三次尝试从md5本身去下手，因为cookie在本地，可以被我们自己修改，因此考虑能否在$secret无法获取的情况下计算出md5(“$secret|admin|xxxxxxx”)，其中xxxxxx为我们可控制的password字段，不能为admin)。</li>
+</ol>
+
+<h4 id="解题思路">解题思路：</h4>
+
+<ol>
+  <li>
+    <p>首先观察md5的整体过程，上半部分指出首先要对消息做填充，填充至512bit的整数倍，该图的下半部分显示了md5的整体计算过程，被哈希的消息Y被分割为长度为512bit的分组(Y0,Y1,…,Yn-1)，计算过程为：</p>
+
+    <ol>
+      <li>
+        <p>$H0=Hmd5(IV, Y0)$</p>
+      </li>
+      <li>
+        <p>$Hi = Hmd5(Hi-1, Yi)$</p>
+      </li>
+      <li>
+        <p>最终有 $md5(Y) = Hn-1$</p>
+
+        <p><em>IV是初始向量，是固定值0x0123456789ABCDEFFEDCBA9876543210</em></p>
+
+        <p><em>Hmd5表示md5中的每个分组的哈希操作，其输入为初始向量和512bit的待哈希分组，输出为128bit</em></p>
+      </li>
+    </ol>
+  </li>
+</ol>
+
+<p><img src="/img/in-post/post-blog-jserv10.png" alt="md5" /></p>
+
+<ol>
+  <li>
+    <p>然后了解消息填充的具体过程</p>
+
+    <p>在MD5算法中，首先需要对信息进行填充，使其位长对512求余的结果等于448，<strong>并且填充必须进行，即使其位长对512求余的结果等于448</strong>。因此，信息的位长（Bits Length）将被扩展至N*512+448，N为一个非负整数，N可以是零。然后在这个结果后面附加一个以64位二进制数字表示扩充前实际信息的长度（小端序）。</p>
+
+    <p><a href="https://baike.baidu.com/item/MD5/212708?fr=aladdin#3_2">来自百度百科的例子</a></p>
+  </li>
+  <li>
+    <p>最后，我们分析题目条件，题目给出了<strong>src = md5($secret|admin|admin)</strong>，我们需要构造一个<strong>des = md5($secret|admin|xxxxxx)</strong>，其中$secret长度未知，xxxxxx不能为admin，长度随意。</p>
+  </li>
+  <li>
+    <p>最后，我们分析题目条件，题目给出了<strong>src = md5($secret|admin|admin)</strong>，我们需要构造一个<strong>des = md5($secret|admin|xxxxxx)</strong>，其中$secret长度未知，xxxxxx不能为admin，长度随意。很容易想到如果我们的md5($secret|admin|xxxxxx)的生成过程和md5($secret|admin|admin)的生成过程前半部分相同，但是比其多出一个分组，那么des = Hmd5(src, xxxxxx的后一部分+此次的填充信息)。那么就要求xxxxxx = admin+src构造过程中的填充信息+448bit内的随意值，为了使得des计算方便，我们就令xxxxxx = admin + src构造过程中的填充信息，此时<strong>des = Hmd5(src, des构造过程中的填充信息)</strong>。</p>
+  </li>
+  <li>
+    <p>python代码实现</p>
+
+    <p>为了实现方便，假设src的构造过程只使用了一个分组，即$secret长度小于43，那么des过程中的填充信息就固定为 <code class="highlighter-rouge">'\x80'+'\x00'*55 +'\x00\x02'+'\x00'*6</code> ，共512bit，64字节，其中’\x00\x02’表示源消息长度为512bit，而xxxxxx会根据$secret的长度变化而变化，设其长度为length，则src构造过程中的源消息长度为length+12字节，则<code class="highlighter-rouge">xxxxxx = "admin" + "\x80" + "\x00" * (length+12-1) + (length+12的8字节小端表示)</code></p>
+  </li>
+</ol>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   import requests
+   bytearr = ['\x00','\x08','\x10','\x18','\x20','\x28','\x30','\x38','\x40','\x48','\x50','\x58','\x60','\x68','\x70','\x78','\x80','\x88','\x90','\x98','\xa0','\xa8','\xb0','\xb8','\xc0','\xc8','\xd0','\xd8','\xe0','\xe8','\xf0','\xf8',]
+   bitarr = ['\x00','\x01','\x02', '\x03', '\x06', '\x07', '\x08', '\x09', '\x0a', '\x0b']
+   length = 42
+   session = requests.Session()
+   for length in range(43):
+           # say origin len &lt; 43
+           origin_len = length + 12
+           padding_len = (56 - origin_len)
+           padding = "\x80" + "\x00" * (padding_len-1)
+           checksum = bytearr[origin_len % 32] + bitarr[origin_len / 32] + '\x00'*6
+           hmac = padding + checksum
+           payload = {'username': 'admin', 'password': 'admin'+padding + checksum}
+           cookie = {'hmac': "5f1b36f358a22a9abe395cba54f6d3bc"}
+           r = session.post("http://202.121.178.201:8081/", cookies=cookie, data=payload)
+           print(r.text)
+</code></pre></div></div>
+
+<p id="j7"></p>
+<h3 id="7eva-200">7.Eva 200</h3>
+
+<p>此题出了bug，直接爆出了答案，没有认真做。</p>
 
 <p>For fair consideration, flag is flag{f1ask_is_a_g00d_pyth0n_web_framew0rk}</p>
 
-<h3 id="9babyre-100">9.babyre 100</h3>
+<p id="j8"></p>
+<h3 id="8babyre-100">8.babyre 100</h3>
 
 <p>题目给出一个pyc文件[<a href="https://ctf.0ops.sjtu.cn/attachment/download/encrypt.pyc">encrypt.pyc</a>]，使用在线工具反编译一下[<a href="http://tools.bugscaner.com/decompyle/">decompyle</a>]，得到python源文件，内容如下。</p>
 
@@ -359,7 +476,9 @@ class handler<span class="o">(</span>SocketServer.BaseRequestHandler<span class=
     <span class="k">print</span> <span class="s">'Wrong!'</span>
 </code></pre></div></div>
 
-<p>这个看代码是典型的Feistel加密，每轮后半部分异或，前后交换，解密就是把过程逆回去。</p>
+<p>这个看代码是典型的Feistel加密，Feistel结构如下，每轮涉及异或与前后互换，解密就是把过程逆回去。</p>
+
+<p><img src="/img/in-post/post-blog-jserv11.png" alt="img" /></p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">hashlib</span> <span class="kn">import</span> <span class="n">md5</span>
 <span class="k">def</span> <span class="nf">md5raw</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
@@ -379,7 +498,8 @@ class handler<span class="o">(</span>SocketServer.BaseRequestHandler<span class=
 <span class="o">&gt;&gt;</span><span class="n">flag</span><span class="p">{</span><span class="mi">1</span><span class="n">nt3re5tiNg_F3iste1_ciPh3R</span><span class="p">}</span>
 </code></pre></div></div>
 
-<h3 id="10encoder-200">10.encoder 200</h3>
+<p id="9"></p>
+<h3 id="9encoder-200">9.encoder 200</h3>
 
 <p>逆向题目，链接为[<a href="https://ctf.0ops.sjtu.cn/attachment/download/encoder.zip">encoder.zip</a>]，解压后一个可执行文件，一个加密后的flag”KNByeN88KqslM52E1L67aYREK1qQ2N1QydYlaEd=”。使用IDA打开可执行文件进行分析。</p>
 
@@ -416,7 +536,8 @@ class handler<span class="o">(</span>SocketServer.BaseRequestHandler<span class=
 
 <p>最终flag提示do u know base32，其实最开始看到密文结尾为=就尝试用了base64</p>
 
-<h3 id="11seabreezes-stack-100">11.seabreeze’s stack 100</h3>
+<p id="j10"></p>
+<h3 id="10seabreezes-stack-100">10.seabreeze’s stack 100</h3>
 
 <p>题目内容为“nc 202.121.178.181 12321”与一个下载链接[<a href="https://ctf.0ops.sjtu.cn/attachment/download/stack">stack_55a49bdfcdafd0c31657649e905486a4</a>]，使用IDA打开分析。</p>
 
@@ -439,7 +560,8 @@ class handler<span class="o">(</span>SocketServer.BaseRequestHandler<span class=
 
 <h2 id="have-idea">Have Idea</h2>
 
-<h3 id="12aes-duet">12.aes-duet</h3>
+<p id="j11"></p>
+<h3 id="11aes-duet">11.aes-duet</h3>
 
 <p>题目描述为一个链接[<a href="https://ctf.0ops.sjtu.cn/attachment/download/aes_duet.zip">aes_duet.zip</a>]，解压得到一个密文和加密函数，文件如下</p>
 
@@ -469,7 +591,7 @@ class handler<span class="o">(</span>SocketServer.BaseRequestHandler<span class=
     <span class="k">print</span> <span class="s">"I am a lovely flag: flag{ </span><span class="si">%</span><span class="s">s}"</span> <span class="o">%</span> <span class="n">key</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s">'hex'</span><span class="p">)</span>
 </code></pre></div></div>
 
-<p>思路很简单，就是AES两轮加密的中间相遇攻击，但是计算量有些庞大，虽然题目为了降低复杂性还提示了key的第一位为0最后一位为8，最终因为时间与硬件原因放弃。</p>
+<p>思路很简单，就是AES两轮加密的中间相遇攻击，虽然题目为了降低复杂性提示了key的第一位为0最后一位为8，但是计算量还是十分庞大，而且计算出来中间值后，查询比较也需要耗时，发现心里的“B树”和“B+树”早忘的没影了，最终因为时间与硬件原因放弃。</p>
 
 <h2 id="感想">感想</h2>
 
@@ -477,7 +599,7 @@ class handler<span class="o">(</span>SocketServer.BaseRequestHandler<span class=
 
 <p>我们在众多bug中微妙的生活着。</p>
 
-<p>以及PHP是世界上最好的语言。</p>
+<p>PHP是世界上最好的语言。</p>
 
 <p><img src="/img/in-post/post-blog-j0serv8.gif" alt="img" /></p>
 

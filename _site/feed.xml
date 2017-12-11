@@ -5,38 +5,63 @@
     <description>学习和生活</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Mon, 11 Dec 2017 03:24:57 +0800</pubDate>
-    <lastBuildDate>Mon, 11 Dec 2017 03:24:57 +0800</lastBuildDate>
+    <pubDate>Mon, 11 Dec 2017 14:16:19 +0800</pubDate>
+    <lastBuildDate>Mon, 11 Dec 2017 14:16:19 +0800</lastBuildDate>
     <generator>Jekyll v3.6.2</generator>
     
       <item>
-        <title>Junior 0CTF 2017</title>
+        <title>Junior 0CTF 2017 WriteUp (部分)</title>
         <description>&lt;blockquote&gt;
   &lt;p&gt;“flag{php_is_best_language_:P}”&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;h2 id=&quot;前言&quot;&gt;前言&lt;/h2&gt;
 
-&lt;p&gt;SJTU 0ops 举办的0CTF校内交流赛，12月9号到10号。&lt;/p&gt;
+&lt;p&gt;SJTU 0ops 举办的0CTF校内交流赛，12月9号到10号。题目索引如下（文中涉及的文件下载[&lt;a href=&quot;/img/in-post/Junior0ctfQuestion.zip&quot;&gt;链接&lt;/a&gt;]&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;a href=&quot;#j0&quot;&gt;QQ Group &lt;/a&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;a href=&quot;#j1&quot;&gt;Mystery Numbers &lt;/a&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;a href=&quot;#j2&quot;&gt;Easy Traffic Analyze &lt;/a&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;a href=&quot;#j3&quot;&gt;AES-server&lt;/a&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;a href=&quot;#j4&quot;&gt;babyrsa &lt;/a&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;a href=&quot;#j5&quot;&gt;Shatter Sha512!&lt;/a&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;a href=&quot;#j6&quot;&gt;Penetrate In &lt;/a&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;a href=&quot;#j7&quot;&gt;Eva&lt;/a&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;a href=&quot;#j8&quot;&gt;babyre&lt;/a&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;a href=&quot;#j9&quot;&gt;encoder &lt;/a&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;a href=&quot;#j10&quot;&gt;seabreeze’s stack &lt;/a&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;a href=&quot;#j11&quot;&gt;aes-duet &lt;/a&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
 
 &lt;h2 id=&quot;solved&quot;&gt;Solved&lt;/h2&gt;
 
-&lt;h3 id=&quot;1qq-group-50&quot;&gt;1.QQ Group 50&lt;/h3&gt;
+&lt;p id=&quot;j0&quot;&gt;&lt;/p&gt;
+&lt;h3 id=&quot;0qq-group-50&quot;&gt;0.QQ Group 50&lt;/h3&gt;
 
 &lt;p&gt;友情送分题，加入QQ交流群送一个flag。&lt;/p&gt;
 
-&lt;h3 id=&quot;2mystery-numbers-100&quot;&gt;2.Mystery Numbers 100&lt;/h3&gt;
+&lt;p id=&quot;j1&quot;&gt;&lt;/p&gt;
+&lt;h3 id=&quot;1mystery-numbers-100&quot;&gt;1.Mystery Numbers 100&lt;/h3&gt;
 
 &lt;p&gt;题目描述没有什么实质性内容。给了一个link[&lt;a href=&quot;https://ctf.0ops.sjtu.cn/attachment/download/signal.txt&quot;&gt;numbers_f300d7d6dce847a265407e072790370d&lt;/a&gt;]，下载得到一个文本文件，内容如下&lt;/p&gt;
 
 &lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;5a6d78685a33746b4d4639354d48566661323477643139694e44557a4e6a52666144526f4e4638324e44593058336b3065545239
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;看到全是字母+数字，而且范围是0到f，以16进制解码到ascii，得到&lt;/p&gt;
+&lt;p&gt;因为看到全是字母与数字的排列，而且范围是0到f，应该是一串16进制的编码，以16进制解码到ascii，得到如下内容&lt;/p&gt;
 
 &lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;ZmxhZ3tkMF95MHVfa24wd19iNDUzNjRfaDRoNF82NDY0X3k0eTR9
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;之后很像base64，尝试解码得到flag。&lt;/p&gt;
+&lt;p&gt;应该还是一串被加密的字符，观察密文形式，很像base64，尝试用它来解码，得到flag。&lt;/p&gt;
 
 &lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;base64&lt;/span&gt;
 &lt;span class=&quot;n&quot;&gt;s&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'ZmxhZ3tkMF95MHVfa24wd19iNDUzNjRfaDRoNF82NDY0X3k0eTR9'&lt;/span&gt;
@@ -44,28 +69,35 @@
 
 &lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;flag&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;d0_y0u_kn0w_b45364_h4h4_6464_y4y4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p id=&quot;j2&quot;&gt;&lt;/p&gt;
+&lt;h3 id=&quot;2easy-traffic-analyze-200&quot;&gt;2.Easy Traffic Analyze 200&lt;/h3&gt;
 
-&lt;h3 id=&quot;3easy-traffic-analyze-200&quot;&gt;3.Easy Traffic Analyze 200&lt;/h3&gt;
+&lt;p&gt;题目给了一个link[&lt;a href=&quot;https://ctf.0ops.sjtu.cn/upload/flag.pcap&quot;&gt;flag.pcap&lt;/a&gt;]，是一个通信包文件，但是用wireshark打开提示格式不正确，应该是pcap文件受损。需要先修复pcap，可以使用[&lt;a href=&quot;https://f00l.de/pcapfix/&quot;&gt;pcapfix&lt;/a&gt;]软件来修复。&lt;/p&gt;
 
-&lt;p&gt;题目给了一个link[&lt;a href=&quot;https://ctf.0ops.sjtu.cn/upload/flag.pcap&quot;&gt;flag.pcap&lt;/a&gt;]，是一个通信包文件，但是用wireshark打开提示格式不正确，于是需要先修复pcap文件，可以使用[&lt;a href=&quot;https://f00l.de/pcapfix/&quot;&gt;pcapfix&lt;/a&gt;]软件修复。之后使用wireshark打开，过滤http请求，导出http通信包，有三个文件。&lt;/p&gt;
+&lt;p&gt;之后使用wireshark打开，通信包有很多，过滤一下http请求，发现只有3个&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/in-post/post-blog-jserv8.png&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;选择“文件” -&amp;gt; “导出对象” -&amp;gt; “HTTP”将其导出，得到三个文件。&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;/img/in-post/post-blog-jserv0.png&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;其中upload.php很大，有1.9M，以二进制打开，发现文件里有flag1.png，同时有一个zip文件头504B 0304。&lt;/p&gt;
+&lt;p&gt;其中upload.php很大，有1.9M，以二进制打开，发现文件里有flag1.png，同时有一个zip文件标志头信息504B 0304。&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;/img/in-post/post-blog-j0serv1.png&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;将不重要的部分删掉，得到文件更改后缀名为zip解压，得到一张图片（还挺好看的 (●ﾟωﾟ●)。&lt;/p&gt;
+&lt;p&gt;将前面不重要的部分删去，得到的文件更改后缀名为zip解压，得到一张图（还挺好看的 (●ﾟωﾟ●)。&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;/img/in-post/post-blog-jserv2.png&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;一般套路都是图片里隐写信息，将图片二进制打开，直接去文件尾，得到flag。&lt;/p&gt;
+&lt;p&gt;这里一般的套路是会在图片里隐写信息，将图片以二进制打开，因为文件比较大，在中间寻找flag较困难，考虑到简单的隐写一般在文件结尾处，直接去文件尾查询，得到了flag。&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;/img/in-post/post-blog-jserv3.png&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;
 
-&lt;h3 id=&quot;4aes-server-100&quot;&gt;4.AES-server 100&lt;/h3&gt;
+&lt;p id=&quot;j3&quot;&gt;&lt;/p&gt;
+&lt;h3 id=&quot;3aes-server-100&quot;&gt;3.AES-server 100&lt;/h3&gt;
 
-&lt;p&gt;题目给出“nc 202.121.178.199 9999” 与一个文件[&lt;a href=&quot;https://ctf.0ops.sjtu.cn/attachment/download/server.py&quot;&gt;server.py&lt;/a&gt;]，文件内容如下，也即是server的代码。&lt;/p&gt;
+&lt;p&gt;题目给出“nc 202.121.178.199 9999” 与一个文件[&lt;a href=&quot;https://ctf.0ops.sjtu.cn/attachment/download/server.py&quot;&gt;server.py&lt;/a&gt;]，其中nc是linux的netcat指令，具体介绍可以自己搜索，在此题中不是重点部分。server.py文件内容如下，也即是服务器上的代码。&lt;/p&gt;
 
 &lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;#!/usr/bin/env python&lt;/span&gt;
 &lt;span class=&quot;c&quot;&gt;# coding=utf-8&lt;/span&gt;
@@ -114,13 +146,20 @@ class handler&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;SocketServer.BaseRequ
     server.serve_forever&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;代码里显示为CBC模式的解密过程，要求输入初始向量iv与加密字符c的拼接串，同时服务器会返回解密后的明文p。数据关系为 p = XOR( iv, fk(c) )，题目显示需要得到的p前5位为“admin”才会返回flag。&lt;/p&gt;
+&lt;p&gt;代码里显示&lt;strong&gt;AES.MODE_CBC&lt;/strong&gt;，说明采用的是CBC(密文分组链接)模式，且代码为CBC的解密过程，CBC decryption见下图&lt;/p&gt;
 
-&lt;p&gt;这里使用异或算法的trick来求解。先自己构造一对iv0，c0，服务器会返回一个p0，记目标初始向量（ “admin……….”）为iv1。p0 = XOR( iv0, fk(c0) )，XOR( iv1, p0 ) = a = XOR( iv1, XOR( iv0, fk(c0) ) ) ，于是得到了XOR( iv1, fk(c0) ) = XOR( a, iv1 )。也就是只要再次发送报文，初始向量为iv1，密文还为c0即可。这里构造iv0, c0为全0字节，admin后面也以0补齐，具体过程见下图。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/img/in-post/post-blog-jserv9.png&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;代码内容只涉及了一组CBC的解密。要求输入初始向量iv与加密字符c的拼接串，同时服务器会返回解密后的明文p。数据关系为 p = XOR( iv, fk(c) )，题目显示需要得到的p前5位为“admin”才会返回flag。&lt;/p&gt;
+
+&lt;p&gt;这里使用异或运算的trick来求解。先自己构造一对iv0，c0，服务器会返回一个p0，记目标初始向量（ “admin……….”）为iv1。p0 = XOR( iv0, fk(c0) )，XOR( iv1, p0 ) = a = XOR( iv1, XOR( iv0, fk(c0) ) ) ，于是得到了XOR( iv1, fk(c0) ) = XOR( a, iv1 ) = b。因为是自己构造的，a与b都是可计算的值。也就是只要再次发送报文，初始向量为iv1，密文还为c0即可。&lt;/p&gt;
+
+&lt;p&gt;这里构造iv0, c0为全0字节，admin后面也以0补齐，具体过程见下图。（由此可见异或运算的问题还是挺大的，但是异或在加密中广为应用。&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;/img/in-post/post-blog-jserv4.png&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;
 
-&lt;h3 id=&quot;5babyrsa-100&quot;&gt;5.babyrsa 100&lt;/h3&gt;
+&lt;p id=&quot;j4&quot;&gt;&lt;/p&gt;
+&lt;h3 id=&quot;4babyrsa-100&quot;&gt;4.babyrsa 100&lt;/h3&gt;
 
 &lt;p&gt;题目提供了一个压缩文件[&lt;a href=&quot;https://ctf.0ops.sjtu.cn/attachment/download/babyrsa.zip&quot;&gt;babyrsa.zip&lt;/a&gt;]，包含RAS加密的公钥，密文，现在需要求明文。&lt;/p&gt;
 
@@ -135,13 +174,14 @@ class handler&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;SocketServer.BaseRequ
 &lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;e&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;65537&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;这个公钥的问题出来n选择太小，直接暴力破解质因数，这里可以去[&lt;a href=&quot;http://www.factordb.com&quot;&gt;factordb&lt;/a&gt;]网站查询，也可以用python的包进行破解。(最开始是用python暴力破的，后来发现可以查询到)&lt;/p&gt;
+&lt;p&gt;这个公钥的问题出在n选择太小，直接暴力破解质因数，这里可以去[&lt;a href=&quot;http://www.factordb.com&quot;&gt;factordb&lt;/a&gt;]网站查询，也可以用python的包进行破解。(最开始是用python暴力破的，后来发现可以查询到)&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;/img/in-post/post-blog-j0serv7.png&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;在质因子破p，q都得到的情况下，后面就是顺水推舟的求私钥d，解明文p了。&lt;/p&gt;
+&lt;p&gt;在质因子p，q都得到的情况下，后面就是顺水推舟的求私钥d，解明文p了。&lt;/p&gt;
 
-&lt;h3 id=&quot;6shatter-sha512-150&quot;&gt;6.Shatter Sha512! 150&lt;/h3&gt;
+&lt;p id=&quot;j5&quot;&gt;&lt;/p&gt;
+&lt;h3 id=&quot;5shatter-sha512-150&quot;&gt;5.Shatter Sha512! 150&lt;/h3&gt;
 
 &lt;p&gt;题目描述“Google Shatter Sha256, so cooooooooooool! Can you break the sha512 algorithm to prove that you are a great genius?” 下面是一个链接，点进去是一个页面，显示如下内容，需要找到两个不同的值x和y，使得hash值一样。&lt;/p&gt;
 
@@ -156,21 +196,98 @@ class handler&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;SocketServer.BaseRequ
 
 &lt;p&gt;&lt;strong&gt;flag{php_is_best_language_:P}&lt;/strong&gt; 被这个漏洞震惊了，果然PHP是最好的语言。&lt;/p&gt;
 
-&lt;h3 id=&quot;7penetrate-in-150&quot;&gt;7.Penetrate In 150&lt;/h3&gt;
+&lt;p id=&quot;j6&quot;&gt;&lt;/p&gt;
+&lt;h3 id=&quot;6penetrate-in-150&quot;&gt;6.Penetrate In 150&lt;/h3&gt;
 
-&lt;p&gt;链接点进去是如下界面&lt;/p&gt;
+&lt;p&gt;此题感觉比较复杂，需要详细说明一下，但是很多人很早就做了出来，不知道用的什么方法。链接点进去是如下界面&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;/img/in-post/post-blog-jserv6.png&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;这个题目及其恶心，暂时不表。&lt;/p&gt;
+&lt;p&gt;第一次访问会设置一个名为“hmac”的cookie，之后要求以POST的方式提交username与password，其中username字段必须为“admin”，password字段不能为“admin”，但是要求hamc与md5(“ $secret|admin|admin”)相等。&lt;/p&gt;
 
-&lt;h3 id=&quot;8eva-200&quot;&gt;8.Eva 200&lt;/h3&gt;
+&lt;h4 id=&quot;心路历程&quot;&gt;心路历程：&lt;/h4&gt;
 
-&lt;p&gt;这个题出了bug，直接爆出了答案，没有认真做。&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;第一次访问该网站时，被设置了一个hmac字段的cookie，该hmac表示的是&lt;code class=&quot;highlighter-rouge&quot;&gt;md5(&quot;$secret|admin|admin&quot;)&lt;/code&gt;，实际内容为”be9fcfa876db5f4184e1635ce6561de7”。&lt;/li&gt;
+  &lt;li&gt;第一想法当然是尝试破解$secret变量，用C++测试了6位以内所有可打印ascii码的组合，并没有找到使得&lt;code class=&quot;highlighter-rouge&quot;&gt;md5(&quot;$secret|admin|admin&quot;)&lt;/code&gt;等于给定值的组合。然后使用了常用密码组合表去重复同样的操作，未果。&lt;/li&gt;
+  &lt;li&gt;然后将思路转移到php本身的缺陷上来，观察到第六行使用了 != 符号，因此在提交数据时，构造字段&lt;code class=&quot;highlighter-rouge&quot;&gt;payload = {&quot;username&quot;:&quot;admin&quot;,&quot;password[]&quot;:&quot;admin&quot;}&lt;/code&gt;，发现虽然第六行的比较通过，但是在第七行时校验不通过，因为该字符串变成了$secret|admin|Array，因此放弃了寻找php本身的漏洞。&lt;/li&gt;
+  &lt;li&gt;第三次尝试从md5本身去下手，因为cookie在本地，可以被我们自己修改，因此考虑能否在$secret无法获取的情况下计算出md5(“$secret|admin|xxxxxxx”)，其中xxxxxx为我们可控制的password字段，不能为admin)。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h4 id=&quot;解题思路&quot;&gt;解题思路：&lt;/h4&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;首先观察md5的整体过程，上半部分指出首先要对消息做填充，填充至512bit的整数倍，该图的下半部分显示了md5的整体计算过程，被哈希的消息Y被分割为长度为512bit的分组(Y0,Y1,…,Yn-1)，计算过程为：&lt;/p&gt;
+
+    &lt;ol&gt;
+      &lt;li&gt;
+        &lt;p&gt;$H0=Hmd5(IV, Y0)$&lt;/p&gt;
+      &lt;/li&gt;
+      &lt;li&gt;
+        &lt;p&gt;$Hi = Hmd5(Hi-1, Yi)$&lt;/p&gt;
+      &lt;/li&gt;
+      &lt;li&gt;
+        &lt;p&gt;最终有 $md5(Y) = Hn-1$&lt;/p&gt;
+
+        &lt;p&gt;&lt;em&gt;IV是初始向量，是固定值0x0123456789ABCDEFFEDCBA9876543210&lt;/em&gt;&lt;/p&gt;
+
+        &lt;p&gt;&lt;em&gt;Hmd5表示md5中的每个分组的哈希操作，其输入为初始向量和512bit的待哈希分组，输出为128bit&lt;/em&gt;&lt;/p&gt;
+      &lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/in-post/post-blog-jserv10.png&quot; alt=&quot;md5&quot; /&gt;&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;然后了解消息填充的具体过程&lt;/p&gt;
+
+    &lt;p&gt;在MD5算法中，首先需要对信息进行填充，使其位长对512求余的结果等于448，&lt;strong&gt;并且填充必须进行，即使其位长对512求余的结果等于448&lt;/strong&gt;。因此，信息的位长（Bits Length）将被扩展至N*512+448，N为一个非负整数，N可以是零。然后在这个结果后面附加一个以64位二进制数字表示扩充前实际信息的长度（小端序）。&lt;/p&gt;
+
+    &lt;p&gt;&lt;a href=&quot;https://baike.baidu.com/item/MD5/212708?fr=aladdin#3_2&quot;&gt;来自百度百科的例子&lt;/a&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;最后，我们分析题目条件，题目给出了&lt;strong&gt;src = md5($secret|admin|admin)&lt;/strong&gt;，我们需要构造一个&lt;strong&gt;des = md5($secret|admin|xxxxxx)&lt;/strong&gt;，其中$secret长度未知，xxxxxx不能为admin，长度随意。&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;最后，我们分析题目条件，题目给出了&lt;strong&gt;src = md5($secret|admin|admin)&lt;/strong&gt;，我们需要构造一个&lt;strong&gt;des = md5($secret|admin|xxxxxx)&lt;/strong&gt;，其中$secret长度未知，xxxxxx不能为admin，长度随意。很容易想到如果我们的md5($secret|admin|xxxxxx)的生成过程和md5($secret|admin|admin)的生成过程前半部分相同，但是比其多出一个分组，那么des = Hmd5(src, xxxxxx的后一部分+此次的填充信息)。那么就要求xxxxxx = admin+src构造过程中的填充信息+448bit内的随意值，为了使得des计算方便，我们就令xxxxxx = admin + src构造过程中的填充信息，此时&lt;strong&gt;des = Hmd5(src, des构造过程中的填充信息)&lt;/strong&gt;。&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;python代码实现&lt;/p&gt;
+
+    &lt;p&gt;为了实现方便，假设src的构造过程只使用了一个分组，即$secret长度小于43，那么des过程中的填充信息就固定为 &lt;code class=&quot;highlighter-rouge&quot;&gt;'\x80'+'\x00'*55 +'\x00\x02'+'\x00'*6&lt;/code&gt; ，共512bit，64字节，其中’\x00\x02’表示源消息长度为512bit，而xxxxxx会根据$secret的长度变化而变化，设其长度为length，则src构造过程中的源消息长度为length+12字节，则&lt;code class=&quot;highlighter-rouge&quot;&gt;xxxxxx = &quot;admin&quot; + &quot;\x80&quot; + &quot;\x00&quot; * (length+12-1) + (length+12的8字节小端表示)&lt;/code&gt;&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;   import requests
+   bytearr = ['\x00','\x08','\x10','\x18','\x20','\x28','\x30','\x38','\x40','\x48','\x50','\x58','\x60','\x68','\x70','\x78','\x80','\x88','\x90','\x98','\xa0','\xa8','\xb0','\xb8','\xc0','\xc8','\xd0','\xd8','\xe0','\xe8','\xf0','\xf8',]
+   bitarr = ['\x00','\x01','\x02', '\x03', '\x06', '\x07', '\x08', '\x09', '\x0a', '\x0b']
+   length = 42
+   session = requests.Session()
+   for length in range(43):
+           # say origin len &amp;lt; 43
+           origin_len = length + 12
+           padding_len = (56 - origin_len)
+           padding = &quot;\x80&quot; + &quot;\x00&quot; * (padding_len-1)
+           checksum = bytearr[origin_len % 32] + bitarr[origin_len / 32] + '\x00'*6
+           hmac = padding + checksum
+           payload = {'username': 'admin', 'password': 'admin'+padding + checksum}
+           cookie = {'hmac': &quot;5f1b36f358a22a9abe395cba54f6d3bc&quot;}
+           r = session.post(&quot;http://202.121.178.201:8081/&quot;, cookies=cookie, data=payload)
+           print(r.text)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p id=&quot;j7&quot;&gt;&lt;/p&gt;
+&lt;h3 id=&quot;7eva-200&quot;&gt;7.Eva 200&lt;/h3&gt;
+
+&lt;p&gt;此题出了bug，直接爆出了答案，没有认真做。&lt;/p&gt;
 
 &lt;p&gt;For fair consideration, flag is flag{f1ask_is_a_g00d_pyth0n_web_framew0rk}&lt;/p&gt;
 
-&lt;h3 id=&quot;9babyre-100&quot;&gt;9.babyre 100&lt;/h3&gt;
+&lt;p id=&quot;j8&quot;&gt;&lt;/p&gt;
+&lt;h3 id=&quot;8babyre-100&quot;&gt;8.babyre 100&lt;/h3&gt;
 
 &lt;p&gt;题目给出一个pyc文件[&lt;a href=&quot;https://ctf.0ops.sjtu.cn/attachment/download/encrypt.pyc&quot;&gt;encrypt.pyc&lt;/a&gt;]，使用在线工具反编译一下[&lt;a href=&quot;http://tools.bugscaner.com/decompyle/&quot;&gt;decompyle&lt;/a&gt;]，得到python源文件，内容如下。&lt;/p&gt;
 
@@ -197,7 +314,9 @@ class handler&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;SocketServer.BaseRequ
     &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'Wrong!'&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;这个看代码是典型的Feistel加密，每轮后半部分异或，前后交换，解密就是把过程逆回去。&lt;/p&gt;
+&lt;p&gt;这个看代码是典型的Feistel加密，Feistel结构如下，每轮涉及异或与前后互换，解密就是把过程逆回去。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/in-post/post-blog-jserv11.png&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;
 
 &lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;hashlib&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;md5&lt;/span&gt;
 &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;md5raw&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
@@ -217,7 +336,8 @@ class handler&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;SocketServer.BaseRequ
 &lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;flag&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;nt3re5tiNg_F3iste1_ciPh3R&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;h3 id=&quot;10encoder-200&quot;&gt;10.encoder 200&lt;/h3&gt;
+&lt;p id=&quot;9&quot;&gt;&lt;/p&gt;
+&lt;h3 id=&quot;9encoder-200&quot;&gt;9.encoder 200&lt;/h3&gt;
 
 &lt;p&gt;逆向题目，链接为[&lt;a href=&quot;https://ctf.0ops.sjtu.cn/attachment/download/encoder.zip&quot;&gt;encoder.zip&lt;/a&gt;]，解压后一个可执行文件，一个加密后的flag”KNByeN88KqslM52E1L67aYREK1qQ2N1QydYlaEd=”。使用IDA打开可执行文件进行分析。&lt;/p&gt;
 
@@ -254,7 +374,8 @@ class handler&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;SocketServer.BaseRequ
 
 &lt;p&gt;最终flag提示do u know base32，其实最开始看到密文结尾为=就尝试用了base64&lt;/p&gt;
 
-&lt;h3 id=&quot;11seabreezes-stack-100&quot;&gt;11.seabreeze’s stack 100&lt;/h3&gt;
+&lt;p id=&quot;j10&quot;&gt;&lt;/p&gt;
+&lt;h3 id=&quot;10seabreezes-stack-100&quot;&gt;10.seabreeze’s stack 100&lt;/h3&gt;
 
 &lt;p&gt;题目内容为“nc 202.121.178.181 12321”与一个下载链接[&lt;a href=&quot;https://ctf.0ops.sjtu.cn/attachment/download/stack&quot;&gt;stack_55a49bdfcdafd0c31657649e905486a4&lt;/a&gt;]，使用IDA打开分析。&lt;/p&gt;
 
@@ -277,7 +398,8 @@ class handler&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;SocketServer.BaseRequ
 
 &lt;h2 id=&quot;have-idea&quot;&gt;Have Idea&lt;/h2&gt;
 
-&lt;h3 id=&quot;12aes-duet&quot;&gt;12.aes-duet&lt;/h3&gt;
+&lt;p id=&quot;j11&quot;&gt;&lt;/p&gt;
+&lt;h3 id=&quot;11aes-duet&quot;&gt;11.aes-duet&lt;/h3&gt;
 
 &lt;p&gt;题目描述为一个链接[&lt;a href=&quot;https://ctf.0ops.sjtu.cn/attachment/download/aes_duet.zip&quot;&gt;aes_duet.zip&lt;/a&gt;]，解压得到一个密文和加密函数，文件如下&lt;/p&gt;
 
@@ -307,7 +429,7 @@ class handler&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;SocketServer.BaseRequ
     &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;I am a lovely flag: flag{ &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;s}&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;key&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;encode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'hex'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;思路很简单，就是AES两轮加密的中间相遇攻击，但是计算量有些庞大，虽然题目为了降低复杂性还提示了key的第一位为0最后一位为8，最终因为时间与硬件原因放弃。&lt;/p&gt;
+&lt;p&gt;思路很简单，就是AES两轮加密的中间相遇攻击，虽然题目为了降低复杂性提示了key的第一位为0最后一位为8，但是计算量还是十分庞大，而且计算出来中间值后，查询比较也需要耗时，发现心里的“B树”和“B+树”早忘的没影了，最终因为时间与硬件原因放弃。&lt;/p&gt;
 
 &lt;h2 id=&quot;感想&quot;&gt;感想&lt;/h2&gt;
 
@@ -315,7 +437,7 @@ class handler&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;SocketServer.BaseRequ
 
 &lt;p&gt;我们在众多bug中微妙的生活着。&lt;/p&gt;
 
-&lt;p&gt;以及PHP是世界上最好的语言。&lt;/p&gt;
+&lt;p&gt;PHP是世界上最好的语言。&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;/img/in-post/post-blog-j0serv8.gif&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;
 
