@@ -229,11 +229,9 @@ e = long(pub.e)
 
    [来自百度百科的例子](https://baike.baidu.com/item/MD5/212708?fr=aladdin#3_2)
 
-3. 最后，我们分析题目条件，题目给出了**src = md5(\$secret\|admin\|admin)**，我们需要构造一个**des = md5(\$secret\|admin\|xxxxxx)**，其中$secret长度未知，xxxxxx不能为admin，长度随意。
+3. 最后，我们分析题目条件，题目给出了**src = md5(\$secret\|admin\|admin)**，我们需要构造一个**des = md5(\$secret\|admin\|xxxxxx)**，其中$secret长度未知，xxxxxx不能为admin，长度随意。很容易想到如果我们的md5(\$secret\|admin\|xxxxxx)的生成过程和md5(\$secret\|admin\|admin)的生成过程前半部分相同，但是比其多出一个分组，那么des = Hmd5(src, xxxxxx的后一部分+此次的填充信息)。那么就要求xxxxxx = admin+src构造过程中的填充信息+448bit内的随意值，为了使得des计算方便，我们就令xxxxxx = admin + src构造过程中的填充信息，此时**des = Hmd5(src, des构造过程中的填充信息)**。
 
-4. 最后，我们分析题目条件，题目给出了**src = md5(\$secret\|admin\|admin)**，我们需要构造一个**des = md5(\$secret\|admin\|xxxxxx)**，其中$secret长度未知，xxxxxx不能为admin，长度随意。很容易想到如果我们的md5(\$secret\|admin\|xxxxxx)的生成过程和md5(\$secret\|admin\|admin)的生成过程前半部分相同，但是比其多出一个分组，那么des = Hmd5(src, xxxxxx的后一部分+此次的填充信息)。那么就要求xxxxxx = admin+src构造过程中的填充信息+448bit内的随意值，为了使得des计算方便，我们就令xxxxxx = admin + src构造过程中的填充信息，此时**des = Hmd5(src, des构造过程中的填充信息)**。
-
-5. python代码实现
+4. python代码实现
 
    为了实现方便，假设src的构造过程只使用了一个分组，即\$secret长度小于43，那么des过程中的填充信息就固定为 ``` '\x80'+'\x00'*55 +'\x00\x02'+'\x00'*6 ``` ，共512bit，64字节，其中'\x00\x02'表示源消息长度为512bit，而xxxxxx会根据$secret的长度变化而变化，设其长度为length，则src构造过程中的源消息长度为length+12字节，则```xxxxxx = "admin" + "\x80" + "\x00" * (length+12-1) + (length+12的8字节小端表示)```
 
