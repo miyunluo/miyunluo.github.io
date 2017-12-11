@@ -198,7 +198,7 @@ e = long(pub.e)
 
 ![img](/img/in-post/post-blog-jserv6.png)
 
-第一次访问会设置一个名为“hmac"的cookie，之后要求以POST的方式提交username与password，其中username字段必须为“admin”，password字段不能为“admin”，但是要求hamc与md5(" $secret\|admin\|admin")相等。
+第一次访问会设置一个名为“hmac"的cookie，之后要求以POST的方式提交username与password，其中username字段必须为“admin”，password字段不能为“admin”，但是要求hamc与md5(" $secret\|$username\|$password")相等。
 
 #### 心路历程：
 
