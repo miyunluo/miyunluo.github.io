@@ -13,7 +13,7 @@ tags:
 
 ## 前言
 
-SJTU 0ops 举办的0CTF校内交流赛，12月9号到10号。题目索引如下（文中涉及的文件下载[[链接](/img/in-post/Junior0ctfQuestion.zip)]
+SJTU 0ops 举办的0CTF校内交流赛，12月9号到10号。部分题目索引如下（文中涉及的文件下载[[链接](/img/in-post/Junior0ctfQuestion.zip)]
 
 [QQ Group ](#j0)|[Mystery Numbers ](#j1)|[Easy Traffic Analyze ](#j2)|[AES-server](#j3)
 [babyrsa ](#j4)|[Shatter Sha512!](#j5)|[Penetrate In ](#j6)|[Eva](#j7)
