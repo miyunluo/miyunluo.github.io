@@ -417,7 +417,7 @@ print("".join(decode("KNByeN88")+decode("KqslM52E")+decode("1L67aYRE")+decode("K
 
 ![img](/img/in-post/post-blog-jserv16.png)
 
-可以看到Sell Gotten与三个问题。执行nc指令
+可以看到Shell Gotten与三个问题。执行nc指令
 
 ![img](/img/in-post/post-blog-jserv17.png)
 
