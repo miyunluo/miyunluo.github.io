@@ -179,7 +179,7 @@
 
 <h2 id="前言">前言</h2>
 
-<p>SJTU 0ops 举办的0CTF校内交流赛，12月9号到10号。题目索引如下（文中涉及的文件下载[<a href="/img/in-post/Junior0ctfQuestion.zip">链接</a>]</p>
+<p>SJTU 0ops 举办的0CTF校内交流赛，12月9号到10号。部分题目索引如下（文中涉及的文件下载[<a href="/img/in-post/Junior0ctfQuestion.zip">链接</a>]</p>
 
 <table>
   <tbody>
@@ -376,7 +376,7 @@ class handler<span class="o">(</span>SocketServer.BaseRequestHandler<span class=
 
 <p><img src="/img/in-post/post-blog-jserv6.png" alt="img" /></p>
 
-<p>第一次访问会设置一个名为“hmac”的cookie，之后要求以POST的方式提交username与password，其中username字段必须为“admin”，password字段不能为“admin”，但是要求hamc与md5(“ $secret|admin|admin”)相等。</p>
+<p>第一次访问会设置一个名为“hmac”的cookie，之后要求以POST的方式提交username与password，其中username字段必须为“admin”，password字段不能为“admin”，但是要求hamc与md5(“ $secret|$username|$password”)相等。</p>
 
 <h4 id="心路历程">心路历程：</h4>
 
@@ -420,9 +420,6 @@ class handler<span class="o">(</span>SocketServer.BaseRequestHandler<span class=
     <p>在MD5算法中，首先需要对信息进行填充，使其位长对512求余的结果等于448，<strong>并且填充必须进行，即使其位长对512求余的结果等于448</strong>。因此，信息的位长（Bits Length）将被扩展至N*512+448，N为一个非负整数，N可以是零。然后在这个结果后面附加一个以64位二进制数字表示扩充前实际信息的长度（小端序）。</p>
 
     <p><a href="https://baike.baidu.com/item/MD5/212708?fr=aladdin#3_2">来自百度百科的例子</a></p>
-  </li>
-  <li>
-    <p>最后，我们分析题目条件，题目给出了<strong>src = md5($secret|admin|admin)</strong>，我们需要构造一个<strong>des = md5($secret|admin|xxxxxx)</strong>，其中$secret长度未知，xxxxxx不能为admin，长度随意。</p>
   </li>
   <li>
     <p>最后，我们分析题目条件，题目给出了<strong>src = md5($secret|admin|admin)</strong>，我们需要构造一个<strong>des = md5($secret|admin|xxxxxx)</strong>，其中$secret长度未知，xxxxxx不能为admin，长度随意。很容易想到如果我们的md5($secret|admin|xxxxxx)的生成过程和md5($secret|admin|admin)的生成过程前半部分相同，但是比其多出一个分组，那么des = Hmd5(src, xxxxxx的后一部分+此次的填充信息)。那么就要求xxxxxx = admin+src构造过程中的填充信息+448bit内的随意值，为了使得des计算方便，我们就令xxxxxx = admin + src构造过程中的填充信息，此时<strong>des = Hmd5(src, des构造过程中的填充信息)</strong>。</p>
@@ -611,7 +608,7 @@ class handler<span class="o">(</span>SocketServer.BaseRequestHandler<span class=
 
 <p><img src="/img/in-post/post-blog-jserv16.png" alt="img" /></p>
 
-<p>可以看到Sell Gotten与三个问题。执行nc指令</p>
+<p>可以看到Shell Gotten与三个问题。执行nc指令</p>
 
 <p><img src="/img/in-post/post-blog-jserv17.png" alt="img" /></p>
 
@@ -685,7 +682,7 @@ class handler<span class="o">(</span>SocketServer.BaseRequestHandler<span class=
     <span class="k">print</span> <span class="s">"I am a lovely flag: flag{ </span><span class="si">%</span><span class="s">s}"</span> <span class="o">%</span> <span class="n">key</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s">'hex'</span><span class="p">)</span>
 </code></pre></div></div>
 
-<p>思路很简单，就是AES两轮加密的中间相遇攻击，虽然题目为了降低复杂性提示了key的第一位为0最后一位为8，但是计算量还是十分庞大，而且计算出来中间值后，查询比较也需要耗时，发现心里的“B树”和“B+树”早忘的没影了，最终因为时间与硬件原因放弃。</p>
+<p>思路很简单，就是AES两轮加密的中间相遇攻击，虽然题目为了降低复杂性提示了key的第一位为0最后一位为8，但是计算量还是十分庞大，需要很多内存，而且计算出来中间值后，查询也会耗时，加上心里的“B树”和“B+树”早忘的没影了，最终因为时间与硬件原因放弃。</p>
 
 <h2 id="感想">感想</h2>
 
@@ -779,6 +776,10 @@ class handler<span class="o">(</span>SocketServer.BaseRequestHandler<span class=
                 <hr>
                 <h5>FRIENDS</h5>
                 <ul class="list-inline">
+                    
+                        <li><a href="https://mihawkhu.github.io">HuHu</a></li>
+                    
+                        <li><a href="https://manifoldqaq.github.io">manifoldQAQ</a></li>
                     
                         <li><a href="http://www.eamonalbert.com/">GinYM</a></li>
                     

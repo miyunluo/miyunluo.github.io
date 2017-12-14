@@ -161,8 +161,8 @@
             ">
     			<!-- Language Selector -->
 <select onchange= "onLanChange(this.options[this.options.selectedIndex].value)">
-    <option value="0" selected>  英语 English</option>
-    <option value="1" > 中文 Chinese </option>
+    <option value="0" selected>  简介 English</option>
+    <option value="1" > CV English </option>
 </select>
 
 <!-- Chinese Version -->
@@ -174,10 +174,11 @@
     </p>
     </blockquote>
 
-    <p>Hey，我是<strong>罗煜东</strong>，SJTU &amp; CS在读</p>
-    <p>Member of <a href = "http://bcmi.sjtu.edu.cn">BCMI</a>. Supervised by Prof. <a href = "http://bcmi.sjtu.edu.cn/~blu/">Baoliang Lu</a>.
+    <p>Hey, I m miyunLuo.</p>
+    <p>Undergraduate researcher at <a href = "http://bcmi.sjtu.edu.cn">BCMI</a>. Supervised by Prof. <a href = "http://bcmi.sjtu.edu.cn/~blu/">Baoliang Lu</a>.
     </p>
-    <p>Deadline是第一生产力。</p>
+    <p>Big fan of python</p>
+    <p><strong>Email</strong>: i@miyunluo.com</p>
     <br>
     <br>
     <br>
@@ -203,7 +204,6 @@
     <p>
         <!-- <strong>Resume</strong>:&nbsp CV (update: Mar. 2 2017)<br> -->
         <strong>Email</strong>: i@miyunluo.com<br>
-        <!--<strong>Tel</strong>: (+86) 182-0181-7587 -->
     </p>
 
     <h2>Education</h2>
@@ -343,7 +343,7 @@
     var $zh = document.querySelector(".zh");
     var $en = document.querySelector(".en");
     function onLanChange(index){
-        if(index == 1){
+        if(index == 0){
             $zh.style.display = "block";
             $en.style.display = "none";
         }else{
@@ -490,6 +490,10 @@
                 <hr>
                 <h5>FRIENDS</h5>
                 <ul class="list-inline">
+                    
+                        <li><a href="https://mihawkhu.github.io">HuHu</a></li>
+                    
+                        <li><a href="https://manifoldqaq.github.io">manifoldQAQ</a></li>
                     
                         <li><a href="http://www.eamonalbert.com/">GinYM</a></li>
                     

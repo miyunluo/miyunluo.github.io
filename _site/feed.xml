@@ -5,8 +5,8 @@
     <description>学习和生活</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Mon, 11 Dec 2017 19:37:55 +0800</pubDate>
-    <lastBuildDate>Mon, 11 Dec 2017 19:37:55 +0800</lastBuildDate>
+    <pubDate>Fri, 15 Dec 2017 01:09:03 +0800</pubDate>
+    <lastBuildDate>Fri, 15 Dec 2017 01:09:03 +0800</lastBuildDate>
     <generator>Jekyll v3.6.2</generator>
     
       <item>
@@ -17,7 +17,7 @@
 
 &lt;h2 id=&quot;前言&quot;&gt;前言&lt;/h2&gt;
 
-&lt;p&gt;SJTU 0ops 举办的0CTF校内交流赛，12月9号到10号。题目索引如下（文中涉及的文件下载[&lt;a href=&quot;/img/in-post/Junior0ctfQuestion.zip&quot;&gt;链接&lt;/a&gt;]&lt;/p&gt;
+&lt;p&gt;SJTU 0ops 举办的0CTF校内交流赛，12月9号到10号。部分题目索引如下（文中涉及的文件下载[&lt;a href=&quot;/img/in-post/Junior0ctfQuestion.zip&quot;&gt;链接&lt;/a&gt;]&lt;/p&gt;
 
 &lt;table&gt;
   &lt;tbody&gt;
@@ -214,7 +214,7 @@ class handler&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;SocketServer.BaseRequ
 
 &lt;p&gt;&lt;img src=&quot;/img/in-post/post-blog-jserv6.png&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;第一次访问会设置一个名为“hmac”的cookie，之后要求以POST的方式提交username与password，其中username字段必须为“admin”，password字段不能为“admin”，但是要求hamc与md5(“ $secret|admin|admin”)相等。&lt;/p&gt;
+&lt;p&gt;第一次访问会设置一个名为“hmac”的cookie，之后要求以POST的方式提交username与password，其中username字段必须为“admin”，password字段不能为“admin”，但是要求hamc与md5(“ $secret|$username|$password”)相等。&lt;/p&gt;
 
 &lt;h4 id=&quot;心路历程&quot;&gt;心路历程：&lt;/h4&gt;
 
@@ -258,9 +258,6 @@ class handler&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;SocketServer.BaseRequ
     &lt;p&gt;在MD5算法中，首先需要对信息进行填充，使其位长对512求余的结果等于448，&lt;strong&gt;并且填充必须进行，即使其位长对512求余的结果等于448&lt;/strong&gt;。因此，信息的位长（Bits Length）将被扩展至N*512+448，N为一个非负整数，N可以是零。然后在这个结果后面附加一个以64位二进制数字表示扩充前实际信息的长度（小端序）。&lt;/p&gt;
 
     &lt;p&gt;&lt;a href=&quot;https://baike.baidu.com/item/MD5/212708?fr=aladdin#3_2&quot;&gt;来自百度百科的例子&lt;/a&gt;&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;最后，我们分析题目条件，题目给出了&lt;strong&gt;src = md5($secret|admin|admin)&lt;/strong&gt;，我们需要构造一个&lt;strong&gt;des = md5($secret|admin|xxxxxx)&lt;/strong&gt;，其中$secret长度未知，xxxxxx不能为admin，长度随意。&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
     &lt;p&gt;最后，我们分析题目条件，题目给出了&lt;strong&gt;src = md5($secret|admin|admin)&lt;/strong&gt;，我们需要构造一个&lt;strong&gt;des = md5($secret|admin|xxxxxx)&lt;/strong&gt;，其中$secret长度未知，xxxxxx不能为admin，长度随意。很容易想到如果我们的md5($secret|admin|xxxxxx)的生成过程和md5($secret|admin|admin)的生成过程前半部分相同，但是比其多出一个分组，那么des = Hmd5(src, xxxxxx的后一部分+此次的填充信息)。那么就要求xxxxxx = admin+src构造过程中的填充信息+448bit内的随意值，为了使得des计算方便，我们就令xxxxxx = admin + src构造过程中的填充信息，此时&lt;strong&gt;des = Hmd5(src, des构造过程中的填充信息)&lt;/strong&gt;。&lt;/p&gt;
@@ -449,7 +446,7 @@ class handler&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;SocketServer.BaseRequ
 
 &lt;p&gt;&lt;img src=&quot;/img/in-post/post-blog-jserv16.png&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;可以看到Sell Gotten与三个问题。执行nc指令&lt;/p&gt;
+&lt;p&gt;可以看到Shell Gotten与三个问题。执行nc指令&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;/img/in-post/post-blog-jserv17.png&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;
 
@@ -523,7 +520,7 @@ class handler&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;SocketServer.BaseRequ
     &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;I am a lovely flag: flag{ &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;s}&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;key&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;encode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'hex'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;思路很简单，就是AES两轮加密的中间相遇攻击，虽然题目为了降低复杂性提示了key的第一位为0最后一位为8，但是计算量还是十分庞大，而且计算出来中间值后，查询比较也需要耗时，发现心里的“B树”和“B+树”早忘的没影了，最终因为时间与硬件原因放弃。&lt;/p&gt;
+&lt;p&gt;思路很简单，就是AES两轮加密的中间相遇攻击，虽然题目为了降低复杂性提示了key的第一位为0最后一位为8，但是计算量还是十分庞大，需要很多内存，而且计算出来中间值后，查询也会耗时，加上心里的“B树”和“B+树”早忘的没影了，最终因为时间与硬件原因放弃。&lt;/p&gt;
 
 &lt;h2 id=&quot;感想&quot;&gt;感想&lt;/h2&gt;
 
