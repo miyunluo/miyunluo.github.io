@@ -82,6 +82,9 @@ featured-condition-size: 1              # A tag will be featured if the size of 
 # Friends
 friends: [
     {
+        title: "manifoldQAQ",
+        href: "https://manifoldqaq.github.io"
+    },{
         title: "GinYM",
         href: "http://www.eamonalbert.com/"
     },{
