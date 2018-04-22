@@ -189,18 +189,18 @@
 
 <h3 id="1compile-python-in-local-directory">1.Compile python in local directory</h3>
 
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mkdir ~/python 
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">mkdir</span> ~/python 
 <span class="nb">cd</span> ~/python
 wget https://www.python.org/ftp/python/2.7.13/Python-2.7.13.tgz
 <span class="nb">tar </span>zxfv Python-2.7.13.tgz
-find ~/python <span class="nt">-type</span> d | xargs chmod 0755
+find ~/python <span class="nt">-type</span> d | xargs <span class="nb">chmod </span>0755
 <span class="nb">cd </span>Python-2.7.13
 </code></pre></div></div>
 
 <p>我选择的安装目录是”~/python”。解压完进入文件夹，接下就是编译了</p>
 
 <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./configure <span class="nt">--prefix</span><span class="o">=</span><span class="nv">$HOME</span>/python
-make <span class="o">&amp;&amp;</span> make install
+make <span class="o">&amp;&amp;</span> make <span class="nb">install</span>
 </code></pre></div></div>
 
 <p><em>$HOME/python</em> 是引导其安装在自己的目录里(即就是~/python)，否则默认安装路径在/usr下，一般用户没有权限读写此文件夹。</p>
@@ -255,13 +255,13 @@ value. collect2: ld returned 1 <span class="nb">exit </span>status.
 <p>似乎是python没编译好，报错建议 “recompile with -fPIC”，于是添加这个选项重新编译</p>
 
 <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./configure <span class="nt">--prefix</span><span class="o">=</span><span class="nv">$HOME</span>/python <span class="nt">-enable-shared</span> <span class="nv">CFLAGS</span><span class="o">=</span><span class="nt">-fPIC</span> 
-make <span class="o">&amp;&amp;</span> make install
+make <span class="o">&amp;&amp;</span> make <span class="nb">install</span>
 </code></pre></div></div>
 
 <p>这次编译完后，python直接无法使用了。于是把~/python目录清空，重新解压，第三次编译，不使用“fPIC”。</p>
 
 <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./configure <span class="nt">--prefix</span><span class="o">=</span><span class="nv">$HOME</span>/python
-make <span class="o">&amp;&amp;</span> make install
+make <span class="o">&amp;&amp;</span> make <span class="nb">install</span>
 </code></pre></div></div>
 
 <p>至于第三次为什么没有严重错误，自己也不是十分清楚，但也不能归于玄学范畴。我猜测第一次失败可能是之前2.7.5版本python的各种库依然存在，虽然reinstall过了，但不能保证没有遗漏。进行第三次前对旧文件删除的比较彻底，所有的模块都重新安装，于是没有产生致命错误。</p>
@@ -314,7 +314,7 @@ make <span class="o">&amp;&amp;</span> make install
                     <div class="tags">
         				
                             
-                				<a href="/tags/#生活" title="生活" rel="5">
+                				<a href="/tags/#生活" title="生活" rel="6">
                                     生活
                                 </a>
                             
@@ -497,7 +497,7 @@ $(document).ready(function () {
                     
                     
                     <li>
-                        <a target="_blank" href="http://weibo.com/5522737680">
+                        <a target="_blank" href="http://weibo.com/6465095643">
                             <span class="fa-stack fa-lg">
                                 <i class="fa fa-circle fa-stack-2x"></i>
                                 <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
@@ -530,7 +530,7 @@ $(document).ready(function () {
                     
                 </ul>
                 <p class="copyright text-muted">
-                    Copyright &copy; Blog Nullptr 2017
+                    Copyright &copy; Blog Nullptr 2018
                     <br>
                     Theme by <a href="http://huangxuan.me">Hux</a>
                 </p>

@@ -219,13 +219,13 @@
 
 <p>现在我们得到一个分组包含的数字个数为0，于是我们找到了10之后的数字11，12，13，14，15都缺失了。</p>
 
-<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// a是原始数组，b是当前位为1的数组，c是当前位为0的数组
-</span><span class="kt">int</span> <span class="nf">split</span><span class="p">(</span><span class="kt">int</span> <span class="o">*</span><span class="n">a</span><span class="p">,</span> <span class="kt">int</span> <span class="o">*</span><span class="n">b</span><span class="p">,</span> <span class="kt">int</span> <span class="o">*</span><span class="n">c</span><span class="p">,</span> <span class="kt">int</span> <span class="n">a_len</span><span class="p">,</span><span class="kt">int</span> <span class="n">bit</span><span class="p">)</span>
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// a是原始数组，b是当前位为1的数组，c是当前位为0的数组</span>
+<span class="kt">int</span> <span class="nf">split</span><span class="p">(</span><span class="kt">int</span> <span class="o">*</span><span class="n">a</span><span class="p">,</span> <span class="kt">int</span> <span class="o">*</span><span class="n">b</span><span class="p">,</span> <span class="kt">int</span> <span class="o">*</span><span class="n">c</span><span class="p">,</span> <span class="kt">int</span> <span class="n">a_len</span><span class="p">,</span><span class="kt">int</span> <span class="n">bit</span><span class="p">)</span>
 <span class="p">{</span>
 	<span class="kt">int</span> <span class="n">b_iterator</span><span class="p">,</span> <span class="n">c_iterator</span><span class="p">,</span> <span class="n">i</span><span class="p">;</span>
 	<span class="kt">int</span> <span class="n">v</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">ans</span><span class="p">;</span>
-	<span class="k">while</span><span class="p">(</span><span class="n">bit</span><span class="o">--</span><span class="p">){</span> <span class="c1">// bit starts from 31
-</span>		<span class="n">v</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="o">&lt;&lt;</span><span class="n">bit</span><span class="p">);</span>
+	<span class="k">while</span><span class="p">(</span><span class="n">bit</span><span class="o">--</span><span class="p">){</span> <span class="c1">// bit starts from 31</span>
+		<span class="n">v</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="o">&lt;&lt;</span><span class="n">bit</span><span class="p">);</span>
 		<span class="k">for</span><span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="n">b_iterator</span> <span class="o">=</span> <span class="n">c_iterator</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">a_len</span><span class="p">;</span><span class="o">++</span><span class="n">i</span><span class="p">)</span>
 		<span class="p">{</span>
 			<span class="k">if</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">&gt;&gt;</span><span class="n">bit</span><span class="p">)</span> <span class="n">b</span><span class="p">[</span><span class="n">b_iterator</span> <span class="o">++</span><span class="p">]</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
@@ -277,14 +277,14 @@
 
 <p>首先移动x[0]到临时变量t，然后移动x[i]至x[0]，x[2i]至x[i]，依次类推(x中的所有下标对n取模)，直至返回到取x[0]中的元素，此时改为从t取值然后终止过程。如果该过程没有移动全部元素，就从x[1]开始再次进行移动，直到所有的元素都已经移动为止。</p>
 
-<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//传说中的共(g)产(c)党(d)算法,求最大公约数
-</span><span class="kt">int</span> <span class="nf">gcd</span><span class="p">(</span><span class="kt">int</span> <span class="n">a</span><span class="p">,</span> <span class="kt">int</span> <span class="n">b</span><span class="p">)</span>
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//传说中的共(g)产(c)党(d)算法,求最大公约数</span>
+<span class="kt">int</span> <span class="nf">gcd</span><span class="p">(</span><span class="kt">int</span> <span class="n">a</span><span class="p">,</span> <span class="kt">int</span> <span class="n">b</span><span class="p">)</span>
 <span class="p">{</span>
     <span class="k">if</span><span class="p">(</span><span class="n">b</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="k">return</span> <span class="n">a</span><span class="p">;</span>
     <span class="k">return</span> <span class="n">gcd</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">a</span> <span class="o">%</span> <span class="n">b</span><span class="p">);</span>
 <span class="p">}</span>
-<span class="c1">//num为等待旋转的数组,len为长度,rotdist为位移长度
-</span><span class="kt">void</span> <span class="nf">rotate</span><span class="p">(</span><span class="kt">int</span> <span class="o">*</span><span class="n">nums</span><span class="p">,</span> <span class="kt">int</span> <span class="n">len</span><span class="p">,</span> <span class="kt">int</span> <span class="n">rotdist</span><span class="p">)</span> <span class="p">{</span>
+<span class="c1">//num为等待旋转的数组,len为长度,rotdist为位移长度</span>
+<span class="kt">void</span> <span class="nf">rotate</span><span class="p">(</span><span class="kt">int</span> <span class="o">*</span><span class="n">nums</span><span class="p">,</span> <span class="kt">int</span> <span class="n">len</span><span class="p">,</span> <span class="kt">int</span> <span class="n">rotdist</span><span class="p">)</span> <span class="p">{</span>
     <span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
     <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">gcd</span><span class="p">(</span><span class="n">rotdist</span><span class="p">,</span> <span class="n">len</span><span class="p">);</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
         <span class="kt">int</span> <span class="n">tmp</span> <span class="o">=</span> <span class="n">nums</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
@@ -383,7 +383,7 @@
                     <div class="tags">
         				
                             
-                				<a href="/tags/#生活" title="生活" rel="5">
+                				<a href="/tags/#生活" title="生活" rel="6">
                                     生活
                                 </a>
                             
@@ -566,7 +566,7 @@ $(document).ready(function () {
                     
                     
                     <li>
-                        <a target="_blank" href="http://weibo.com/5522737680">
+                        <a target="_blank" href="http://weibo.com/6465095643">
                             <span class="fa-stack fa-lg">
                                 <i class="fa fa-circle fa-stack-2x"></i>
                                 <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
@@ -599,7 +599,7 @@ $(document).ready(function () {
                     
                 </ul>
                 <p class="copyright text-muted">
-                    Copyright &copy; Blog Nullptr 2017
+                    Copyright &copy; Blog Nullptr 2018
                     <br>
                     Theme by <a href="http://huangxuan.me">Hux</a>
                 </p>

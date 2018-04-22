@@ -10,9 +10,9 @@
     <meta name="keyword"  content=" 芈云落, miyunLuo, MiyunLuo Blog">
     <link rel="shortcut icon" href="/img/favicon.ico">
 
-    <title>数据决定程序结构 && 编写正确的程序 - Blog Nullptr</title>
+    <title>自己好菜 - Blog Nullptr</title>
 
-    <link rel="canonical" href="http://localhost:4000/2016/10/21/BCZJ34/">
+    <link rel="canonical" href="http://localhost:4000/2018/03/25/realrbl/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -132,12 +132,12 @@
 
     <!-- Image to hack wechat -->
 <!-- <img src="/img/icon_wechat.png" width="0" height="0"> -->
-<!-- <img src="/img/post-bg-BCZJ34.jpg" width="0" height="0"> -->
+<!-- <img src="/img/post-bg-realrbl.jpg" width="0" height="0"> -->
 
 <!-- Post Header -->
 <style type="text/css">
     header.intro-header{
-        background-image: url('/img/post-bg-BCZJ34.jpg')
+        background-image: url('/img/post-bg-realrbl.jpg')
     }
 </style>
 <header class="intro-header" >
@@ -147,15 +147,15 @@
                 <div class="post-heading">
                     <div class="tags">
                         
-                        <a class="tag" href="/tags/#编程珠玑" title="编程珠玑">编程珠玑</a>
+                        <a class="tag" href="/tags/#生活" title="生活">生活</a>
                         
                     </div>
-                    <h1>数据决定程序结构 && 编写正确的程序</h1>
+                    <h1>自己好菜</h1>
                     
                     
-                    <h2 class="subheading"> "《编程珠玑》第三｜四章"</h2>
+                    <h2 class="subheading"> "没有副标题"</h2>
                     
-                    <span class="meta">Posted by Miyunluo on October 21, 2016</span>
+                    <span class="meta">Posted by Miyunluo on March 25, 2018</span>
                 </div>
             </div>
         </div>
@@ -174,69 +174,79 @@
                 post-container">
 
 				<blockquote>
-  <p>“文字较多”</p>
+  <p>“这里也没有”</p>
 </blockquote>
 
-<h2 id="前言">前言</h2>
+<h2 id="一点感想">一点感想</h2>
 
-<p>三四章的说明性内容较多，就放在一起来写吧。</p>
+<p>感觉自己弱爆了，这种发现每天都有，一来好几件，sigh，<del>我要坚强</del>。</p>
 
 <hr />
 
-<h2 id="正文">正文</h2>
+<h2 id="关于实习">关于实习</h2>
 
-<p>第三章说明了数据对程序的决定性，正如书中的原话所说 <strong>(数据的)表示形式是程序设计的根本</strong>。</p>
+<p>这学期找了鹅厂的实习，有点被面试官忽悠了的感觉，<del>希望这句不要被他看到</del>。</p>
 
-<p>这让我不由的想起之前做某道OJ题，看到某大牛提供的答案因为巧妙利用了输入数据的性质而在线性的时间AC，当时居然有点觉得这是奇技淫巧，不可取。NAIVE！</p>
+<p>在大公司实习</p>
 
-<p>当程序有很多重复部分时，我们可以使用<strong>格式编程</strong>，可以使得代码简洁易于维护。当然，书中也鼓励我们使用已有的轮子，节约时间与代码量。</p>
+<p>优点：</p>
 
-<p>第四章着重于对程序的理解以及对<strong>程序正确性</strong>的证明。</p>
+<ul>
+  <li>公司福利好</li>
+  <li>工作轻松</li>
+  <li>没了</li>
+</ul>
 
-<p>书中花了大量篇幅论述了二分搜索的<strong>停机证明</strong>。个人感觉，要证明自己程序的正确性其实并不容易，比如第四章exe5。</p>
+<p>缺点：</p>
 
-<p>下面是两道练习题</p>
+<ul>
+  <li>工作节奏慢</li>
+  <li>技术氛围不浓</li>
+  <li>实习生无法接触核心业务</li>
+</ul>
 
-<h3 id="chapter-4-exe2">Chapter 4 exe2</h3>
+<p>不过谁会用实习生参与核心算法开发好伐。</p>
 
-<blockquote>
-  <p>如果原始的二分搜索对你来说太过容易，那么请试试这个演化后的版本：把 t 在数组中第一次出现的位置返回给 p。要求代码对数组元素进行对数次比较（该任务可以在 log2(n) 次比较之内完成）。</p>
-</blockquote>
+<p>只能试试能不能把那个图像自动调整的模型做出来。我还是想做自己喜欢做的事情。</p>
 
-<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// a是排序好的数组，l,r 为左右界，t为查找的数</span>
-<span class="kt">int</span> <span class="nf">BinarySearch</span><span class="p">(</span><span class="kt">int</span> <span class="o">*</span><span class="n">a</span><span class="p">,</span> <span class="kt">int</span> <span class="n">l</span><span class="p">,</span> <span class="kt">int</span> <span class="n">r</span><span class="p">,</span> <span class="kt">int</span> <span class="n">t</span><span class="p">)</span>
-<span class="p">{</span>
-	<span class="k">while</span><span class="p">(</span><span class="n">l</span> <span class="o">&lt;=</span> <span class="n">r</span><span class="p">)</span>
-	<span class="p">{</span>
-		<span class="k">if</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="n">l</span><span class="p">]</span> <span class="o">==</span> <span class="n">t</span><span class="p">)</span> <span class="k">return</span> <span class="n">l</span><span class="p">;</span>
-		<span class="kt">int</span> <span class="n">mid</span> <span class="o">=</span> <span class="p">(</span><span class="n">l</span><span class="o">+</span><span class="n">r</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span>
-		<span class="k">if</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="n">mid</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">t</span><span class="p">)</span> <span class="n">l</span> <span class="o">=</span> <span class="n">mid</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
-		<span class="k">if</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="n">mid</span><span class="p">]</span> <span class="o">==</span> <span class="n">t</span><span class="p">)</span> <span class="n">r</span> <span class="o">=</span> <span class="n">mid</span><span class="p">;</span>
-		<span class="k">if</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="n">mid</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">t</span><span class="p">)</span> <span class="n">r</span> <span class="o">=</span> <span class="n">mid</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span>
-	<span class="p">}</span>
-	<span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>  <span class="c1">//not find return -1</span>
-<span class="p">}</span>
-</code></pre></div></div>
-<p>思路很好理解，因为我们要找最先出现的位置，那么我们总是要寻找尽量靠左的部分，于是我们每次都尽可能往左递归。</p>
+<p>(jekyll装了几个小时没装好，现在的网速真是让人捉急)</p>
 
-<h3 id="chapter-4-exe5">Chapter 4 exe5</h3>
+<hr />
 
-<blockquote>
-  <p>证明下面的程序在输入 x 为正整数时能够终止。</p>
-</blockquote>
+<h2 id="补加一段">补加一段</h2>
 
-<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">while</span> <span class="n">x</span> <span class="o">!=</span> <span class="mi">1</span> <span class="k">do</span>
-	<span class="k">if</span> <span class="n">even</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-		<span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">/</span><span class="mi">2</span>
-	<span class="k">else</span>
-		<span class="n">x</span> <span class="o">=</span> <span class="mi">3</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span> <span class="mi">1</span>
-</code></pre></div></div>
+<p>整个二月末到三月末每天都在惶恐中度过，每天浑浑噩噩地混日子，不想面对现实，这种感觉真是难受。今早又按照惯例逛了一遍地里和gradcafe，看了一下别人的结果以及背景，感觉自己应该是凉了（bgm《凉凉》走起）。分析一下问题，完全DIY，对自己定位不够准确，论文太少，GRE出分太迟，有个别学校不给update，申请学校数量有点少，且层次不清晰。之前觉得中介太坑，现在想想如果当时咨询一下也好。</p>
 
-<p>这题开始感觉挺简单的，后来愈发感觉不对劲，上网查了查发现这是一个著名的数学猜想，名字比较多，就取其中一个通用的，叫它3x+1问题好了。（感觉作者把这个题放在这里略不厚道）</p>
+<p>在公司实习的体验让我明白我目前还是更倾向于上学或科研，(不知道这种感觉是否片面)。</p>
 
-<p>网上的证明众说纷纭啊，暂时先放下0.0</p>
+<p>目前打算：</p>
 
-<p>– miyunluo 于2016.10</p>
+<ol>
+  <li>顺利毕业</li>
+  <li>找一份科研实习，这次无论如何要发出paper，所以要找一个内容match的</li>
+  <li>准备申春季</li>
+  <li>顺便关注一下公司春招</li>
+</ol>
+
+<h2 id="追加">追加</h2>
+
+<p>[3.31]写在3月最后一天。现在仔细想想整个二月和三月简直是被我浪费掉了，整天精神恍惚，夜里失眠，百日做梦。要说这个申请季最大的收获就是认识到自己是多么的菜了吧，也算是人生的一笔重要财富了。今天随便翻了翻知乎的那个老问题，发现了很多新回答，看来像我这种也是大有人在啊。总之不想再停留在这种状态里了，4月份尽快辞掉这个毫无价值的实习，认真做毕设，投简历，准备面试。以上。</p>
+
+<h2 id="事情突然有了转机">事情突然有了转机</h2>
+
+<p>[4.17]4月初突然被一个教授联系，约skype面试了一波，感觉聊的挺愉快，谈话结束就给了口头offer，等了一周就收到了学校的正式信件。虽说SFU在国内名气不大，但是在BC省除过UBC就是SFU了，而且还给了钱，出国压力小一点，教授是CMU master and Phd看上去也不错。<del>就是温哥华土豪太多了，很有压力。</del></p>
+
+<p>上周从腾讯跑路顺便去面了百度，下周入职百度，听说那个部门还有几个交大学长，工作也是写代码的活，应该会比之前天天配json的好。这段腾讯实习经历，给我的感觉是十分不好的</p>
+
+<ul>
+  <li>缺乏技术氛围</li>
+  <li>办事效率低</li>
+  <li>leader不管</li>
+  <li>最要命的是，内部工具代码没有文档，也没有新手教程，也没有指导(三无)</li>
+</ul>
+
+<p>没搞懂一个写app的部门居然要那么多人？真感觉腾讯可以把这种活外包出去。这一点我觉得依图做的还是不错的，实习生去了有专门的新手教程，帮助上手，而且还解决住宿，对交大cs学生也很友好，毕竟创始人是交大ACM队的，层次高一些，但应该暂时没机会去了。</p>
+
 
 
                 <hr>
@@ -247,13 +257,9 @@
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/2016/10/15/BCZJ2/" data-toggle="tooltip" data-placement="top" title="啊哈！算法">&larr; Previous Post</a>
+                        <a href="/2017/12/10/jun0ctf/" data-toggle="tooltip" data-placement="top" title="Junior 0CTF 2017 WriteUp (部分)">&larr; Previous Post</a>
                     </li>
                     
-                    
-                    <li class="next">
-                        <a href="/2016/10/28/DS/" data-toggle="tooltip" data-placement="top" title="基于 Deterministic Select 的快速选择">Next Post &rarr;</a>
-                    </li>
                     
                 </ul>
 
@@ -350,8 +356,8 @@
 <script type="text/javascript">
     /* * * CONFIGURATION VARIABLES * * */
     var disqus_shortname = "miyunluo";
-    var disqus_identifier = "/2016/10/21/BCZJ34";
-    var disqus_url = "http://localhost:4000/2016/10/21/BCZJ34/";
+    var disqus_identifier = "/2018/03/25/realrbl";
+    var disqus_url = "http://localhost:4000/2018/03/25/realrbl/";
 
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;

@@ -201,8 +201,8 @@
 
 <p>在快速选择时，因为我们要寻找第k大的数，所以我们可以记录一下在上面斜体字执行完后，pivot 是这个数组中的第几个（假设为第 m 个），如果k == m，那么 pivot就是第k大的数，如果k &lt; m，那么第 k 大的数在 pivot 左边的数组中，依然是第k大，否则在 pivot 右边的数组中，是第 k - m 大。</p>
 
-<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// 伪代码
-</span><span class="kt">int</span> <span class="nf">QuickSelect</span><span class="p">(</span><span class="n">array</span> <span class="n">A</span><span class="p">,</span> <span class="kt">int</span> <span class="n">k</span><span class="p">)</span>
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// 伪代码</span>
+<span class="kt">int</span> <span class="nf">QuickSelect</span><span class="p">(</span><span class="n">array</span> <span class="n">A</span><span class="p">,</span> <span class="kt">int</span> <span class="n">k</span><span class="p">)</span>
 <span class="p">{</span>
 	<span class="k">if</span> <span class="o">|</span><span class="n">A</span><span class="o">|</span> <span class="o">==</span> <span class="mi">0</span> <span class="o">:</span> <span class="n">error</span>
 	<span class="k">if</span> <span class="o">|</span><span class="n">A</span><span class="o">|</span> <span class="o">==</span> <span class="mi">1</span> <span class="o">:</span> <span class="k">if</span> <span class="n">K</span> <span class="o">==</span> <span class="mi">1</span> <span class="o">:</span><span class="k">return</span> <span class="n">A</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
@@ -273,12 +273,12 @@
 
 <p>下面是算法的代码实现，在实际过程中，我们没必要对5个数的小数组再进行按照中位数排序，只要递归找到中位数的中位数即可（上面对5个小数组排序只是为了说明所占比例问题）</p>
 
-<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//
-//  main.cpp
-//  deterministic_select
-//
-//  Created on 16/10/27.
-</span>
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//</span>
+<span class="c1">//  main.cpp</span>
+<span class="c1">//  deterministic_select</span>
+<span class="c1">//</span>
+<span class="c1">//  Created on 16/10/27.</span>
+
 <span class="cp">#include &lt;iostream&gt;
 </span><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
 
@@ -436,7 +436,7 @@
                     <div class="tags">
         				
                             
-                				<a href="/tags/#生活" title="生活" rel="5">
+                				<a href="/tags/#生活" title="生活" rel="6">
                                     生活
                                 </a>
                             
@@ -619,7 +619,7 @@ $(document).ready(function () {
                     
                     
                     <li>
-                        <a target="_blank" href="http://weibo.com/5522737680">
+                        <a target="_blank" href="http://weibo.com/6465095643">
                             <span class="fa-stack fa-lg">
                                 <i class="fa fa-circle fa-stack-2x"></i>
                                 <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
@@ -652,7 +652,7 @@ $(document).ready(function () {
                     
                 </ul>
                 <p class="copyright text-muted">
-                    Copyright &copy; Blog Nullptr 2017
+                    Copyright &copy; Blog Nullptr 2018
                     <br>
                     Theme by <a href="http://huangxuan.me">Hux</a>
                 </p>

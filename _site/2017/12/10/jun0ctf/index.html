@@ -529,15 +529,15 @@ class handler<span class="o">(</span>SocketServer.BaseRequestHandler<span class=
 
 <div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">_BYTE</span> <span class="o">*</span><span class="kr">__fastcall</span> <span class="nf">sub_4006D6</span><span class="p">(</span><span class="kt">unsigned</span> <span class="n">__int64</span> <span class="n">messagePtr</span><span class="p">,</span> <span class="kt">signed</span> <span class="kt">int</span> <span class="n">len</span><span class="p">)</span>
 <span class="p">{</span>
-  <span class="kt">signed</span> <span class="kt">int</span> <span class="n">i</span><span class="p">;</span> <span class="c1">// [sp+14h] [bp-2Ch]@4
-</span>  <span class="kt">signed</span> <span class="kt">int</span> <span class="n">j</span><span class="p">;</span> <span class="c1">// [sp+14h] [bp-2Ch]@9
-</span>  <span class="kt">signed</span> <span class="kt">int</span> <span class="n">left_len</span><span class="p">;</span> <span class="c1">// [sp+18h] [bp-28h]@2
-</span>  <span class="kt">int</span> <span class="n">v6</span><span class="p">;</span> <span class="c1">// [sp+1Ch] [bp-24h]@9
-</span>  <span class="kt">unsigned</span> <span class="n">__int64</span> <span class="n">check_sum</span><span class="p">;</span> <span class="c1">// [sp+20h] [bp-20h]@2
-</span>  <span class="kt">unsigned</span> <span class="n">__int64</span> <span class="n">new_message_ptr</span><span class="p">;</span> <span class="c1">// [sp+28h] [bp-18h]@1
-</span>  <span class="n">_BYTE</span> <span class="o">*</span><span class="n">group_secret</span><span class="p">;</span> <span class="c1">// [sp+30h] [bp-10h]@1
-</span>  <span class="n">_BYTE</span> <span class="o">*</span><span class="n">secret</span><span class="p">;</span> <span class="c1">// [sp+38h] [bp-8h]@1
-</span>
+  <span class="kt">signed</span> <span class="kt">int</span> <span class="n">i</span><span class="p">;</span> <span class="c1">// [sp+14h] [bp-2Ch]@4</span>
+  <span class="kt">signed</span> <span class="kt">int</span> <span class="n">j</span><span class="p">;</span> <span class="c1">// [sp+14h] [bp-2Ch]@9</span>
+  <span class="kt">signed</span> <span class="kt">int</span> <span class="n">left_len</span><span class="p">;</span> <span class="c1">// [sp+18h] [bp-28h]@2</span>
+  <span class="kt">int</span> <span class="n">v6</span><span class="p">;</span> <span class="c1">// [sp+1Ch] [bp-24h]@9</span>
+  <span class="kt">unsigned</span> <span class="n">__int64</span> <span class="n">check_sum</span><span class="p">;</span> <span class="c1">// [sp+20h] [bp-20h]@2</span>
+  <span class="kt">unsigned</span> <span class="n">__int64</span> <span class="n">new_message_ptr</span><span class="p">;</span> <span class="c1">// [sp+28h] [bp-18h]@1</span>
+  <span class="n">_BYTE</span> <span class="o">*</span><span class="n">group_secret</span><span class="p">;</span> <span class="c1">// [sp+30h] [bp-10h]@1</span>
+  <span class="n">_BYTE</span> <span class="o">*</span><span class="n">secret</span><span class="p">;</span> <span class="c1">// [sp+38h] [bp-8h]@1</span>
+
   <span class="n">secret</span> <span class="o">=</span> <span class="n">malloc</span><span class="p">(</span><span class="mi">8</span> <span class="o">*</span> <span class="p">(</span><span class="n">len</span> <span class="o">/</span> <span class="mi">5</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
   <span class="n">new_message_ptr</span> <span class="o">=</span> <span class="n">messagePtr</span><span class="p">;</span>
   <span class="n">group_secret</span> <span class="o">=</span> <span class="n">secret</span><span class="p">;</span>
@@ -709,6 +709,10 @@ class handler<span class="o">(</span>SocketServer.BaseRequestHandler<span class=
                     </li>
                     
                     
+                    <li class="next">
+                        <a href="/2018/03/25/realrbl/" data-toggle="tooltip" data-placement="top" title="自己好菜">Next Post &rarr;</a>
+                    </li>
+                    
                 </ul>
 
 
@@ -738,7 +742,7 @@ class handler<span class="o">(</span>SocketServer.BaseRequestHandler<span class=
                     <div class="tags">
         				
                             
-                				<a href="/tags/#生活" title="生活" rel="5">
+                				<a href="/tags/#生活" title="生活" rel="6">
                                     生活
                                 </a>
                             
@@ -921,7 +925,7 @@ $(document).ready(function () {
                     
                     
                     <li>
-                        <a target="_blank" href="http://weibo.com/5522737680">
+                        <a target="_blank" href="http://weibo.com/6465095643">
                             <span class="fa-stack fa-lg">
                                 <i class="fa fa-circle fa-stack-2x"></i>
                                 <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
@@ -954,7 +958,7 @@ $(document).ready(function () {
                     
                 </ul>
                 <p class="copyright text-muted">
-                    Copyright &copy; Blog Nullptr 2017
+                    Copyright &copy; Blog Nullptr 2018
                     <br>
                     Theme by <a href="http://huangxuan.me">Hux</a>
                 </p>
