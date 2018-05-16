@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <!-- hexo-inject:begin --><!-- hexo-inject:end --><!-- so meta -->
+    <!-- so meta -->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
@@ -69,14 +69,14 @@
     
       <link rel="stylesheet" href="/css/rtl.css">
     
-    <!-- rss --><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+    <!-- rss -->
     
     
 </head>
 
 <body class="max-width mx-auto px3 ltr">
     
-      <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="header-post">
+      <div id="header-post">
   <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
   <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
   <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
@@ -253,7 +253,7 @@
 <p>为了实现方便，假设src的构造过程只使用了一个分组，即\$secret长度小于43，那么des过程中的填充信息就固定为 <code>&#39;\x80&#39;+&#39;\x00&#39;*55 +&#39;\x00\x02&#39;+&#39;\x00&#39;*6</code> ，共512bit，64字节，其中’\x00\x02’表示源消息长度为512bit，而xxxxxx会根据$secret的长度变化而变化，设其长度为length，则src构造过程中的源消息长度为length+12字节，则<code>xxxxxx = &quot;admin&quot; + &quot;\x80&quot; + &quot;\x00&quot; * (length+12-1) + (length+12的8字节小端表示)</code></p>
 </li>
 </ol>
-<figure class="highlight hsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">import requests</span><br><span class="line">bytearr = [<span class="string">'\x00'</span>,<span class="string">'\x08'</span>,<span class="string">'\x10'</span>,<span class="string">'\x18'</span>,<span class="string">'\x20'</span>,<span class="string">'\x28'</span>,<span class="string">'\x30'</span>,<span class="string">'\x38'</span>,<span class="string">'\x40'</span>,<span class="string">'\x48'</span>,<span class="string">'\x50'</span>,<span class="string">'\x58'</span>,<span class="string">'\x60'</span>,<span class="string">'\x68'</span>,<span class="string">'\x70'</span>,<span class="string">'\x78'</span>,<span class="string">'\x80'</span>,<span class="string">'\x88'</span>,<span class="string">'\x90'</span>,<span class="string">'\x98'</span>,<span class="string">'\xa0'</span>,<span class="string">'\xa8'</span>,<span class="string">'\xb0'</span>,<span class="string">'\xb8'</span>,<span class="string">'\xc0'</span>,<span class="string">'\xc8'</span>,<span class="string">'\xd0'</span>,<span class="string">'\xd8'</span>,<span class="string">'\xe0'</span>,<span class="string">'\xe8'</span>,<span class="string">'\xf0'</span>,<span class="string">'\xf8'</span>,]</span><br><span class="line">bitarr = [<span class="string">'\x00'</span>,<span class="string">'\x01'</span>,<span class="string">'\x02'</span>, <span class="string">'\x03'</span>, <span class="string">'\x06'</span>, <span class="string">'\x07'</span>, <span class="string">'\x08'</span>, <span class="string">'\x09'</span>, <span class="string">'\x0a'</span>, <span class="string">'\x0b'</span>]</span><br><span class="line"><span class="keyword">length</span> = <span class="number">42</span></span><br><span class="line">session = requests.Session()</span><br><span class="line"><span class="keyword">for</span> <span class="keyword">length</span> in range(<span class="number">43</span>):</span><br><span class="line">        <span class="meta"># say origin len &lt; <span class="number">43</span></span></span><br><span class="line">        origin_len = <span class="keyword">length</span> + <span class="number">12</span></span><br><span class="line">        padding_len = (<span class="number">56</span> - origin_len)</span><br><span class="line">        padding = <span class="string">"\x80"</span> + <span class="string">"\x00"</span> * (padding_len<span class="number">-1</span>)</span><br><span class="line">        checksum = bytearr[origin_len % <span class="number">32</span>] + bitarr[origin_len / <span class="number">32</span>] + <span class="string">'\x00'</span>*<span class="number">6</span></span><br><span class="line">        hmac = padding + checksum</span><br><span class="line">        payload = &#123;<span class="string">'username'</span>: <span class="string">'admin'</span>, <span class="string">'password'</span>: <span class="string">'admin'</span>+padding + checksum&#125;</span><br><span class="line">        cookie = &#123;<span class="string">'hmac'</span>: <span class="string">"5f1b36f358a22a9abe395cba54f6d3bc"</span>&#125;</span><br><span class="line">        r = session.post(<span class="string">"http://202.121.178.201:8081/"</span>, cookies=cookie, data=payload)</span><br><span class="line">        <span class="keyword">print</span>(r.text)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">import requests</span><br><span class="line">bytearr = [&apos;\x00&apos;,&apos;\x08&apos;,&apos;\x10&apos;,&apos;\x18&apos;,&apos;\x20&apos;,&apos;\x28&apos;,&apos;\x30&apos;,&apos;\x38&apos;,&apos;\x40&apos;,&apos;\x48&apos;,&apos;\x50&apos;,&apos;\x58&apos;,&apos;\x60&apos;,&apos;\x68&apos;,&apos;\x70&apos;,&apos;\x78&apos;,&apos;\x80&apos;,&apos;\x88&apos;,&apos;\x90&apos;,&apos;\x98&apos;,&apos;\xa0&apos;,&apos;\xa8&apos;,&apos;\xb0&apos;,&apos;\xb8&apos;,&apos;\xc0&apos;,&apos;\xc8&apos;,&apos;\xd0&apos;,&apos;\xd8&apos;,&apos;\xe0&apos;,&apos;\xe8&apos;,&apos;\xf0&apos;,&apos;\xf8&apos;,]</span><br><span class="line">bitarr = [&apos;\x00&apos;,&apos;\x01&apos;,&apos;\x02&apos;, &apos;\x03&apos;, &apos;\x06&apos;, &apos;\x07&apos;, &apos;\x08&apos;, &apos;\x09&apos;, &apos;\x0a&apos;, &apos;\x0b&apos;]</span><br><span class="line">length = 42</span><br><span class="line">session = requests.Session()</span><br><span class="line">for length in range(43):</span><br><span class="line">        # say origin len &lt; 43</span><br><span class="line">        origin_len = length + 12</span><br><span class="line">        padding_len = (56 - origin_len)</span><br><span class="line">        padding = &quot;\x80&quot; + &quot;\x00&quot; * (padding_len-1)</span><br><span class="line">        checksum = bytearr[origin_len % 32] + bitarr[origin_len / 32] + &apos;\x00&apos;*6</span><br><span class="line">        hmac = padding + checksum</span><br><span class="line">        payload = &#123;&apos;username&apos;: &apos;admin&apos;, &apos;password&apos;: &apos;admin&apos;+padding + checksum&#125;</span><br><span class="line">        cookie = &#123;&apos;hmac&apos;: &quot;5f1b36f358a22a9abe395cba54f6d3bc&quot;&#125;</span><br><span class="line">        r = session.post(&quot;http://202.121.178.201:8081/&quot;, cookies=cookie, data=payload)</span><br><span class="line">        print(r.text)</span><br></pre></td></tr></table></figure>
 <p></p><p id="j7"></p><p></p>
 <h3 id="7-Eva-200"><a href="#7-Eva-200" class="headerlink" title="7.Eva 200"></a>7.Eva 200</h3><p>此题出了bug，直接爆出了答案，没有认真做。</p>
 <p>For fair consideration, flag is flag{f1ask_is_a_g00d_pyth0n_web_framew0rk}</p>
@@ -375,7 +375,7 @@
       </ul>
     </nav>
   </div>
-</footer><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</footer>
 
 </body>
 </html>
