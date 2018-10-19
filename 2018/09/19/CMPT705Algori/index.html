@@ -6,23 +6,25 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="“Prof.  Leonid Chindelevitch teaches this course”  Greedy Algorithm找零问题 从最大面值的硬币开始，每一个面值的使用贪心法。 Huffman Coding Dynamic Programming找零问题 如何traceback 0-1背包 有 n 个物品，每个物品有重量 w 和 价值 u，背包的承重容量为 c，放入物体使得背包中的">
+    <meta name="description" content="“Prof.  Leonid Chindelevitch teaches this course”  Greedy Algorithm找零问题 从最大面值的硬币开始，每一个面值的使用贪心法。  Huffman Coding Dynamic Programming找零问题 如何traceback 0-1背包 有 n 个物品，每个物品有重量 w 和 价值 u，背包的承重容量为 c，放入物体使得背包中">
 <meta name="keywords" content="SFUcourse">
 <meta property="og:type" content="article">
 <meta property="og:title" content="CMPT705-Design and Analysis of Algorithms">
 <meta property="og:url" content="http://miyunluo.com/2018/09/19/CMPT705Algori/index.html">
 <meta property="og:site_name" content="miyunLuo">
-<meta property="og:description" content="“Prof.  Leonid Chindelevitch teaches this course”  Greedy Algorithm找零问题 从最大面值的硬币开始，每一个面值的使用贪心法。 Huffman Coding Dynamic Programming找零问题 如何traceback 0-1背包 有 n 个物品，每个物品有重量 w 和 价值 u，背包的承重容量为 c，放入物体使得背包中的">
+<meta property="og:description" content="“Prof.  Leonid Chindelevitch teaches this course”  Greedy Algorithm找零问题 从最大面值的硬币开始，每一个面值的使用贪心法。  Huffman Coding Dynamic Programming找零问题 如何traceback 0-1背包 有 n 个物品，每个物品有重量 w 和 价值 u，背包的承重容量为 c，放入物体使得背包中">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="http://miyunluo.com/images/in-post/post-blog-0-1bag.png">
 <meta property="og:image" content="http://miyunluo.com/images/in-post/post-blog-lcsubseq.png">
 <meta property="og:image" content="http://miyunluo.com/images/in-post/post-blog-lcsubstr.png">
 <meta property="og:image" content="http://miyunluo.com/images/in-post/post-blog-lcsubstrmatch.png">
 <meta property="og:image" content="http://miyunluo.com/images/in-post/post-blog-matrixmul.png">
-<meta property="og:updated_time" content="2018-10-15T22:36:26.000Z">
+<meta property="og:image" content="http://miyunluo.com/images/in-post/post-blog-neggraph.png">
+<meta property="og:image" content="http://miyunluo.com/images/in-post/post-blog-Johnson.png">
+<meta property="og:updated_time" content="2018-10-19T03:26:15.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CMPT705-Design and Analysis of Algorithms">
-<meta name="twitter:description" content="“Prof.  Leonid Chindelevitch teaches this course”  Greedy Algorithm找零问题 从最大面值的硬币开始，每一个面值的使用贪心法。 Huffman Coding Dynamic Programming找零问题 如何traceback 0-1背包 有 n 个物品，每个物品有重量 w 和 价值 u，背包的承重容量为 c，放入物体使得背包中的">
+<meta name="twitter:description" content="“Prof.  Leonid Chindelevitch teaches this course”  Greedy Algorithm找零问题 从最大面值的硬币开始，每一个面值的使用贪心法。  Huffman Coding Dynamic Programming找零问题 如何traceback 0-1背包 有 n 个物品，每个物品有重量 w 和 价值 u，背包的承重容量为 c，放入物体使得背包中">
 <meta name="twitter:image" content="http://miyunluo.com/images/in-post/post-blog-0-1bag.png">
     
     
@@ -107,7 +109,7 @@
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Greedy-Algorithm"><span class="toc-number">1.</span> <span class="toc-text">Greedy Algorithm</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Dynamic-Programming"><span class="toc-number">2.</span> <span class="toc-text">Dynamic Programming</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Graph-Algorithms"><span class="toc-number">3.</span> <span class="toc-text">Graph Algorithms</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Greedy-Algorithm"><span class="toc-number">1.</span> <span class="toc-text">Greedy Algorithm</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Dynamic-Programming"><span class="toc-number">2.</span> <span class="toc-text">Dynamic Programming</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Basic-Graph-Algorithms"><span class="toc-number">3.</span> <span class="toc-text">Basic Graph Algorithms</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Graph-Decompositions-for-Optimization"><span class="toc-number">4.</span> <span class="toc-text">Graph Decompositions for Optimization</span></a></li></ol>
     </div>
   </span>
 </div>
@@ -151,6 +153,7 @@
 </blockquote>
 <h2 id="Greedy-Algorithm"><a href="#Greedy-Algorithm" class="headerlink" title="Greedy Algorithm"></a>Greedy Algorithm</h2><p><strong>找零问题</strong></p>
 <p>从最大面值的硬币开始，每一个面值的使用贪心法。</p>
+<hr>
 <p><strong>Huffman Coding</strong></p>
 <h2 id="Dynamic-Programming"><a href="#Dynamic-Programming" class="headerlink" title="Dynamic Programming"></a>Dynamic Programming</h2><p><strong>找零问题</strong></p>
 <p>如何traceback</p>
@@ -163,11 +166,13 @@
 <p>样例</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">输入：</span><br><span class="line"><span class="number">5</span> <span class="number">10</span></span><br><span class="line"><span class="number">4</span> <span class="number">9</span></span><br><span class="line"><span class="number">3</span> <span class="number">6</span></span><br><span class="line"><span class="number">5</span> <span class="number">1</span></span><br><span class="line"><span class="number">2</span> <span class="number">4</span></span><br><span class="line"><span class="number">4</span> <span class="number">9</span></span><br><span class="line">输出：</span><br><span class="line"><span class="number">22</span></span><br><span class="line"><span class="number">1</span> <span class="number">0</span> <span class="number">0</span> <span class="number">1</span> <span class="number">1</span></span><br></pre></td></tr></table></figure>
 <p>dp只可以得到最大的价值是多大，如果需要知道方案的具体内容，即究竟选了哪几个物品，就需要回溯。回溯的思路也很简单，如果 $D[i,j] &gt; D[i-1,j]$，那么说明物品 <code>i</code> 被选择了。<code>j</code> 初始化为总容量 <code>c</code>，<code>i</code> 从n循环至1.</p>
+<hr>
 <p><strong>Longest common subsequence</strong></p>
 <p>最长公共子序列，区别于最长公共子串。比如 <code>ABCD</code> 与 <code>DACB</code> 的最长公共子序列是AC。</p>
 <p>两个字符串 $s$ 和 $t$，使用 $L[i,j]$ 表示 $s$ 的前 $i$ 个字符与 $t$ 的前 $j$ 个字符的最长公共子序列的长度，状态转移方程为</p>
 <p><img src="/images/in-post/post-blog-lcsubseq.png" alt="img"></p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">longestCommonSubsequence</span><span class="params">(<span class="built_in">string</span> A, <span class="built_in">string</span> B)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> n = A.length();</span><br><span class="line">    <span class="keyword">int</span> m = B.length();</span><br><span class="line">    <span class="keyword">int</span> dp[n+<span class="number">1</span>][m+<span class="number">1</span>];</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i&lt;=n; ++i)</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">1</span>; j&lt;=m; ++j)</span><br><span class="line">        &#123;</span><br><span class="line">            dp[i][j] = max(dp[i<span class="number">-1</span>][j], dp[i][j<span class="number">-1</span>]);</span><br><span class="line">            <span class="keyword">if</span>(A[i<span class="number">-1</span>] == B[j<span class="number">-1</span>])</span><br><span class="line">                dp[i][j] = dp[i<span class="number">-1</span>][j<span class="number">-1</span>]+<span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    <span class="keyword">return</span> dp[n][m];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="built_in">string</span> A = <span class="string">"ABCD"</span>;</span><br><span class="line">    <span class="built_in">string</span> B = <span class="string">"DACB"</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; longestCommonSubsequence(A, B) &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
 <p><strong>Longest common substring</strong></p>
 <p>最长公共子串。使用 $L[i,j]$  表示 $S_{1:i}$ 与 $T_{1:j}$ 的最长公共子串。转移方程为 </p>
 <p><img src="/images/in-post/post-blog-lcsubstr.png" alt="img"></p>
@@ -176,14 +181,18 @@
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">LongestCommonSubstring</span><span class="params">(<span class="built_in">string</span> s1, <span class="built_in">string</span> s2)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> m = s1.size(), n = s2.size();</span><br><span class="line">    <span class="keyword">int</span> dp[m+<span class="number">1</span>][n+<span class="number">1</span>];</span><br><span class="line">    <span class="keyword">int</span> longest = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;=m; ++i)</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>; j&lt;=n; ++j)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (i == <span class="number">0</span> || j == <span class="number">0</span>) dp[i][j] = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span>(s1[i<span class="number">-1</span>] == s2[j<span class="number">-1</span>])</span><br><span class="line">            &#123;</span><br><span class="line">                dp[i][j] = dp[i<span class="number">-1</span>][j<span class="number">-1</span>]+<span class="number">1</span>;</span><br><span class="line">                longest = max(longest, dp[i][j]);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> dp[i][j] = <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    <span class="keyword">return</span> longest;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>需要输出所有的最长公共子串，可以在每次dp得到最大值的时候，都记录一下$(i,j)$, 然后做一次遍历输出所有 $S$ 与 $T$ 的 <code>substr()</code> 相等的且长度等于最大长度的子串。</p>
 <p><u>这个问题还可以通过KMP算法解决，在之前的文章里</u> <a href="http://miyunluo.com/2016/10/07/KMP/">link</a></p>
+<hr>
 <p><strong>Matrix multiplication</strong></p>
 <p>两个矩阵的维度分别是 $x*y$ 与 $y*z$ , 那么两个矩阵相乘的时间复杂度是 $O(xyz)$. 但是由于矩阵乘法有结合律，所以计算的先后顺序也决定了复杂度不同。目标为使得总复杂度最小。</p>
 <p>比如 $A$: $10*20$, $B$: $20*30$, $C$: $30*40$，$(AB)C$ 需要32000操作，而 $A(BC)$ 为18000. </p>
 <p>记$C[i,j]$ 为$A_iA_{i+1}…A_{j-1}A_j$ 的最优解，转换方程为</p>
 <p><img src="/images/in-post/post-blog-matrixmul.png" alt="img"></p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;climits&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> dp[<span class="number">1024</span>][<span class="number">1024</span>] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Matrix</span> &#123;</span></span><br><span class="line">    <span class="keyword">int</span> row;</span><br><span class="line">    <span class="keyword">int</span> column;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">matrixChainCost</span><span class="params">(Matrix *ms, <span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> scale = <span class="number">2</span>; scale &lt;= n; scale++) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt;= n - scale; i++) &#123;</span><br><span class="line">            <span class="keyword">int</span> j = i + scale - <span class="number">1</span>;</span><br><span class="line">            dp[i][j] = INT_MAX;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> k = i; k &lt; j; k++) &#123;</span><br><span class="line">                dp[i][j] = <span class="built_in">std</span>::min(dp[i][j], dp[i][k] + dp[k+<span class="number">1</span>][j] + (ms[i].row*ms[k].column*ms[j].column));</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> dp[<span class="number">0</span>][n - <span class="number">1</span>];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
 <p><strong>Traveling Salesman Problem</strong></p>
-<h2 id="Graph-Algorithms"><a href="#Graph-Algorithms" class="headerlink" title="Graph Algorithms"></a>Graph Algorithms</h2><p><strong>Strong Connectivity Algorithm 强连通</strong></p>
+<h2 id="Basic-Graph-Algorithms"><a href="#Basic-Graph-Algorithms" class="headerlink" title="Basic Graph Algorithms"></a>Basic Graph Algorithms</h2><blockquote>
+<p>Digraph 有向图</p>
+</blockquote>
 <p><strong>Transitive Closure 传递闭包</strong></p>
 <p>就是求解一个图的连通性，一般处理 <strong>有向图</strong>，得到一个连通矩阵。比如存在路径 $(u,v)$ and $(v,w)$，那么 $(u,w)$ 也是连通的。可见解决子问题 $(u,v)$ and $(v,w)$ 就可以解决上层问题 $(u,w)$。直接动态规划。</p>
 <p>算法名字叫 “Warshall Algorithm”，时间复杂度为 $O(V^3)$。</p>
@@ -192,6 +201,7 @@
 <p>比如现在有节点 $(u,v)$ 连通，那么标记 $(u,v)$ 连通之后，对于 $v$ 的所有子节点 $k$，也标记 $(u,k)$ 连通。这个方法使用邻接表会方便一些。</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">graphTC</span><span class="params">(Graph G)</span></span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (every node in G) dfs(G, s, s); <span class="comment">// 对于图内的所有节点</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">dfs</span><span class="params">(Graph G, <span class="keyword">int</span> s, <span class="keyword">int</span> v)</span></span>&#123;</span><br><span class="line">    tc[s][v] = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span> (w be v 的所有邻接节点)</span><br><span class="line">        <span class="keyword">if</span>(tc[s][w] == <span class="number">0</span>) dfs(G, s, w);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p> 时间复杂度为 $O(VE)$。</p>
+<hr>
 <p><strong>Topological Sorting 拓扑排序</strong></p>
 <p>拓扑排序在实际中的例子就是，不同事件发生是有顺序的，比如</p>
 <p>拓扑排序针对 <strong>有向无环图</strong>  (<strong>DAG</strong>,<strong>Directed Acyclic Graph</strong>)，满足两个性质。1.每个顶点只出现一次，2.若图中存在一条A到B的路径，那么拓扑排序中A必然出现在B的前面。</p>
@@ -205,6 +215,46 @@
 <p>还有一种使用 $DFS$ 的做法。这个做法比较神奇，之前也没有见过，不是一般意义上的深度优先，沿着有向边反向走，比如当前搜索到了点 $u$，下一步搜索 $u$ 的所有前继节点 $v$，只要还存在前继节点，就还不能把 $u$ 放进拓扑序里。</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">function <span class="title">TSDFS</span><span class="params">(node u)</span></span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(all v that points to u)&#123;</span><br><span class="line">        <span class="keyword">if</span>(v没有被删掉)</span><br><span class="line">        	TSDFS(v);</span><br><span class="line">    &#125;</span><br><span class="line">    将u加入到拓扑序列中;</span><br><span class="line">    删除u;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p> $DFS$ 拓扑序可以从<strong>出度</strong>为0的顶点开始做起。 时间复杂度也是 $O(V+E)$。</p>
+<hr>
+<p><strong>Strong Connectivity Algorithm 强连通</strong></p>
+<p>针对有向图，如果 $u,v$ 连通，$v,u$ 也连通，则二者强连通。对于一个强连通分量，所包含的点两两可达。如果只是需要统计图中的强连通分量的个数，则可以使用 <strong><em>并查集</em></strong> 解决。如果需要找出强连通分量的点，使用 Kosaraju 或者 Tarjan 算法。时间复杂度$O(V+E)$。</p>
+<hr>
+<blockquote>
+<p>Shortest Path 最短路</p>
+</blockquote>
+<p><strong>Single Source Shortest Paths 单源最短路径</strong></p>
+<p>给定一个源点$s$，求 $s​$ 到其他各个顶点的最短路径。</p>
+<p>经典算法 <strong>Dijkstra Algorithm</strong>，要求图 “没有负边” 有向或者无向。 算法步骤为</p>
+<ol>
+<li>将顶点分为两个集合 $A$ 和 $B$，$A$ 为已经找到最短路径的顶点集合，$B$ 为等待求最短路径的集合。初始 $A = {s}$, $B$ 集合中所有点到源点的距离为 $inf$.</li>
+<li>每次集合 $A$ 新加入一个点 $u$，将与 $u$ 相邻的所有点 $v$ 的距离使用 $dist(u)$ 松弛 $dist(v) = min(dist(v), dist(u) + e(u,v))$。初始情况将源点 $s$ 视为新加入的点，松弛操作为 $dist(v) = min(inf, e(s,v))$。</li>
+<li>选取 $B$ 中最小的 $dist$ 的点加入集合 $A$</li>
+<li>重复2.3. 直到 $B$ 为空</li>
+</ol>
+<p>时间复杂度，使用邻接表，不优化，外层循环所有顶点，内层循环寻找 $B$ 中最短距离的点，松弛操作经过了所有的边，因此时间复杂度为 $O(V^2+E)$。</p>
+<p>但是这个算法可以使用最小堆(heap)优化，使得找距离源点最小距离点的时间复杂度降到 $O(logN)$。如果这个图是一个稀疏图，则可以用邻接表来表示这个图，于是时间复杂度为 $O((E+V)logV)$。如果是个稠密图，比如 $E = V^2$，那么复杂度反而很高了。</p>
+<p>对于有负边的图，可以使用 <strong>Bellman-Ford Algorithm</strong>。算法的思想为，对所有边进行 $V-1$ 次松弛操作。进行 $V-1$ 次操作的原因是，在一个包含 $V$ 个顶点的图中，任意两点之间的最短路径最多包含 $V-1$ 条边。对于每一条边$e(u,v)$，$dist(v) = min(dist(v), dist(u) + e(u,v))$。在 $V-1$轮操作后，如果再执行一次边集的松弛操作还可以松弛，那么就说明图中含有负环。时间复杂度为 $O(VE)$。</p>
+<hr>
+<p><strong>All-pairs shortest paths 全源最短路径</strong></p>
+<p>这个是单源最短路径的推广，上面两个算法可也以做，就是对每个顶点为源点做一次单源最短路径。这样Dijkstra算法时间复杂度为 $O(VE+V^2logV)$，Bellman-Ford算法时间复杂度为$O(V^2E)$。还有一个Floyd-Warshall算法，本质和求连通性的Warshall算法一样，时间复杂度为 $O(V^3)$。所以在稀疏图的时候前两个算法的复杂度低一点，但是对于稠密图，比如$E=V^2$，复杂度就比较高了。</p>
+<p>还有一点就是，Dijkstra要求图边的权值不能为负，于是有一个 <strong>Johnson Algorithm</strong> 通过调整权值为负的图，使之可以使用Dijkstra算法，并且re-weight后，计算出的最短路路径依然正确。</p>
+<p>比如这里有一个包含负边的图</p>
+<p><img src="/images/in-post/post-blog-neggraph.png" alt="img"></p>
+<p>首先增加一个节点，连接所有的边，新边权值为0</p>
+<p><img src="/images/in-post/post-blog-Johnson.png" alt="img"></p>
+<p>然后使用Bellman-ford算法 (因为有负边)，计算新增节点到其他节点的最短路径$h[i]$，使用公式 $w(u,v) = w(u,v)+(h[u] - h[v])$ 进行re-weight，然后移除新增节点，对其他节点使用Dijkstra算法。</p>
+<p>主要运行时间为Dijkstra算法的时间。</p>
+<p>对于正确性的证明，直观地解释是，re-weight之前的shortest path 在re-weight之后还是shortest path，参考这个链接<a href="https://brilliant.org/wiki/johnsons-algorithm/" target="_blank" rel="noopener">link</a>，也有讲到re-weight后的边都是正的。</p>
+<hr>
+<p><strong>Shortest paths via matrix multiplication</strong></p>
+<h2 id="Graph-Decompositions-for-Optimization"><a href="#Graph-Decompositions-for-Optimization" class="headerlink" title="Graph Decompositions for Optimization"></a>Graph Decompositions for Optimization</h2><p><strong>Tree Decomposition</strong></p>
+<p>定义可以参考 <a href="https://en.wikipedia.org/wiki/Tree_decomposition" target="_blank" rel="noopener">wikipedia</a>，将tree分解为若干个bags，其中bag满足如下几个性质。</p>
+<ol>
+<li>every vertex is in at least one bag 每个顶点至少包含在一个bag里</li>
+<li>every edge is included in some bag 每条边都包含在某个bag里</li>
+<li>如果 $u\in X_w$ 并且 $u\in X_z$，那么 $u$ 在两个bag通路上的所有bag里 </li>
+</ol>
+<p>width of a tree decomposition 是最大的bag的大小 - 1，这里指的是某一个确定的decomposition。对于 treewide，是所有可能的decomposition中的那个最小的width。</p>
 
   </div>
 </article>
@@ -231,7 +281,7 @@
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Greedy-Algorithm"><span class="toc-number">1.</span> <span class="toc-text">Greedy Algorithm</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Dynamic-Programming"><span class="toc-number">2.</span> <span class="toc-text">Dynamic Programming</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Graph-Algorithms"><span class="toc-number">3.</span> <span class="toc-text">Graph Algorithms</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Greedy-Algorithm"><span class="toc-number">1.</span> <span class="toc-text">Greedy Algorithm</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Dynamic-Programming"><span class="toc-number">2.</span> <span class="toc-text">Dynamic Programming</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Basic-Graph-Algorithms"><span class="toc-number">3.</span> <span class="toc-text">Basic Graph Algorithms</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Graph-Decompositions-for-Optimization"><span class="toc-number">4.</span> <span class="toc-text">Graph Decompositions for Optimization</span></a></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">
