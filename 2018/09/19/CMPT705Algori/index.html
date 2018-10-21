@@ -21,7 +21,7 @@
 <meta property="og:image" content="http://miyunluo.com/images/in-post/post-blog-matrixmul.png">
 <meta property="og:image" content="http://miyunluo.com/images/in-post/post-blog-neggraph.png">
 <meta property="og:image" content="http://miyunluo.com/images/in-post/post-blog-Johnson.png">
-<meta property="og:updated_time" content="2018-10-19T03:26:15.000Z">
+<meta property="og:updated_time" content="2018-10-19T23:09:01.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CMPT705-Design and Analysis of Algorithms">
 <meta name="twitter:description" content="“Prof.  Leonid Chindelevitch teaches this course”  Greedy Algorithm找零问题 从最大面值的硬币开始，每一个面值的使用贪心法。  Huffman Coding Dynamic Programming找零问题 如何traceback 0-1背包 有 n 个物品，每个物品有重量 w 和 价值 u，背包的承重容量为 c，放入物体使得背包中">
@@ -80,6 +80,8 @@
     <br/>
     <span id="actions">
       <ul>
+        
+        <li><a class="icon" href="/2018/10/21/stupidbyzqd/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
         
         
         <li><a class="icon" href="/2018/09/09/CMPT822CV/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
@@ -190,6 +192,9 @@
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;climits&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> dp[<span class="number">1024</span>][<span class="number">1024</span>] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Matrix</span> &#123;</span></span><br><span class="line">    <span class="keyword">int</span> row;</span><br><span class="line">    <span class="keyword">int</span> column;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">matrixChainCost</span><span class="params">(Matrix *ms, <span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> scale = <span class="number">2</span>; scale &lt;= n; scale++) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt;= n - scale; i++) &#123;</span><br><span class="line">            <span class="keyword">int</span> j = i + scale - <span class="number">1</span>;</span><br><span class="line">            dp[i][j] = INT_MAX;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> k = i; k &lt; j; k++) &#123;</span><br><span class="line">                dp[i][j] = <span class="built_in">std</span>::min(dp[i][j], dp[i][k] + dp[k+<span class="number">1</span>][j] + (ms[i].row*ms[k].column*ms[j].column));</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> dp[<span class="number">0</span>][n - <span class="number">1</span>];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <hr>
 <p><strong>Traveling Salesman Problem</strong></p>
+<p>选取一个城市为起点，经过图中其余的每一个城市一次，最终回到起点，使得路径最短。</p>
+<p>分析，假设顶点集合为 $V$，起点为 $v_1$，且先从 $v_1$ 到 $v_2$，则从 $v_2$ 出发沿着某一条路径回到 $v_1$ 经过 $V-{v_1,v_2}$ 每个点一次，且路径最短的那一条。</p>
+<p>设 $D[v_k,S]$ 表示从 $v_k$ 出发，经过集合 $S$ 中所有城市一次且仅一次，最后回到出发城市 $v_1$ 的最短路径的长度。有 $D[v_1, V] = \min\limits_{2\le k\le n}{d_{ik} + D[v_k,V-{v_1,v_k}]}$ </p>
 <h2 id="Basic-Graph-Algorithms"><a href="#Basic-Graph-Algorithms" class="headerlink" title="Basic Graph Algorithms"></a>Basic Graph Algorithms</h2><blockquote>
 <p>Digraph 有向图</p>
 </blockquote>
@@ -255,6 +260,11 @@
 <li>如果 $u\in X_w$ 并且 $u\in X_z$，那么 $u$ 在两个bag通路上的所有bag里 </li>
 </ol>
 <p>width of a tree decomposition 是最大的bag的大小 - 1，这里指的是某一个确定的decomposition。对于 treewide，是所有可能的decomposition中的那个最小的width。</p>
+<p><strong>Maximum independent set</strong></p>
+<p>首先，independent set 指的是，一个点集内，所有点两两之间都不相邻。寻找maximum independent set是$NP-hard$ 问题。但是在确定了tree-width的时候，变成了一个定参数问题，可以使用dp解决。</p>
+<p>例子 <strong>The Party Problem</strong>。邀请一些人来参加party，这些人有职位上的隶属关系，可以形成一棵树。要求不能同时邀请直接下属和上司，也就是父节点和直接子节点不能同时被选择，使得所选出来的点，总权重最大。</p>
+<p>也就是，输入为一个节点有权重的树，寻找总权重最大的independent set。</p>
+<p>Denote $T_v$ 为以 $v$ 为根的子树，$A[v]$ 为 $T_v$ 的independent set的最大权重，$B[v]$ 为 $T_v$ 不包含根节点 $v$ 的 independent set的最大权重。记 $v$ 的子节点为 $v’_1, v’_2,…,v’<em>k$，<br>$$<br>B[v] = \sum</em>{i=1}^kA[v’<em>i]\<br>A[v] = max(B[v], w(v)+\sum</em>{i=1}^kB[v’_i])<br>$$</p>
 
   </div>
 </article>
