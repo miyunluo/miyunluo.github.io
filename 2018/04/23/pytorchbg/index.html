@@ -17,7 +17,9 @@
 <meta property="og:image" content="http://miyunluo.com/images/in-post/post-blog-torch0.png">
 <meta property="og:image" content="http://miyunluo.com/images/in-post/post-blog-torch1.png">
 <meta property="og:image" content="http://miyunluo.com/images/in-post/post-blog-torch2.png">
-<meta property="og:updated_time" content="2019-02-05T22:16:24.000Z">
+<meta property="og:image" content="http://miyunluo.com/images/in-post/post-blog-torch3.png">
+<meta property="og:image" content="http://miyunluo.com/images/in-post/post-blog-torch4.png">
+<meta property="og:updated_time" content="2019-02-06T02:40:22.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="pytorch自用笔记">
 <meta name="twitter:description" content="“防止以后踩坑”  pytorch 0.4 较之前api有了很大变化 0.0 Tensor在pytorch 0.4 中 Tensor 和 Variable 合并 Tensor可以理解为一个多维矩阵，可以使用 .size() 显示大小，同时也可以和 numpy.array 转换  由于和Variable合并，requires_grad 和 autograd 成了 Tensor 的属性。 Tenso">
@@ -227,9 +229,18 @@
 <p>对于二分类问题，loss可以写为</p>
 <p>$$-\frac{1}{m}\sum^m_{i=1}(y^ilog\, sigmod(x^i)+(1-y^i)log(1-sigmod(x^i)))$$</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># pytorch 提供了交叉熵函数</span></span><br><span class="line">criterion = nn.CrossEntropyLoss()</span><br></pre></td></tr></table></figure>
-<h2 id="1-4-参数初始化"><a href="#1-4-参数初始化" class="headerlink" title="1.4 参数初始化"></a>1.4 参数初始化</h2><ul>
-<li><strong>使用numpy初始化</strong></li>
-</ul>
+<h2 id="1-4-参数初始化"><a href="#1-4-参数初始化" class="headerlink" title="1.4 参数初始化"></a>1.4 参数初始化</h2><p>首先，使用Sequential构建模型，可以直接访问参数</p>
+<p><img src="/images/in-post/post-blog-torch3.png" alt=""></p>
+<p>那么就可以直接从numpy赋值 来初始化参数</p>
+<p><img src="/images/in-post/post-blog-torch4.png" alt=""></p>
+<p>使用</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">net1[<span class="number">0</span>].weight.data = torch.from_numpy(np.random.uniform(<span class="number">3</span>, <span class="number">5</span>, size=(<span class="number">4</span>, <span class="number">3</span>)))</span><br></pre></td></tr></table></figure>
+<p>初始化了第一层的权重，可以看到weight的数值发生了变化，bias没有变。</p>
+<p>要对每一个层都初始化，使用循环</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> layer <span class="keyword">in</span> net1:</span><br><span class="line">    <span class="keyword">if</span> isinstance(layer, nn.Linear): <span class="comment"># 判断是否是线性层</span></span><br><span class="line">        paran_shape = layer.weight.shape</span><br><span class="line">        layer.weight.data = torch.form_numpy(np.random.normal(<span class="number">0</span>, <span class="number">0.5</span>, size=param_shape))</span><br><span class="line">        <span class="comment"># 正太分布</span></span><br></pre></td></tr></table></figure>
+<p>pythorch 提供了 <code>torch.nn.init</code> 用于初始化</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> torch.nn <span class="keyword">import</span> init</span><br><span class="line">init.xavier_uniform(net1[<span class="number">0</span>].weight)</span><br></pre></td></tr></table></figure>
+<p>Xavier初始化方式来源于一篇论文，证明使用这种初始化方法可以使得每层的输出方差尽可能相等</p>
 
   </div>
 </article>
