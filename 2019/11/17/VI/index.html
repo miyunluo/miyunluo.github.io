@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="Refers to Sergey Levine’s slides  Latent variable models$p(x)=\sum_zp(x|z)p(z)$ $p(x)=\int p(x|z)p(z)dz$ $z$ is a latent variable not observed from data directly. How to train latent variable modelmo">
+<meta name="keywords" content="RL">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Variational Inference">
+<meta property="og:url" content="http://miyunluo.com/2019/11/17/VI/index.html">
+<meta property="og:site_name" content="miyunLuo">
+<meta property="og:description" content="Refers to Sergey Levine’s slides  Latent variable models$p(x)=\sum_zp(x|z)p(z)$ $p(x)=\int p(x|z)p(z)dz$ $z$ is a latent variable not observed from data directly. How to train latent variable modelmo">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-11-18T01:58:21.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Variational Inference">
+<meta name="twitter:description" content="Refers to Sergey Levine’s slides  Latent variable models$p(x)=\sum_zp(x|z)p(z)$ $p(x)=\int p(x|z)p(z)dz$ $z$ is a latent variable not observed from data directly. How to train latent variable modelmo">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-200x200.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>Variational Inference</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/research/">Research</a></li>
+         
+          <li><a href="/about/">About</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" href="/2019/01/25/RLDavid/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://miyunluo.com/2019/11/17/VI/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://miyunluo.com/2019/11/17/VI/&text=Variational Inference"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://miyunluo.com/2019/11/17/VI/&title=Variational Inference"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://miyunluo.com/2019/11/17/VI/&is_video=false&description=Variational Inference"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Variational Inference&body=Check out this article: http://miyunluo.com/2019/11/17/VI/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://miyunluo.com/2019/11/17/VI/&title=Variational Inference"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://miyunluo.com/2019/11/17/VI/&title=Variational Inference"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://miyunluo.com/2019/11/17/VI/&title=Variational Inference"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://miyunluo.com/2019/11/17/VI/&title=Variational Inference"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://miyunluo.com/2019/11/17/VI/&name=Variational Inference&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Latent-variable-models"><span class="toc-number">1.</span> <span class="toc-text">Latent variable models</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#How-to-train-latent-variable-model"><span class="toc-number">2.</span> <span class="toc-text">How to train latent variable model</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Variational-approximation"><span class="toc-number">3.</span> <span class="toc-text">Variational approximation</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#KL-Divergence"><span class="toc-number">4.</span> <span class="toc-text">KL-Divergence</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Amortized-variational-inference"><span class="toc-number">5.</span> <span class="toc-text">Amortized variational inference</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index my4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Variational Inference
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">miyunLuo</span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2019-11-17T08:00:00.000Z" itemprop="datePublished">2019-11-17</time>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/RL/">RL</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <blockquote>
+<p>Refers to Sergey Levine’s slides</p>
+</blockquote>
+<h3 id="Latent-variable-models"><a href="#Latent-variable-models" class="headerlink" title="Latent variable models"></a>Latent variable models</h3><p>$p(x)=\sum_zp(x|z)p(z)$</p>
+<p>$p(x)=\int p(x|z)p(z)dz$</p>
+<p>$z$ is a latent variable not observed from data directly.</p>
+<h3 id="How-to-train-latent-variable-model"><a href="#How-to-train-latent-variable-model" class="headerlink" title="How to train latent variable model"></a>How to train latent variable model</h3><p>model: $p_{\theta}(x)$</p>
+<p>data: $D={x_1, x_2, …,x_N}$</p>
+<p>maximum likelihood: $\theta \leftarrow \arg\max_{\theta}\frac{1}{N}\sum_i\log p_{\theta}(x_i)$ , and $p(x)=\int p(x|z)p(z)dz$</p>
+<p>$\theta\leftarrow \arg\max_{\theta}\frac{1}{N}\sum_i\log[\int p_{\theta}(x_i|z)p(z)dz]$</p>
+<p>But we don’t know what $z$ is, an alternative is to compute expected log-likelihood.</p>
+<p>$\theta\leftarrow \arg\max_{\theta}\frac{1}{N}\sum_i\mathbb{E}_{z\sim p(z|x_i)}[\log p_{\theta}(x_i,z)]$</p>
+<p>Intuition: “guess” most likely $z$ given $x_i$ , and pretend it is the right one.</p>
+<h3 id="Variational-approximation"><a href="#Variational-approximation" class="headerlink" title="Variational approximation"></a>Variational approximation</h3><p>So here comes the question, how to calculate $p(z|x_i)$ , could use a simple distribution to approximate, $q_i(z)=\mathcal{N}(\mu_i,\sigma_i)$.</p>
+<p>This $q_i(z)$ can be used to bound $\log p(x_i)$</p>
+<p>$\log p(x_i)=\log\int_zp(x_i|z)p(z)=\log\int_zp(x_i|z)p(z)\frac{q_i(z)}{q_i(z)}=\log\mathbb{E}_{z\sim q_i(z)}[\frac{p(x_i|z)p(z)}{q_i(z)}]$</p>
+<p>Use Jensen’s inequality, $\log \mathbb{E}[y]\ge \mathbb{E}[\log y]$</p>
+<p>$\ge \mathbb{E}_{z\sim q_i(z)}[\log \frac{p(x_i|z)p(z)}{q_i(z)}]=\mathbb{E}_{z\sim q_i(z)}[\log p(x_i|z)+\log p(z)]-\mathbb{E}_{z\sim q_i(z)}[\log q_i(z)]=\mathbb{E}_{z\sim q_i(z)}[\log p(x_i|z)+\log p(z)]+\mathcal{H}(q_i)$</p>
+<p>Entropy: $\mathcal{H}(p)=-\mathbb{E}_{x\sim p(x)}[\log p(x)]=-\int_x p(x)\log p(x)dx$ , measures how random is the random variable.</p>
+<p>Then we maximize this lower bound will maximize $\log p(x_i)$.</p>
+<h3 id="KL-Divergence"><a href="#KL-Divergence" class="headerlink" title="KL-Divergence"></a>KL-Divergence</h3><p>We get $\log p(x_i)\ge \mathbb{E}_{z\sim q_i(z)}[\log p(x_i|z)+\log p(z)]+\mathcal{H}(q_i)$, define this lower bound as $\mathcal{L}_i(p,q_i)$</p>
+<p>$\mathcal{L}_i(p,q_i)$ has relationship with $D_{KL}(q_i(z)||p(z|x_i))$</p>
+<p>$D_{KL}(q_i(z)||p(z|x_i))=\mathbb{E}_{z\sim q_i(z)}[\log \frac{q_i(z)}{p(z|x_i)}]=\mathbb{E}_{z\sim q_i(z)}[\log\frac{q_i(z)p(x_i)}{p(x_i,z)}]$ , where $p(x_i,z)=p(x_i|z)p(z)$</p>
+<p>$=-\mathbb{E}_{z\sim q_i(z)}[\log p(x_i|z)+\log p(z)]+\mathbb{E}_{z\sim q_i(z)}[\log q_i(z)]+\mathbb{E}_{z\sim q_i(z)}[\log p(x_i)]$</p>
+<p>$=-\mathcal{L}_i(p,q_i)+\log p(x_i)$</p>
+<p>$\mathcal{L}_i(p,q_i) = -D_{KL}(q_i(z)||p(z|x_i))+\log p(x_i)$ , maximize this lower bound means minimize the KL-divergence between $q_i(z)$ with the true distribution $p(z|x_i)$  .</p>
+<p>$\theta \leftarrow \arg\max_\theta\frac{1}{N}\sum_i\mathcal{L}_i(p,q_i) $</p>
+<p>for each $x_i$ :</p>
+<p>​        calculate $\nabla_\theta\mathcal{L}_i(p,q_i)$: sample $z\sim q_i(z) ,\nabla_\theta\mathcal{L}_i(p,q_i)\approx\nabla_\theta\log p_\theta(x_i|z)$</p>
+<p>​        $\theta\leftarrow \theta + \alpha\nabla_\theta\mathcal{L}_i(p,q_i)$</p>
+<p>​        update $q_i$ to maximize $\mathcal{L}_i(p,q_i)$ [suppose $q_i(z)=\mathcal{N}(\mu_i,\sigma_i)$, gradient ascent on $\mu_i,\sigma_i$]</p>
+<p>Problme is the there are too many parameters to train !</p>
+<h3 id="Amortized-variational-inference"><a href="#Amortized-variational-inference" class="headerlink" title="Amortized variational inference"></a>Amortized variational inference</h3><p>What if we just learn a network $q_i(z)=q(z|x_i)\approx p(z|x_i)$</p>
+<p>There is a network for $p_\theta(x_i|z)$ , and one for $q_\phi(z|x_i)=\mathcal{N}(\mu_\phi(x_i),\sigma_\phi(x_i))$</p>
+<p>for each $x_i$ :</p>
+<p>​        calculate $\nabla_\theta\mathcal{L}_i(p_{\theta}(x_i|z),q_{\phi}(z|x_i))$ : sample $z\sim q_\phi(z|x_i),\nabla_\theta\mathcal{L}\approx\nabla_\theta\log p_\theta(x_i|z)$</p>
+<p>​        $\theta\leftarrow \theta+\alpha\nabla_\theta\mathcal{L}$</p>
+<p>​        $\phi\leftarrow \phi + \alpha\nabla_\phi\mathcal{L}$</p>
+<p>To better calculate $\phi\leftarrow \phi + \alpha\nabla_\phi\mathcal{L}$ , there is a reparameterization trick</p>
+<p>$J(\phi)=\mathbb{E}_{z\sim q_{\phi}(z|x_i)}[r(x_i,z)]=\mathbb{E}_{\epsilon\sim\mathcal{N}(0,1)}[r(x_i,\mu_{\phi}(x_i)+\epsilon\sigma_{\phi}(x_i))]$</p>
+<p>To calculate $\nabla_{\phi}J(\phi)$, just need to sample $\epsilon_1,…,\epsilon_M$ from $\mathcal{N}(0,1)$ (a single sample is ok)</p>
+<p>$\nabla_{\phi}J(\phi)\approx \frac{1}{M}\sum_j\nabla_\phi r(x_i,\mu_{\phi}(x_i)+\epsilon\sigma_{\phi}(x_i))$</p>
+<p>When using TensorFlow or pyTorch software, these frameworks are usually designed to minimize a loss function. In this case, we minimize $-\mathcal{L}_i$ , which equals to minimize KL-divergence loss plus reconstruction loss.</p>
+
+  </div>
+</article>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/research/">Research</a></li>
+         
+          <li><a href="/about/">About</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Latent-variable-models"><span class="toc-number">1.</span> <span class="toc-text">Latent variable models</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#How-to-train-latent-variable-model"><span class="toc-number">2.</span> <span class="toc-text">How to train latent variable model</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Variational-approximation"><span class="toc-number">3.</span> <span class="toc-text">Variational approximation</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#KL-Divergence"><span class="toc-number">4.</span> <span class="toc-text">KL-Divergence</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Amortized-variational-inference"><span class="toc-number">5.</span> <span class="toc-text">Amortized variational inference</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://miyunluo.com/2019/11/17/VI/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://miyunluo.com/2019/11/17/VI/&text=Variational Inference"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://miyunluo.com/2019/11/17/VI/&title=Variational Inference"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://miyunluo.com/2019/11/17/VI/&is_video=false&description=Variational Inference"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Variational Inference&body=Check out this article: http://miyunluo.com/2019/11/17/VI/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://miyunluo.com/2019/11/17/VI/&title=Variational Inference"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://miyunluo.com/2019/11/17/VI/&title=Variational Inference"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://miyunluo.com/2019/11/17/VI/&title=Variational Inference"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://miyunluo.com/2019/11/17/VI/&title=Variational Inference"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://miyunluo.com/2019/11/17/VI/&name=Variational Inference&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2019 Yudong Luo
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/research/">Research</a></li>
+         
+          <li><a href="/about/">About</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/fontawesome-all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+<!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-102635433-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+
+<!-- Mathjax -->
+
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+  </script>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  </script>
+  <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
