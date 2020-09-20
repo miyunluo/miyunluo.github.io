@@ -9,6 +9,11 @@ Version    : 1.0
 Released   : 20120729
 */
 
+@font-face{
+	font-family: Ubuntu;
+	src:url("font/Ubuntu-R.ttf")
+}
+
 * {
 	margin: 0;
 	padding: 0;
@@ -35,7 +40,8 @@ body {
 }
 
 body,input {
-	font-family: Segoe, "Segoe UI", "DejaVu Sans", "Trebuchet MS", Verdana, sans-serif;
+	/*font-family: Segoe, "Segoe UI", "DejaVu Sans", "Trebuchet MS", Verdana, sans-serif;*/
+	font-family: Ubuntu;
 }
 
 br.clearfix {
