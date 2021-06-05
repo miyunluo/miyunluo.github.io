@@ -11,7 +11,7 @@ Released   : 20120729
 
 @font-face{
 	font-family: Ubuntu;
-	src:url("font/Ubuntu-R.ttf")
+	src:url("./font/Ubuntu-R.ttf")
 }
 
 * {
