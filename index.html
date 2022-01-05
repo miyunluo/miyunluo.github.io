@@ -10,6 +10,15 @@
 <meta name="description" content="Yudong Luo's home page">
 <link rel="stylesheet" href="css/jemdoc.css" type="text/css" />
 <link rel="shortcut icon" href="img/favicon.ico">
+
+<style>
+ 
+    /* Set display to none for image*/
+    #image_btn {
+        display: none;
+    }
+</style>
+
 </head>
 
 
@@ -157,8 +166,15 @@
 
 <h2>Miscellaneous</h2>
 <ul>
-	<li> Gallery: [<a href="https://nwq.tumblr.com" target="_blank">Photos</a>], [<a href="http://miyunluo.com/w10blue/" target="_blank">Mō Yú</a>] </li>
-			
+	<li> Gallery: [<a href="https://nwq.tumblr.com" target="_blank">Photos</a>] </li>
+    <li> Tool: [<a href="http://miyunluo.com/w10blue/" target="_blank">Mō Yú</a>] </li>
+    <li>
+    <img id="image_btn" src="img/intro.jpg" width="25%" />
+	<button type="button"
+        onclick="show()" id="btnID">
+        Something more
+    </button>  </li>
+
 </ul>
 
 <table width="100%"> 
@@ -176,8 +192,20 @@
     })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
   
     ga('create', 'UA-102635433-1', 'auto');
-    ga('send', 'pageview');
-  
+    ga('send', 'pageview');  
+</script>
+
+<script>
+    function show() {
+
+        /* Access image by id and change
+        the display property to block*/
+        document.getElementById('image_btn')
+                .style.display = "block";
+
+        document.getElementById('btnID')
+                .style.display = "none";
+    }
 </script>
 
 </body>
