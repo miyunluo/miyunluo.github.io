@@ -15,9 +15,10 @@ body {
 html {
   background-color: #eeeeee; 
 }
+/* Georgia, Helvetica, Arial, Verdana, san-serif, Times */
 
 body { 
-  font-family: Georgia, Helvetica, Arial, Verdana, san-serif, Times;
+  font-family: "Fira Sans", Georgia;
   color: #000;
   background-color: #ffffff; 
   text-align:left; /* for IE */
