@@ -1,5 +1,5 @@
 /* Fira Sans Thin */
-@font-face {
+/* @font-face {
     font-family: "Fira Sans";
     src: url('fonts/fira/eot/FiraSans-Thin.eot');
     src: url('fonts/fira/eot/FiraSans-Thin.eot') format('embedded-opentype'),
@@ -19,7 +19,7 @@
          url('fonts/fira/woff2/FiraSans-ThinItalic.ttf') format('truetype');
     font-weight: 200;
     font-style: italic;
-  }
+  } */
   
   /* Fira Sans Light */
   @font-face {

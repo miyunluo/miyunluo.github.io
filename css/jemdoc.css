@@ -18,7 +18,7 @@ html {
 /* Georgia, Helvetica, Arial, Verdana, san-serif, Times */
 
 body { 
-  font-family: Georgia, Helvetica;
+  font-family: "Fira Sans", Georgia;
   color: #000;
   background-color: #ffffff; 
   text-align:left; /* for IE */
